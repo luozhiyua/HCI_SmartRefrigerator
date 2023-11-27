@@ -23,3 +23,28 @@ export class FoodInfo {
     this.whe_frozen = whe_frozen;
   }
 }
+
+export class MenuIngredientInfo{
+  name: string
+  quantity: string
+
+  constructor(name: string = '', quantity: string = '') {
+    this.name = name
+    this.quantity = quantity
+  }
+}
+
+export class MenuInfo{
+  image: Resource
+  name: string
+  ingredients: Array<MenuIngredientInfo>
+  steps: Array<string>
+
+  constructor(image: Resource, name: string, ingredients: Array<MenuIngredientInfo>, steps: Array<string>) {
+    this.image = image
+    this.name = name
+    this.ingredients = ingredients
+    this.steps = steps
+  }
+
+}

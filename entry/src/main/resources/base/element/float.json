@@ -1,0 +1,56 @@
+{
+  "float": [
+    {
+      "name": "checkbox_width",
+      "value": "280vp"
+    },
+    {
+      "name": "checkbox_height",
+      "value": "200vp"
+    },
+    {
+      "name": "checkbox_margin",
+      "value": "20vp"
+    },
+    {
+      "name": "step_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "title_font_size",
+      "value": "28fp"
+    },
+    {
+      "name": "title_font_height",
+      "value": "33vp"
+    },
+    {
+      "name": "recipeDetail_margin_top",
+      "value": "10vp"
+    },
+    {
+      "name": "recipeDetail_img_margin_top",
+      "value": "80vp"
+    },
+    {
+      "name": "textSize",
+      "value": "12vp"
+    },
+    {
+      "name": "step_font_height",
+      "value": "64vp"
+    },
+    {
+      "name": "TitleSizeL",
+      "value": "28fp"
+    },
+    {
+      "name": "TitleSizeM",
+      "value": "21fp"
+    },
+    {
+      "name": "TitleSizeS",
+      "value": "14fp"
+    }
+  ]
+}

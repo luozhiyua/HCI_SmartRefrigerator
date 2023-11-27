@@ -11,6 +11,22 @@
     {
       "name": "EntryAbility_label",
       "value": "label"
+    },
+    {
+      "name": "recipe_width",
+      "value": "90%"
+    },
+    {
+      "name": "dotted_line",
+      "value": "---------------------------------------------------------------------------------------------------------------------------------------------"
+    },
+    {
+      "name": "recipe_detail_ingredient_title",
+      "value": "ingredient"
+    },
+    {
+      "name": "recipe_detail_step_title",
+      "value": "step"
     }
   ]
 }
