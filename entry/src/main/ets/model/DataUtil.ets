@@ -1,3 +1,10 @@
+import router from '@ohos.router'
+
+import { FoodInfo } from './DataModels'
+import { mockFoods, mockFoodInfo } from '../mock/MockData'
+
+const DEBUG_PREVIEW = false
+
 export function getFoodCategories(): string[] {
   return ['蔬菜','水果','肉类','海鲜','零食','其他']
 }
@@ -20,4 +27,12 @@ export function getunitLists(): string[] {
 
 export function getAutoLists(): string[]{
   return ['蔬菜','生菜','千克','左边','一层']
+}
+
+export function getFoods(): Array<FoodInfo>{
+  return mockFoods
+}
+
+export function getFoodInfo(): FoodInfo {
+  return DEBUG_PREVIEW ? mockFoodInfo : (router.getParams() as Record<string, FoodInfo>).foodId
 }

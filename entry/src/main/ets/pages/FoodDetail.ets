@@ -1,5 +1,22 @@
+/*
+ * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import router from '@ohos.router'
 import { FoodInfo } from '../model/DataModels'
+import { getFoodInfo } from '../model/DataUtil'
+
 @Styles
 function cardStyle() {
   .height('100%')
@@ -12,13 +29,13 @@ function cardStyle() {
 struct PageTitle {
   build() {
     Row() {
-      Image($r('app.media.return_icon'))
+      Image($r('app.media.back'))
         .width(20)
         .height(20)
         .onClick(() => {
           router.back()
         })
-      Text("食材详情")
+      Text("食物详情")
         .fontSize(22)
         .margin({ left: 20 })
     }
@@ -29,38 +46,33 @@ struct PageTitle {
 
 @Component
 struct FoodImageDisplay {
-  // private foodInfo: FoodInfo = new FoodInfo(0, '', '', null)
-  // @State imageBgColorA: number = 0
-  // @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
+  private foodInfo: FoodInfo = new FoodInfo('',$r('app.media.cucumber'),'','','','','0','',false)
+  @State imageBgColorA: number = 0
+  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
 
   build() {
     Stack({ alignContent: Alignment.BottomStart }) {
-      Image($r('app.media.lettuce'))
-        // .sharedTransition(this.foodInfo.letter, {
-        //   duration: 400,
-        //   curve: curves.cubicBezier(0.2, 0.2, 0.1, 1.0),
-        //   delay: 100
-        // })
-        // .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
+      Image(this.foodInfo.image!)
+        .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
         .objectFit(ImageFit.Contain)
-      Text("生菜")
+      Text(this.foodInfo.name)
         .fontSize(26)
         .fontWeight(FontWeight.Bold)
         .margin({ left: 26, bottom: 18 })
     }
-    .height(280)
+    .height(this.currentBreakpoint == 'lg' ? 166 : 280)
   }
 }
 
 @Component
 struct ContentTable {
-  private foodInfo: FoodInfo = new FoodInfo('',$r('app.media.default_photo'),'','','','','0','',false)
+  private foodInfo: FoodInfo = new FoodInfo('',$r('app.media.cucumber'),'','','','','0','',false)
 
   @Builder
   IngredientItem(title: string | Resource | undefined, colorValue: string, name: string, value: string) {
     Row() {
       Text(title)
-        .fontSize(22)
+        .fontSize(18)
         .fontWeight(FontWeight.Bold)
         .layoutWeight(1)
         .align(Alignment.Start)
@@ -68,11 +80,8 @@ struct ContentTable {
         Circle({ width: 6, height: 6 })
           .margin({ right: 12 })
           .fill(colorValue)
-        // Text(name)
-        //   .fontSize(18)
-        // Blank()
         Text(value)
-          .fontSize(22)
+          .fontSize(18)
       }
       .width('100%')
       .layoutWeight(2)
@@ -95,12 +104,25 @@ struct ContentTable {
 
 @Entry
 @Component
-struct FoodDetailPage {
-  build(){
-    Column() {
-      PageTitle()
-      FoodImageDisplay()
-      ContentTable()
+struct FoodDetail {
+  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
+  private foodInfo: FoodInfo = getFoodInfo()
+
+  build() {
+    Scroll() {
+      Column() {
+        PageTitle()
+        FoodImageDisplay({ foodInfo: this.foodInfo })
+        Column() {
+          ContentTable({ foodInfo: this.foodInfo })
+        }
+        .height(330)
+        .margin({ top: 10, right: 10, left: 10 })
+      }
+      .alignItems(HorizontalAlign.Center)
     }
+    .backgroundColor('#EDF2F5')
+    .height('100%')
+    .align(Alignment.Top)
   }
 }

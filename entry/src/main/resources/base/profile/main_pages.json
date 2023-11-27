@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/FoodDetail",
     "pages/Menus",
-    "pages/MenuDetail"
+    "pages/MenuDetail",
+    "pages/Home"
   ]
 }
