@@ -1,6 +1,6 @@
 import router from '@ohos.router'
 @Component
-export struct PageTitle {
+export struct headline {
   private pageName: string
 
   build() {
@@ -15,7 +15,7 @@ export struct PageTitle {
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
         .margin({ left: 20 })
-        .textAlign(TextAlign.Center)
+        // .textAlign(TextAlign.Center)
         .width("85%")
     }
     .padding(12)

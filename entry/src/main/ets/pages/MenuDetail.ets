@@ -3,7 +3,8 @@ import router from '@ohos.router'
 
 // import {MenuInfo} from '../model/DataModels'
 // import {getMenuInfo} from '../model/DataUtil'
-import {PageTitle} from '../pages/MenuComponent/PageTitle'
+// import {PageTitle} from '../pages/MenuComponent/PageTitle'
+import {headline} from './MenuRecommendComponent/Headline'
 import {MenuImage} from '../pages/MenuComponent/MenuImage'
 import {IngredientList} from '../pages/MenuComponent/IngredientList'
 import {MenuViewModel} from '../viewModel/MenuViewModel'
@@ -61,7 +62,7 @@ struct MenuDetail {
           Column() {
             content({menuViewModel: this.menuViewModel})
           }
-          .backgroundColor('#EDF2F5')
+          // .backgroundColor('#EDF2F5')
           //.height('100%')
           .align(Alignment.Top)
           .justifyContent(FlexAlign.Start)
@@ -72,7 +73,8 @@ struct MenuDetail {
         .scrollBarWidth(10)
         .edgeEffect(EdgeEffect.Spring)
 
-        PageTitle()
+        // PageTitle({pageName: "菜谱详情"})
+        headline({pageName: "菜谱详情"})
       }
     }
   }

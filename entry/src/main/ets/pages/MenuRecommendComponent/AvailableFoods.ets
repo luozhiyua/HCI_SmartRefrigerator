@@ -11,11 +11,11 @@ struct titleLine{
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
         .fontColor(Color.Gray)
-        .margin({top: '3%'})
+        // .margin({top: '3%'})
 
     }
     .height("8%")
-    .margin({bottom: '3%'})
+    // .margin({bottom: '3%'})
     .alignItems(HorizontalAlign.Start)
 
   }

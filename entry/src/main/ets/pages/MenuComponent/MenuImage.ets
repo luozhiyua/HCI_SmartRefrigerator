@@ -5,7 +5,10 @@ export struct MenuImage {
 
   build() {
     Row(){
-      Image(this.image).width('40%').height('30%')
+      Image(this.image)
+        .width('40%')
+        .height('30%')
+        .borderRadius(20)
       Text(this.name)
         .fontSize(26)
         .fontWeight(FontWeight.Bold)
