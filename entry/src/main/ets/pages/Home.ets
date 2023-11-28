@@ -14,8 +14,9 @@
  */
 
 import router from '@ohos.router'
+import { MockDB } from '../mock/MockDB'
 import { FoodInfo } from '../model/DataModels'
-import { getFoods, getFoodCategories } from '../model/DataUtil'
+import { getFoodCategories } from '../model/DataUtil'
 
 @Component
 struct FoodGridItem {
@@ -30,7 +31,7 @@ struct FoodGridItem {
         .height(152)
       Row() {
         Text(this.foodItem?.name)
-          .fontSize(14)
+          .fontSize(20)
       }
       .padding({ left: 12, right: 12 })
       .width('100%')
@@ -40,7 +41,7 @@ struct FoodGridItem {
     .height(184)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
-      router.push({ url: 'pages/FoodDetail', params: { foodId: this.foodItem } })
+      router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
     })
   }
 }
@@ -67,15 +68,21 @@ struct FoodGrid {
 
 @Component
 struct CategoryModeFoods {
+
+  // TODO: 目前采用 AppStorage.SetOrCreate('appDB', new MockDB()) 进行数据全局存储，但只能用模拟器看效果
+  // TODO: ！！！改这里！！！想要预览，则与注释行交换
+  mockDB : MockDB = AppStorage.Link('appDB').get();
+  // mockDB: MockDB = new MockDB()
+
   @State currentTabIndex: number = 0
-  private foodItems: FoodInfo[] = getFoods()
+  foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
   private foodCategories: string[] = getFoodCategories()
 
   @Builder
   tabBarItemBuilder(value: string, index: number) {
     Text(value)
       .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 24 : 18)
+      .fontSize(this.currentTabIndex === index ? 30 : 24)
       .margin({ top: 2 })
       .height(56)
   }
@@ -101,58 +108,14 @@ struct CategoryModeFoods {
   }
 }
 
+@Entry
 @Component
-struct FoodsDisplay {
+struct Home {
   @State isCategoryMode: boolean = true
 
   build() {
     Stack({ alignContent: Alignment.TopEnd }) {
       CategoryModeFoods()
     }
-  }
-}
-
-@Entry
-@Component
-struct Home {
-  @State currentTabIndex: number = 0
-
-  @Builder
-  bottomBarItemBuilder(name: string, icon: Resource, index: number) {
-    Flex({
-      direction: FlexDirection.Column,
-      justifyContent: FlexAlign.Center,
-      alignItems: ItemAlign.Center
-    }) {
-      Image(icon)
-        .height(24)
-        .width(24)
-        .fillColor(this.getTabBarColor(index))
-      Text(name)
-        .margin({ top: 4 })
-        .fontSize(11)
-        .fontColor(this.getTabBarColor(index))
-    }
-  }
-
-  build() {
-    Tabs({
-      barPosition: BarPosition.End
-    }) {
-      TabContent() {
-        FoodsDisplay()
-      }.tabBar(this.bottomBarItemBuilder("主页", $r("app.media.ic_bottom_home"), 0))
-    }
-    .vertical(false)
-    .barWidth('100%')
-    .barHeight('56vp')
-    .animationDuration(0)
-    .onChange((index) => {
-      this.currentTabIndex = index
-    })
-  }
-
-  private getTabBarColor(index: number) {
-    return this.currentTabIndex == index ? "#73CD57" : "#999999"
   }
 }

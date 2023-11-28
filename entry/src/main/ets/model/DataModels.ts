@@ -1,7 +1,7 @@
 export class FoodInfo {
   id: number = 0;
   name: string
-  image: Resource;
+  image: Resource
   category: string;
   freshDate: string
   side: string
@@ -10,8 +10,9 @@ export class FoodInfo {
   unit: string
   whe_frozen: boolean
 
-  constructor(name: string, image: Resource,category: string,
+  constructor(id:number,name: string, image: Resource,category: string,
   freshDate: string,side: string,addr: string,quantity: string,unit: string,whe_frozen: boolean) {
+    this.id = id;
     this.name = name;
     this.image = image;
     this.category = category;

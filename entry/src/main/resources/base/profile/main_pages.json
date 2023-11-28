@@ -4,6 +4,7 @@
     "pages/FoodDetail",
     "pages/Menus",
     "pages/MenuDetail",
-    "pages/Home"
+    "pages/Home",
+    "pages/AddFoodPage"
   ]
 }

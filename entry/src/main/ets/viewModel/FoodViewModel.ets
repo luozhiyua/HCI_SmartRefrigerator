@@ -11,7 +11,6 @@ export class FoodViewModel{
 
 
   initData(){
-    // TODO: 从远处 GET
     // let httpRequest = http.createHttp();
     // httpRequest.request(
     //   SERVER_ADDR+'/foodList',
@@ -32,7 +31,7 @@ export class FoodViewModel{
     // this.foodList.push(new FoodItem(3,"生菜","3天","10个","蔬菜","冷藏1层", $r('app.media.mushroom')));
     // this.foodList.push(new FoodItem(4,"苹果","3天","10个","水果","冷藏1层", $r('app.media.icecream')));
     // this.foodList.push(new FoodItem(5,"白菜","3天","10个","蔬菜","冷藏1层", $r('app.media.crab')));
-    this.foodList.push(new FoodInfo("猪肉", $r('app.media.blueberry'), "肉类", "3天", "左侧", "冷藏1层", "10", "个", true));
+    this.foodList.push(new FoodInfo(0,"猪肉", $r('app.media.blueberry'), "肉类", "3天", "左侧", "冷藏1层", "10", "个", true));
 
   }
 

@@ -1,22 +1,25 @@
-/*
- * Copyright (c) 2022 Huawei Device Co., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import router from '@ohos.router'
+import { MockDB } from '../mock/MockDB';
 import { FoodInfo } from '../model/DataModels'
-import { getFoodInfo } from '../model/DataUtil'
+import { getAddrLists, getSideLists } from '../model/DataUtil'
 
+const params = router.getParams(); // 获取传递过来的参数对象
+const foodItemID = params['foodId']
+
+@Styles
+function boardItemStyle() {
+  .borderRadius(12)
+  .backgroundColor('#FFF5EE')
+  .margin(8)
+}
+
+@Styles
+function buttonStyle() {
+  .borderRadius(12)
+  .width(100)
+  .height(50)
+  .backgroundColor('#73CD57')
+}
 @Styles
 function cardStyle() {
   .height('100%')
@@ -27,26 +30,64 @@ function cardStyle() {
 
 @Component
 struct PageTitle {
+  @Link autoMode: boolean
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(20)
-        .height(20)
+        .width(25)
+        .height(25)
         .onClick(() => {
-          router.back()
+          router.replaceUrl({ url: 'pages/Home'})
         })
       Text("食物详情")
-        .fontSize(22)
+        .fontSize(25)
         .margin({ left: 20 })
+      Blank()
+      Button('自动识别',{ type: ButtonType.Normal})
+        .borderRadius(12).backgroundColor('#73CD57').fontSize(20).height(50)
+        .onClick(()=>{
+          this.autoMode = !this.autoMode
+        })
     }
     .padding(12)
     .width('100%')
   }
 }
 
+@CustomDialog
+struct CheckDelete {
+  controller: CustomDialogController
+  foodItemID: number
+
+  // TODO: ！！！改这里！！！数据存储变更
+  mockDB : MockDB = AppStorage.Link('appDB').get();
+  // mockDB: MockDB = new MockDB()
+
+  build() {
+    Column() {
+      Text('确定删除吗？')
+        .fontSize(20)
+        .margin({ top: 10, bottom: 10 })
+
+      Flex({ justifyContent: FlexAlign.SpaceAround }) {
+        Button('取消')
+          .onClick(() => {
+            this.controller.close()
+          }).backgroundColor(0xffffff).fontColor(Color.Black)
+        Button('确定')
+          .onClick(() => {
+            this.mockDB.deleteFood(this.foodItemID)
+            router.replaceUrl({ url: 'pages/Home'})
+            this.controller.close()
+          }).backgroundColor(0xffffff).fontColor(Color.Red)
+      }.margin({ bottom: 10 })
+    }
+  }
+}
+
 @Component
 struct FoodImageDisplay {
-  private foodInfo: FoodInfo = new FoodInfo('',$r('app.media.cucumber'),'','','','','0','',false)
+  private foodInfo: FoodInfo
   @State imageBgColorA: number = 0
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
 
@@ -56,7 +97,7 @@ struct FoodImageDisplay {
         .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
         .objectFit(ImageFit.Contain)
       Text(this.foodInfo.name)
-        .fontSize(26)
+        .fontSize(30)
         .fontWeight(FontWeight.Bold)
         .margin({ left: 26, bottom: 18 })
     }
@@ -65,59 +106,189 @@ struct FoodImageDisplay {
 }
 
 @Component
-struct ContentTable {
-  private foodInfo: FoodInfo = new FoodInfo('',$r('app.media.cucumber'),'','','','','0','',false)
+struct inputSelectItem{
+  @State text : string = ''
+  @Consume editParams: FoodInfo
+  chooseRange: string[]
+  chooseKey: string
 
-  @Builder
-  IngredientItem(title: string | Resource | undefined, colorValue: string, name: string, value: string) {
+  build(){
+    Row(){
+      Flex({justifyContent: FlexAlign.SpaceBetween}){
+        Text(this.text).fontSize(20)
+        Image($r('app.media.selector'))
+          .width(25)
+          .height(25)
+          .onClick(()=>{
+            TextPickerDialog.show({
+              range: this.chooseRange,
+              onAccept: (value: TextPickerResult) => {
+                this.text = this.chooseRange[value.index]
+                this.editParams[this.chooseKey] = this.text
+              }
+            })
+          })
+      }.margin({ left:8,right:8})
+    }
+    .width('100%')
+    .height(35)
+    .boardItemStyle()
+  }
+}
+
+@Component
+struct DateSelectItem{
+  @Consume editParams: FoodInfo
+  @State text : string = ''
+  selectedDate: Date = new Date("2010-1-1")
+  build(){
+    Row(){
+      Flex({justifyContent: FlexAlign.SpaceBetween}){
+        Text(this.text).fontSize(20)
+        Image($r('app.media.selector'))
+          .width(25)
+          .height(25)
+          .onClick(()=>{
+            DatePickerDialog.show({
+              start: new Date('1970-1-1'),
+              end: new Date('2100-1-1'),
+              selected: this.selectedDate,
+              onAccept: (value: DatePickerResult) => {
+                this.selectedDate.setFullYear(value.year, value.month, value.day)
+                this.text = this.selectedDate.toDateString()
+                this.editParams.freshDate = this.text
+              }
+            })
+          })
+      }.margin({ left:8,right:8})
+    }
+    .width('100%')
+    .height(35)
+    .boardItemStyle()
+  }
+}
+
+@Component
+struct IngredientItem{
+  title: string
+  colorValue: string
+  name: string
+  value: string = ''
+  chooseKey: string
+  chooseRange: string[]
+  @Consume whe_edit: boolean
+  @State quantityValue: string = this.value
+
+  fontSize: number = 20
+
+  build(){
     Row() {
-      Text(title)
-        .fontSize(18)
+      Text(this.title)
+        .fontSize(this.fontSize)
         .fontWeight(FontWeight.Bold)
         .layoutWeight(1)
         .align(Alignment.Start)
       Row() {
         Circle({ width: 6, height: 6 })
           .margin({ right: 12 })
-          .fill(colorValue)
-        Text(value)
-          .fontSize(18)
+          .fill(this.colorValue)
+
+        if(this.chooseKey == 'category' || !this.whe_edit){
+          Text(this.value)
+            .fontSize(this.fontSize)
+        }else if(this.chooseKey == 'quantity'){
+          // TODO: 转换为加减,  但是不知道如何字符串转数字，很麻烦
+          TextInput({placeholder:this.value.substring(0,this.value.length-1), text: this.quantityValue})
+            .onChange((newValue : string)=>{
+              this.quantityValue = newValue
+            })
+            .width('20%')
+          Text(this.value.charAt(this.value.length-1)).padding({left:5}).fontSize(this.fontSize)
+        }else if(this.chooseKey == 'freshDate'){
+          DateSelectItem({text: this.value}).width('80%')
+        }
+        else {
+          inputSelectItem({text: this.value,chooseKey: this.chooseKey,chooseRange: this.chooseRange}).width('80%')
+        }
+
       }
       .width('100%')
       .layoutWeight(2)
     }
-    .margin({ bottom: 20 })
+    .margin({ bottom: 20,top: 6 })
   }
 
-  build() {
-    Column() {
-      this.IngredientItem("品类", '#CCC', "品类", "蔬菜")
-      this.IngredientItem('保质期', '#9E9EFF', "日期", "2023-11-27")
-      this.IngredientItem('数量', '#F5D640', "数量", "2个")
-      this.IngredientItem('位置', '#53F540', "冷藏/冷冻", "冷藏")
-      this.IngredientItem('', '#53F540', "左/右", "左")
-      this.IngredientItem('', '#53F540', "层数", "一层")
-    }
-    .cardStyle()
-  }
 }
 
 @Entry
 @Component
 struct FoodDetail {
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
-  private foodInfo: FoodInfo = getFoodInfo()
+
+  // TODO: ！！！改这里！！！数据存储变更
+  mockDB : MockDB = AppStorage.Link('appDB').get();
+  // mockDB: MockDB = new MockDB()
+
+  @State foodInfo: FoodInfo = this.mockDB.findFoodItem(foodItemID)
+  @Provide editParams: FoodInfo = this.foodInfo;
+  @Provide whe_edit: boolean = false
+  @State @Watch('onAutoModeUp') autoMode: boolean = false
+  nullValue: string[]
+
+  // 这是用来控制 ”确认删除“弹窗的
+  deleteCheckController: CustomDialogController = new CustomDialogController({
+    builder: CheckDelete({foodItemID: this.foodInfo.id}),
+    alignment : DialogAlignment.Center
+  })
+
+  onAutoModeUp(){
+    this.whe_edit = true
+    // TODO: 先不管，默认无变更值
+  }
 
   build() {
     Scroll() {
       Column() {
-        PageTitle()
+        PageTitle({autoMode: $autoMode})
         FoodImageDisplay({ foodInfo: this.foodInfo })
         Column() {
-          ContentTable({ foodInfo: this.foodInfo })
+          Column() {
+            IngredientItem({title: "品类",colorValue: '#CCC',name: "品类",value: this.foodInfo.category,chooseKey: "category",chooseRange: this.nullValue}).height('15%')
+            IngredientItem({title: '保质期',colorValue: '#9E9EFF',name: "日期",value: this.foodInfo.freshDate,chooseKey: "freshDate",chooseRange: this.nullValue}).height('15%')
+            IngredientItem({title: '数量',colorValue: '#F5D640',name: "数量",value: this.foodInfo.quantity+this.foodInfo.unit,chooseKey: "quantity",chooseRange: this.nullValue}).height('15%')
+            IngredientItem({title: '位置',colorValue: '#53F540',name: "冷藏/冷冻",value: this.foodInfo.whe_frozen ? "冷冻":"冷藏",chooseKey: "whe_frozen",chooseRange: ['冷藏','冷冻']}).height('15%')
+            IngredientItem({title: '',colorValue: '#53F540',name: "左/右",value: this.foodInfo.side,chooseKey: "side",chooseRange: getSideLists()}).height('15%')
+            IngredientItem({title: '',colorValue: '#53F540',name: "层数",value: this.foodInfo.addr,chooseKey: "addr",chooseRange: getAddrLists()}).height('15%')
+          }
+          .cardStyle()
         }
-        .height(330)
+        .height(400)
         .margin({ top: 10, right: 10, left: 10 })
+
+        Row(){
+          if(!this.whe_edit){
+            Button('删除',{ type: ButtonType.Normal}).onClick(()=>{
+              this.deleteCheckController.open()
+            }).buttonStyle().fontSize(20)
+            Row().width('25%')
+            Button('编辑',{ type: ButtonType.Normal}).onClick(()=>{
+              this.whe_edit = true
+            }).buttonStyle().fontSize(20)
+          }else{
+            Button('取消',{ type: ButtonType.Normal}).onClick(()=>{
+              this.editParams = this.foodInfo
+              this.whe_edit = false
+            }).buttonStyle().fontSize(20)
+            Row().width('25%')
+            Button('完成',{ type: ButtonType.Normal}).onClick(()=>{
+              this.editParams.id = this.mockDB.getNewID()
+              this.mockDB.addFoodInfo(this.editParams)
+              this.foodInfo = this.editParams
+              router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID} })
+            }).buttonStyle().fontSize(20)
+          }
+        }.margin({top:30})
+
       }
       .alignItems(HorizontalAlign.Center)
     }
