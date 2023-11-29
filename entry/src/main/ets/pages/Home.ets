@@ -68,12 +68,7 @@ struct FoodGrid {
 
 @Component
 struct CategoryModeFoods {
-
-  // TODO: 目前采用 AppStorage.SetOrCreate('appDB', new MockDB()) 进行数据全局存储，但只能用模拟器看效果
-  // TODO: ！！！改这里！！！想要预览，则与注释行交换
   mockDB : MockDB = AppStorage.Link('appDB').get();
-  // mockDB: MockDB = new MockDB()
-
   @State currentTabIndex: number = 0
   foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
   private foodCategories: string[] = getFoodCategories()
@@ -116,6 +111,9 @@ struct Home {
   build() {
     Stack({ alignContent: Alignment.TopEnd }) {
       CategoryModeFoods()
+      Button('添加').onClick(()=>{
+        router.replaceUrl({url:'pages/AddFoodPage'})
+      })
     }
   }
 }

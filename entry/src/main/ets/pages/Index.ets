@@ -5,6 +5,10 @@ import router from '@ohos.router'
 struct Index {
   @State message: string = 'Hello World'
 
+  onPageShow(){
+    AppStorage.SetOrCreate('appDB', new MockDB());
+  }
+
   build() {
     Row() {
       Column() {

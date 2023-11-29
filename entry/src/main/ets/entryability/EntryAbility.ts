@@ -1,7 +1,6 @@
 import UIAbility from '@ohos.app.ability.UIAbility';
 import hilog from '@ohos.hilog';
 import window from '@ohos.window';
-import { MockDB } from '../mock/MockDB'
 
 export default class EntryAbility extends UIAbility {
   onCreate(want, launchParam) {
@@ -15,8 +14,6 @@ export default class EntryAbility extends UIAbility {
   onWindowStageCreate(windowStage: window.WindowStage) {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
-
-    AppStorage.SetOrCreate('appDB', new MockDB());
 
     windowStage.loadContent('pages/Index', (err, data) => {
       if (err.code) {

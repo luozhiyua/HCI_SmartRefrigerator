@@ -58,10 +58,7 @@ struct PageTitle {
 struct CheckDelete {
   controller: CustomDialogController
   foodItemID: number
-
-  // TODO: ！！！改这里！！！数据存储变更
   mockDB : MockDB = AppStorage.Link('appDB').get();
-  // mockDB: MockDB = new MockDB()
 
   build() {
     Column() {
@@ -198,6 +195,7 @@ struct IngredientItem{
             .fontSize(this.fontSize)
         }else if(this.chooseKey == 'quantity'){
           // TODO: 转换为加减,  但是不知道如何字符串转数字，很麻烦
+          // TODO: 单位也可能两位数
           TextInput({placeholder:this.value.substring(0,this.value.length-1), text: this.quantityValue})
             .onChange((newValue : string)=>{
               this.quantityValue = newValue
@@ -224,11 +222,7 @@ struct IngredientItem{
 @Component
 struct FoodDetail {
   @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
-
-  // TODO: ！！！改这里！！！数据存储变更
   mockDB : MockDB = AppStorage.Link('appDB').get();
-  // mockDB: MockDB = new MockDB()
-
   @State foodInfo: FoodInfo = this.mockDB.findFoodItem(foodItemID)
   @Provide editParams: FoodInfo = this.foodInfo;
   @Provide whe_edit: boolean = false
@@ -281,8 +275,8 @@ struct FoodDetail {
             }).buttonStyle().fontSize(20)
             Row().width('25%')
             Button('完成',{ type: ButtonType.Normal}).onClick(()=>{
-              this.editParams.id = this.mockDB.getNewID()
-              this.mockDB.addFoodInfo(this.editParams)
+              this.editParams.id = foodItemID
+              this.mockDB.editFoodInfo(this.editParams)
               this.foodInfo = this.editParams
               router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID} })
             }).buttonStyle().fontSize(20)

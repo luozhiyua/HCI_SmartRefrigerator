@@ -2,6 +2,7 @@ import { FoodInfo } from '../model/DataModels'
 import systemDateTime from '@ohos.systemDateTime'
 import { getAddrLists, getAutoLists, getDetailLists, getFoodCategories, getSideLists, getunitLists } from '../model/DataUtil'
 import router from '@ohos.router'
+import { MockDB } from '../mock/MockDB'
 
 @Styles
 function boardItemStyle() {
@@ -27,7 +28,7 @@ struct CustomDialogExample {
       Button('确认',{ type: ButtonType.Normal})
         .onClick(() => {
           this.controller.close()
-          router.back()
+          router.replaceUrl({url:'pages/Home'})
         }).backgroundColor('#F5F5F5').fontColor(Color.Red).fontSize(20).width('100%').height('55%')
     }.margin({ bottom: 10 }).height(130)
   }
@@ -113,9 +114,6 @@ struct DateSelectItem{
                 this.selectedDate.setFullYear(value.year, value.month, value.day)
                 this.text = this.selectedDate.toDateString()
                 this.settingParams.freshDate = this.text
-              },
-              onCancel: () => {
-
               }
             })
           })
@@ -137,6 +135,7 @@ struct FoodAddPage {
   @Provide @Watch('onNameChange') NameChoosed: boolean = false
   @State foodImage: Resource = $r('app.media.default_photo')
   unit: string = '单位'
+  mockDB : MockDB = AppStorage.Link('appDB').get();
 
   dialogController: CustomDialogController = new CustomDialogController({
     builder: CustomDialogExample()
@@ -156,7 +155,7 @@ struct FoodAddPage {
           .width(28)
           .height(28)
           .onClick(() => {
-            router.back()
+            router.replaceUrl({url:'pages/Home'})
           })
         Column().width(5)
         Text('添加食物').fontSize(25)
@@ -234,8 +233,7 @@ struct FoodAddPage {
       Row(){
         Button('取消',{ type: ButtonType.Normal, stateEffect: true })
           .onClick(()=>{
-            router.back()
-            // router.pushUrl({url: 'pages/Index'})
+            router.replaceUrl({url: 'pages/AddFoodPage'})
           })
           .buttonStyle()
 
@@ -243,11 +241,12 @@ struct FoodAddPage {
 
         Button('提交',{ type: ButtonType.Normal, stateEffect: true })
           .onClick(()=>{
+            // TODO: 空白检测提醒
             this.settingParams.whe_frozen = this.whe_frozen
+            this.settingParams.image = this.foodImage
             this.settingParams.quantity = this.quantity
-
-            // TODO: 进行食材保存, 保存 settingParams 即可
-
+            this.settingParams.id = this.mockDB.getNewID()
+            this.mockDB.editFoodInfo(this.settingParams)
             this.dialogController.open()
           })
           .buttonStyle()

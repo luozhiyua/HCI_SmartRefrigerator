@@ -1,7 +1,6 @@
 import { FoodInfo } from '../model/DataModels'
 
 export class MockDB{
-  dba: Array<FoodInfo> = new Array<FoodInfo>()
   db: Map<number,FoodInfo> = new Map<number,FoodInfo>()
   idCounter: number = 7
 
@@ -12,16 +11,9 @@ export class MockDB{
     this.db.set(4,new FoodInfo(4,'蓝莓', $r('app.media.blueberry'), "水果", "2023-12-27", "左边", "三层", "3","个", false));
     this.db.set(5,new FoodInfo(5,'螃蟹', $r('app.media.crab'), "海鲜", "2023-12-27", "左边", "三层", "3","个", true));
     this.db.set(6,new FoodInfo(6,'雪糕', $r('app.media.icecream'), "零食", "2023-11-20", "右边", "二层", "1", "个", true));
-
-    // this.dba.push(new FoodInfo(1,'番茄', $r('app.media.tomato'), "蔬菜", "2023-11-27", "左边", "一层", "临期", "2个", false));
-    // this.dba.push(new FoodInfo(2,'坚果', $r('app.media.walnut'), "零食", "2023-12-20", "左边", "二层", "新鲜", "0.5千克", false));
-    // this.dba.push(new FoodInfo(3,'黄瓜', $r('app.media.cucumber'), "蔬菜", "2023-12-27", "左边", "三层", "新鲜", "3个", false));
-    // this.dba.push(new FoodInfo(4,'蓝莓', $r('app.media.blueberry'), "水果", "2023-12-27", "左边", "三层", "新鲜", "3个", false));
-    // this.dba.push(new FoodInfo(5,'螃蟹', $r('app.media.crab'), "海鲜", "2023-12-27", "左边", "三层", "新鲜", "3个", true));
-    // this.dba.push(new FoodInfo(6,'雪糕', $r('app.media.icecream'), "零食", "2023-11-20", "右边", "二层", "过期", "1个", true));
   }
 
-  addFoodInfo(newFood : FoodInfo){
+  editFoodInfo(newFood : FoodInfo){
     this.db.set(newFood.id,newFood)
   }
 
