@@ -1,6 +1,6 @@
 import { FoodInfo } from '../model/DataModels'
 import systemDateTime from '@ohos.systemDateTime'
-import { getAddrLists, getAutoLists, getDetailLists, getFoodCategories, getSideLists, getunitLists } from '../model/DataUtil'
+import { getAddrLists, getAutoIamge, getAutoLists, getAutoUnit, getDetailLists, getFoodCategories, getSideLists, getunitLists } from '../model/DataUtil'
 import router from '@ohos.router'
 import { MockDB } from '../mock/MockDB'
 
@@ -22,13 +22,15 @@ function buttonStyle() {
 @CustomDialog
 struct CustomDialogExample {
   controller: CustomDialogController
+  text: string = ''
+
   build() {
     Column() {
-      Text('提交成功').fontSize(25).margin({ top: 10, bottom: 10 }).height('38%')
+      Text(this.text).fontSize(25).margin({ top: 10, bottom: 10 }).height('38%')
       Button('确认',{ type: ButtonType.Normal})
         .onClick(() => {
           this.controller.close()
-          router.replaceUrl({url:'pages/Home'})
+          if(this.text == "提交已成功") router.replaceUrl({url:'pages/Home'})
         }).backgroundColor('#F5F5F5').fontColor(Color.Red).fontSize(20).width('100%').height('55%')
     }.margin({ bottom: 10 }).height(130)
   }
@@ -40,14 +42,21 @@ struct inputSelectItem{
   @Consume settingParams: FoodInfo
   @Consume @Watch('onAutoModeUp') autoMode: boolean
   @Consume @Watch('onNameChange') NameChoosed: boolean
+  @Consume @Watch('onCategoryChange') CategoryChoosed: boolean
   chooseRange: string[]
   chooseKey: string
   itemID: number
+  selectedIndex: number
+
+  onCategoryChange(){
+    if(this.itemID == 1) {
+      this.chooseRange = getDetailLists(this.settingParams.category)
+    }
+  }
 
   onNameChange(){
     if(this.itemID == 2){
-      // TODO: 适当变更 this.settingParams.unit，替换这里的 '个‘
-      this.text = '个'
+      this.text = this.settingParams.name === '' ? '' : getAutoUnit(this.settingParams.name)
       this.settingParams.unit = this.text
     }
   }
@@ -68,13 +77,15 @@ struct inputSelectItem{
           .onClick(()=>{
             TextPickerDialog.show({
               range: this.chooseRange,
+              selected: this.selectedIndex,
               onAccept: (value: TextPickerResult) => {
+                this.selectedIndex = value.index
+                this.text = this.chooseRange[value.index]
+                this.settingParams[this.chooseKey] = this.text
                 if(this.itemID == 1){
                   // 只要是 name 变动，就应该触发自动选择图片和单位
                   this.NameChoosed = !this.NameChoosed
-                }
-                this.text = this.chooseRange[value.index]
-                this.settingParams[this.chooseKey] = this.text
+                }else if(this.itemID == 0)this.CategoryChoosed = !this.CategoryChoosed
               }
             })
           })
@@ -91,7 +102,7 @@ struct DateSelectItem{
   @Consume settingParams: FoodInfo
   @Consume @Watch('onAutoModeUp') autoMode: boolean
   @State text : string = ''
-  selectedDate: Date = new Date("2010-1-1")
+  selectedDate: Date = new Date("2023-12-1")
   onAutoModeUp(){
     // 实际autoMode一直在变，只要变了就触发这里
     this.text = 'Fri Jan 12 2023'
@@ -107,12 +118,12 @@ struct DateSelectItem{
           .height(25)
           .onClick(()=>{
             DatePickerDialog.show({
-              start: new Date('1970-1-1'),
+              start: new Date('2023-1-1'),
               end: new Date('2100-1-1'),
               selected: this.selectedDate,
               onAccept: (value: DatePickerResult) => {
                 this.selectedDate.setFullYear(value.year, value.month, value.day)
-                this.text = this.selectedDate.toDateString()
+                this.text = value.year + '-' + value.month + '-' + value.day
                 this.settingParams.freshDate = this.text
               }
             })
@@ -128,23 +139,22 @@ struct DateSelectItem{
 @Entry
 @Component
 struct FoodAddPage {
-  @Provide settingParams: FoodInfo = new FoodInfo(0,'',$r('app.media.default_photo'),'','','','','0','',false);
+  @Provide settingParams: FoodInfo = new FoodInfo(0,'',$r('app.media.default_photo'),'','','','','','',false);
   @State whe_frozen: boolean = false
   @State quantity: string = ''
   @Provide autoMode: boolean = false
   @Provide @Watch('onNameChange') NameChoosed: boolean = false
+  @Provide CategoryChoosed: boolean = false
   @State foodImage: Resource = $r('app.media.default_photo')
-  unit: string = '单位'
   mockDB : MockDB = AppStorage.Link('appDB').get();
+  tipText: string = ''
 
   dialogController: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExample()
+    builder: CustomDialogExample({text: this.tipText})
   })
 
   onNameChange(){
-    // 此处主要用于图片自动识别，为避免自身不断回调，此处使用foodImage，而不改变settingParams.image
-    // TODO:根据 name 得到图片resourse 赋值给 this.foodImage
-    this.foodImage = $r('app.media.take_picture')
+    this.foodImage = this.settingParams.name === '' ? $r('app.media.default_photo') : getAutoIamge(this.settingParams.name)
     this.settingParams.image = this.foodImage
   }
 
@@ -207,9 +217,8 @@ struct FoodAddPage {
             Row(){
               TextInput({placeholder: '请输入数量',text: this.quantity}).width('45%').height(38).boardItemStyle().type(InputType.Number)
                 .onChange((value: string)=>{this.quantity = value})
-              // TODO: 这里 InputType.Number 和 string 混用是否会出问题
               Row().width('5%')
-              inputSelectItem({ text:this.unit, chooseRange: getunitLists(),chooseKey:'unit',itemID:2 }).width('45%')
+              inputSelectItem({ text:'单位', chooseRange: getunitLists(),chooseKey:'unit',itemID:2 }).width('45%')
             }
 
             Row(){
@@ -241,12 +250,27 @@ struct FoodAddPage {
 
         Button('提交',{ type: ButtonType.Normal, stateEffect: true })
           .onClick(()=>{
-            // TODO: 空白检测提醒
             this.settingParams.whe_frozen = this.whe_frozen
             this.settingParams.image = this.foodImage
             this.settingParams.quantity = this.quantity
-            this.settingParams.id = this.mockDB.getNewID()
-            this.mockDB.editFoodInfo(this.settingParams)
+
+            if(this.settingParams.category == ''){
+              this.tipText = "未选择品类！"
+            }else if(this.settingParams.name == ''){
+              this.tipText = "未选择名称！"
+            }else if(this.settingParams.freshDate == ''){
+              this.tipText = "未选择保质期！"
+            }else if(this.settingParams.side == ''){
+              this.tipText = "未选择侧边栏！"
+            }else if(this.settingParams.addr == ''){
+              this.tipText = "未选择层数！"
+            }else if(this.settingParams.quantity == ''){
+              this.tipText = "未填入数量！"
+            }else {
+              this.settingParams.id = this.mockDB.getNewID()
+              this.mockDB.editFoodInfo(this.settingParams)
+              this.tipText = "提交已成功"
+            }
             this.dialogController.open()
           })
           .buttonStyle()

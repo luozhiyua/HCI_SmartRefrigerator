@@ -108,6 +108,7 @@ struct inputSelectItem{
   @Consume editParams: FoodInfo
   chooseRange: string[]
   chooseKey: string
+  selectedIndex: number
 
   build(){
     Row(){
@@ -119,6 +120,7 @@ struct inputSelectItem{
           .onClick(()=>{
             TextPickerDialog.show({
               range: this.chooseRange,
+              selected: this.selectedIndex,
               onAccept: (value: TextPickerResult) => {
                 this.text = this.chooseRange[value.index]
                 this.editParams[this.chooseKey] = this.text
@@ -137,7 +139,7 @@ struct inputSelectItem{
 struct DateSelectItem{
   @Consume editParams: FoodInfo
   @State text : string = ''
-  selectedDate: Date = new Date("2010-1-1")
+  selectedDate: Date = new Date("2023-12-1")
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
@@ -147,12 +149,12 @@ struct DateSelectItem{
           .height(25)
           .onClick(()=>{
             DatePickerDialog.show({
-              start: new Date('1970-1-1'),
+              start: new Date('2023-1-1'),
               end: new Date('2100-1-1'),
               selected: this.selectedDate,
               onAccept: (value: DatePickerResult) => {
                 this.selectedDate.setFullYear(value.year, value.month, value.day)
-                this.text = this.selectedDate.toDateString()
+                this.text = value.year + '-' + value.month + '-' + value.day
                 this.editParams.freshDate = this.text
               }
             })
@@ -174,6 +176,7 @@ struct IngredientItem{
   chooseKey: string
   chooseRange: string[]
   @Consume whe_edit: boolean
+  @Consume editParams: FoodInfo
   @State quantityValue: string = this.value
 
   fontSize: number = 20
@@ -194,14 +197,28 @@ struct IngredientItem{
           Text(this.value)
             .fontSize(this.fontSize)
         }else if(this.chooseKey == 'quantity'){
-          // TODO: 转换为加减,  但是不知道如何字符串转数字，很麻烦
-          // TODO: 单位也可能两位数
-          TextInput({placeholder:this.value.substring(0,this.value.length-1), text: this.quantityValue})
+          TextInput({placeholder:this.value.split(' ')[0], text: this.quantityValue})
             .onChange((newValue : string)=>{
               this.quantityValue = newValue
+              this.editParams.quantity = this.quantityValue
             })
             .width('20%')
-          Text(this.value.charAt(this.value.length-1)).padding({left:5}).fontSize(this.fontSize)
+          Text(this.value.split(' ')[1]).padding({left:5}).fontSize(this.fontSize)
+
+          Row().width('20%')
+
+          Button('+',{type: ButtonType.Circle}).onClick(()=>{
+            if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
+            this.quantityValue = (Number.parseInt(this.quantityValue) + 1).toString()
+            this.editParams.quantity = this.quantityValue
+          }).margin(5).fontSize(25).backgroundColor('#73CD57')
+
+          Button('-',{type: ButtonType.Circle}).onClick(()=>{
+            if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
+            this.quantityValue = (Number.parseInt(this.quantityValue) - 1).toString()
+            this.editParams.quantity = this.quantityValue
+          }).fontSize(25).backgroundColor('#73CD57')
+
         }else if(this.chooseKey == 'freshDate'){
           DateSelectItem({text: this.value}).width('80%')
         }
@@ -228,6 +245,7 @@ struct FoodDetail {
   @Provide whe_edit: boolean = false
   @State @Watch('onAutoModeUp') autoMode: boolean = false
   nullValue: string[]
+  quanShow: string = this.foodInfo.quantity + " " + this.foodInfo.unit
 
   // 这是用来控制 ”确认删除“弹窗的
   deleteCheckController: CustomDialogController = new CustomDialogController({
@@ -249,7 +267,7 @@ struct FoodDetail {
           Column() {
             IngredientItem({title: "品类",colorValue: '#CCC',name: "品类",value: this.foodInfo.category,chooseKey: "category",chooseRange: this.nullValue}).height('15%')
             IngredientItem({title: '保质期',colorValue: '#9E9EFF',name: "日期",value: this.foodInfo.freshDate,chooseKey: "freshDate",chooseRange: this.nullValue}).height('15%')
-            IngredientItem({title: '数量',colorValue: '#F5D640',name: "数量",value: this.foodInfo.quantity+this.foodInfo.unit,chooseKey: "quantity",chooseRange: this.nullValue}).height('15%')
+            IngredientItem({title: '数量',colorValue: '#F5D640',name: "数量",value: this.quanShow,chooseKey: "quantity",chooseRange: this.nullValue}).height('15%')
             IngredientItem({title: '位置',colorValue: '#53F540',name: "冷藏/冷冻",value: this.foodInfo.whe_frozen ? "冷冻":"冷藏",chooseKey: "whe_frozen",chooseRange: ['冷藏','冷冻']}).height('15%')
             IngredientItem({title: '',colorValue: '#53F540',name: "左/右",value: this.foodInfo.side,chooseKey: "side",chooseRange: getSideLists()}).height('15%')
             IngredientItem({title: '',colorValue: '#53F540',name: "层数",value: this.foodInfo.addr,chooseKey: "addr",chooseRange: getAddrLists()}).height('15%')
