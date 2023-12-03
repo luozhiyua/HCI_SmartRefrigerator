@@ -17,6 +17,11 @@ struct Index {
             url: 'pages/Home',
           })
         })
+        Button('菜谱').onClick(()=>{
+          router.pushUrl({
+            url: 'pages/Menus',
+          })
+        })
       }
       .width('100%')
     }

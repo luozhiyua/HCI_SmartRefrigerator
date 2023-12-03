@@ -16,16 +16,16 @@ function boardItemStyle() {
 @Styles
 function buttonStyle() {
   .borderRadius(12)
-  .width(100)
-  .height(50)
+  .width(130)
+  .height(60)
   .backgroundColor('#73CD57')
 }
 @Styles
 function cardStyle() {
   .height('100%')
-  .padding({ top: 20, right: 20, left: 20 })
+  .padding({ top: 30, right: 50, left: 50 })
   .backgroundColor(Color.White)
-  .borderRadius(12)
+  .borderRadius(40)
 }
 
 @Component
@@ -34,23 +34,28 @@ struct PageTitle {
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(25)
-        .height(25)
+        .width(35)
+        .height(35)
         .onClick(() => {
-          router.replaceUrl({ url: 'pages/Home'})
+          // router.replaceUrl({ url: 'pages/Home'})
+          router.back()
         })
       Text("食物详情")
-        .fontSize(25)
+        .fontSize(40)
         .margin({ left: 20 })
       Blank()
       Button('自动识别',{ type: ButtonType.Normal})
-        .borderRadius(12).backgroundColor('#73CD57').fontSize(20).height(50)
+        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(30).height(60)
         .onClick(()=>{
           this.autoMode = !this.autoMode
         })
     }
-    .padding(12)
+    .padding(20)
     .width('100%')
+    .linearGradient({
+      angle: 90,
+      colors: [['#EDF2F5', 0.0], ['#73CD57', 0.9]]
+    })
   }
 }
 
@@ -63,22 +68,26 @@ struct CheckDelete {
   build() {
     Column() {
       Text('确定删除吗？')
-        .fontSize(20)
-        .margin({ top: 10, bottom: 10 })
+        .fontSize(28)
+        .margin({ top: 15, bottom: 15 })
 
       Flex({ justifyContent: FlexAlign.SpaceAround }) {
         Button('取消')
+          .fontSize(25)
           .onClick(() => {
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Black)
         Button('确定')
+          .fontSize(25)
           .onClick(() => {
             this.mockDB.deleteFood(this.foodItemID)
-            router.replaceUrl({ url: 'pages/Home'})
+            // router.replaceUrl({ url: 'pages/Home'})
+            router.back()
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Red)
-      }.margin({ bottom: 10 })
+      }.margin({ bottom: 5 })
     }
+    .width("100%")
   }
 }
 
@@ -94,11 +103,11 @@ struct FoodImageDisplay {
         .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
         .objectFit(ImageFit.Contain)
       Text(this.foodInfo.name)
-        .fontSize(30)
+        .fontSize(50)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 26, bottom: 18 })
+        .margin({ left: 45, bottom: 18 })
     }
-    .height(this.currentBreakpoint == 'lg' ? 166 : 280)
+    .height(280)
   }
 }
 
@@ -179,7 +188,7 @@ struct IngredientItem{
   @Consume editParams: FoodInfo
   @State quantityValue: string = this.value
 
-  fontSize: number = 20
+  fontSize: number = 30
 
   build(){
     Row() {
@@ -189,8 +198,8 @@ struct IngredientItem{
         .layoutWeight(1)
         .align(Alignment.Start)
       Row() {
-        Circle({ width: 6, height: 6 })
-          .margin({ right: 12 })
+        Circle({ width: 9, height: 9 })
+          .margin({ right: 15 })
           .fill(this.colorValue)
 
         if(this.chooseKey == 'category' || !this.whe_edit){
@@ -261,51 +270,94 @@ struct FoodDetail {
   build() {
     Scroll() {
       Column() {
-        PageTitle({autoMode: $autoMode})
+        PageTitle({ autoMode: $autoMode })
         FoodImageDisplay({ foodInfo: this.foodInfo })
         Column() {
           Column() {
-            IngredientItem({title: "品类",colorValue: '#CCC',name: "品类",value: this.foodInfo.category,chooseKey: "category",chooseRange: this.nullValue}).height('15%')
-            IngredientItem({title: '保质期',colorValue: '#9E9EFF',name: "日期",value: this.foodInfo.freshDate,chooseKey: "freshDate",chooseRange: this.nullValue}).height('15%')
-            IngredientItem({title: '数量',colorValue: '#F5D640',name: "数量",value: this.quanShow,chooseKey: "quantity",chooseRange: this.nullValue}).height('15%')
-            IngredientItem({title: '位置',colorValue: '#53F540',name: "冷藏/冷冻",value: this.foodInfo.whe_frozen ? "冷冻":"冷藏",chooseKey: "whe_frozen",chooseRange: ['冷藏','冷冻']}).height('15%')
-            IngredientItem({title: '',colorValue: '#53F540',name: "左/右",value: this.foodInfo.side,chooseKey: "side",chooseRange: getSideLists()}).height('15%')
-            IngredientItem({title: '',colorValue: '#53F540',name: "层数",value: this.foodInfo.addr,chooseKey: "addr",chooseRange: getAddrLists()}).height('15%')
+            IngredientItem({
+              title: "品类",
+              colorValue: '#CCC',
+              name: "品类",
+              value: this.foodInfo.category,
+              chooseKey: "category",
+              chooseRange: this.nullValue
+            }).height('15%')
+            IngredientItem({
+              title: '保质期',
+              colorValue: '#9E9EFF',
+              name: "日期",
+              value: this.foodInfo.freshDate,
+              chooseKey: "freshDate",
+              chooseRange: this.nullValue
+            }).height('15%')
+            IngredientItem({
+              title: '数量',
+              colorValue: '#F5D640',
+              name: "数量",
+              value: this.quanShow,
+              chooseKey: "quantity",
+              chooseRange: this.nullValue
+            }).height('15%')
+            IngredientItem({
+              title: '位置',
+              colorValue: '#AFEEEE',
+              name: "冷藏/冷冻",
+              value: this.foodInfo.whe_frozen ? "冷冻" : "冷藏",
+              chooseKey: "whe_frozen",
+              chooseRange: ['冷藏', '冷冻']
+            }).height('15%')
+            IngredientItem({
+              title: '',
+              colorValue: '#AFEEEE',
+              name: "左/右",
+              value: this.foodInfo.side,
+              chooseKey: "side",
+              chooseRange: getSideLists()
+            }).height('15%')
+            IngredientItem({
+              title: '',
+              colorValue: '#AFEEEE',
+              name: "层数",
+              value: this.foodInfo.addr,
+              chooseKey: "addr",
+              chooseRange: getAddrLists()
+            }).height('15%')
           }
           .cardStyle()
         }
         .height(400)
-        .margin({ top: 10, right: 10, left: 10 })
+        .margin({ top: 10, right: 30, left: 30 })
+        .backgroundColor("#EDF2F5")
 
-        Row(){
-          if(!this.whe_edit){
-            Button('删除',{ type: ButtonType.Normal}).onClick(()=>{
+        Row() {
+          if (!this.whe_edit) {
+            Button('删除', { type: ButtonType.Normal }).onClick(() => {
               this.deleteCheckController.open()
-            }).buttonStyle().fontSize(20)
+            }).buttonStyle().fontSize(30)
             Row().width('25%')
-            Button('编辑',{ type: ButtonType.Normal}).onClick(()=>{
+            Button('编辑', { type: ButtonType.Normal }).onClick(() => {
               this.whe_edit = true
-            }).buttonStyle().fontSize(20)
-          }else{
-            Button('取消',{ type: ButtonType.Normal}).onClick(()=>{
+            }).buttonStyle().fontSize(30)
+          } else {
+            Button('取消', { type: ButtonType.Normal }).onClick(() => {
               this.editParams = this.foodInfo
               this.whe_edit = false
-            }).buttonStyle().fontSize(20)
+            }).buttonStyle().fontSize(30)
             Row().width('25%')
-            Button('完成',{ type: ButtonType.Normal}).onClick(()=>{
+            Button('完成', { type: ButtonType.Normal }).onClick(() => {
               this.editParams.id = foodItemID
               this.mockDB.editFoodInfo(this.editParams)
               this.foodInfo = this.editParams
-              router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID} })
-            }).buttonStyle().fontSize(20)
+              router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID } })
+            }).buttonStyle().fontSize(30)
           }
-        }.margin({top:30})
+        }.margin({ top: 30 })
 
       }
       .alignItems(HorizontalAlign.Center)
     }
-    .backgroundColor('#EDF2F5')
     .height('100%')
     .align(Alignment.Top)
+    .backgroundColor('#EDF2F5')
   }
 }

@@ -28,27 +28,26 @@ struct FoodGridItem {
         .objectFit(ImageFit.Contain)
         .backgroundColor('#f1f3f5')
         .width('100%')
-        .height(152)
+        .height(180)
       Row() {
         Text(this.foodItem?.name)
-          .fontSize(20)
+          .fontSize(35)
       }
-      .padding({ left: 12, right: 12 })
+      .padding({ left: 20, right: 20 })
       .width('100%')
-      .height(32)
+      .height(50)
       .backgroundColor('#E5E5E5')
     }
-    .height(184)
+    .height(230)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
-      router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
+      router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
     })
   }
 }
 
 @Component
 struct FoodGrid {
-  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
   private foodItems?: FoodInfo[]
 
   build() {
@@ -60,8 +59,8 @@ struct FoodGrid {
       })
     }
     .columnsTemplate('1fr 1fr')
-    .columnsGap(8)
-    .rowsGap(8)
+    .columnsGap(15)
+    .rowsGap(15)
     .padding({ left: 16, right: 16 })
   }
 }
@@ -70,7 +69,7 @@ struct FoodGrid {
 struct CategoryModeFoods {
   mockDB : MockDB = AppStorage.Link('appDB').get();
   @State currentTabIndex: number = 0
-  foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
+  @State foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
   private foodCategories: string[] = getFoodCategories()
 
   @Builder

@@ -27,6 +27,7 @@ struct titleLine{
 @Component
 struct MenuListItem {
   private menu : MenuInfo;
+  private menuID: number;
 
   build(){
     Row(){
@@ -46,7 +47,8 @@ struct MenuListItem {
     .borderRadius(10)
     .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
     .onClick(() => {
-      router.push({url: 'pages/MenuDetail'})
+      console.info(this.menuID.toString())
+      router.replaceUrl({url: 'pages/MenuDetail', params: { menuID: this.menuID}})
     })
   }
 
@@ -62,9 +64,9 @@ export struct MenuList{
     Column(){
       titleLine()
       List({scroller: this.scroller}){
-        ForEach(this.menuList.getMenuList(), (item: MenuInfo) => {
+        ForEach(this.menuList.getMenuList(), (item: MenuInfo, index: number) => {
           ListItem(){
-            MenuListItem({menu: item})
+            MenuListItem({menu: item, menuID: index})
 
           }
         })
