@@ -128,17 +128,17 @@ struct inputSelectItem{
         Image($r('app.media.selector'))
           .width(25)
           .height(25)
-          .onClick(()=>{
-            TextPickerDialog.show({
-              range: this.chooseRange,
-              selected: this.selectedIndex,
-              onAccept: (value: TextPickerResult) => {
-                this.text = this.chooseRange[value.index]
-                this.editParams[this.chooseKey] = this.text
-              }
-            })
-          })
       }.margin({ left:8,right:8})
+      .onClick(()=>{
+        TextPickerDialog.show({
+          range: this.chooseRange,
+          selected: this.selectedIndex,
+          onAccept: (value: TextPickerResult) => {
+            this.text = this.chooseRange[value.index]
+            this.editParams[this.chooseKey] = this.text
+          }
+        })
+      })
     }
     .width('100%')
     .height(30)
@@ -158,19 +158,19 @@ struct DateSelectItem{
         Image($r('app.media.selector'))
           .width(22)
           .height(22)
-          .onClick(()=>{
-            DatePickerDialog.show({
-              start: new Date('2023-1-1'),
-              end: new Date('2100-1-1'),
-              selected: this.selectedDate,
-              onAccept: (value: DatePickerResult) => {
-                this.selectedDate.setFullYear(value.year, value.month, value.day)
-                this.text = value.year + '-' + value.month + '-' + value.day
-                this.editParams.freshDate = this.text
-              }
-            })
-          })
       }.margin({ left:8,right:8})
+      .onClick(()=>{
+        DatePickerDialog.show({
+          start: new Date('2023-1-1'),
+          end: new Date('2100-1-1'),
+          selected: this.selectedDate,
+          onAccept: (value: DatePickerResult) => {
+            this.selectedDate.setFullYear(value.year, value.month, value.day)
+            this.text = value.year + '-' + value.month + '-' + value.day
+            this.editParams.freshDate = this.text
+          }
+        })
+      })
     }
     .width('100%')
     .height(30)

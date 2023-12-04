@@ -74,22 +74,55 @@ struct inputSelectItem{
         Image($r('app.media.selector'))
           .width(25)
           .height(25)
-          .onClick(()=>{
-            TextPickerDialog.show({
-              range: this.chooseRange,
-              selected: this.selectedIndex,
-              onAccept: (value: TextPickerResult) => {
-                this.selectedIndex = value.index
-                this.text = this.chooseRange[value.index]
-                this.settingParams[this.chooseKey] = this.text
-                if(this.itemID == 1){
-                  // 只要是 name 变动，就应该触发自动选择图片和单位
-                  this.NameChoosed = !this.NameChoosed
-                }else if(this.itemID == 0)this.CategoryChoosed = !this.CategoryChoosed
-              }
-            })
-          })
       }.margin({ left:8,right:8})
+      .onClick(()=>{
+
+        // const sheets = this.chooseRange.map((rangeItem) => {
+        //   return {
+        //     title: rangeItem,
+        //     action: () => {
+        //       this.text = rangeItem
+        //       this.settingParams[this.chooseKey] = rangeItem
+        //       if (this.itemID === 1) {
+        //         this.NameChoosed = !this.NameChoosed
+        //       } else if (this.itemID === 0) {
+        //         this.CategoryChoosed = !this.CategoryChoosed
+        //       }
+        //     }
+        //   }
+        // })
+        // ActionSheet.show({
+        //   title: 'ActionSheet title',
+        //   message: 'message',
+        //   autoCancel: true,
+        //   confirm: {
+        //     value: 'Confirm button',
+        //     action: () => {
+        //       console.log('Get Alert Dialog handled')
+        //     }
+        //   },
+        //   cancel: () => {
+        //     console.log('actionSheet canceled')
+        //   },
+        //   alignment: DialogAlignment.Bottom,
+        //   offset: { dx: 0, dy: -10 },
+        //   sheets: sheets
+        // })
+
+        TextPickerDialog.show({
+          range: this.chooseRange,
+          selected: this.selectedIndex,
+          onAccept: (value: TextPickerResult) => {
+            this.selectedIndex = value.index
+            this.text = this.chooseRange[value.index]
+            this.settingParams[this.chooseKey] = this.text
+            if(this.itemID == 1){
+              // 只要是 name 变动，就应该触发自动选择图片和单位
+              this.NameChoosed = !this.NameChoosed
+            }else if(this.itemID == 0)this.CategoryChoosed = !this.CategoryChoosed
+          }
+        })
+      })
     }
     .width('100%')
     .height(35)
@@ -116,19 +149,19 @@ struct DateSelectItem{
         Image($r('app.media.selector'))
           .width(25)
           .height(25)
-          .onClick(()=>{
-            DatePickerDialog.show({
-              start: new Date('2023-1-1'),
-              end: new Date('2100-1-1'),
-              selected: this.selectedDate,
-              onAccept: (value: DatePickerResult) => {
-                this.selectedDate.setFullYear(value.year, value.month, value.day)
-                this.text = value.year + '-' + value.month + '-' + value.day
-                this.settingParams.freshDate = this.text
-              }
-            })
-          })
       }.margin({ left:8,right:8})
+      .onClick(()=>{
+        DatePickerDialog.show({
+          start: new Date('2023-1-1'),
+          end: new Date('2100-1-1'),
+          selected: this.selectedDate,
+          onAccept: (value: DatePickerResult) => {
+            this.selectedDate.setFullYear(value.year, value.month, value.day)
+            this.text = value.year + '-' + value.month + '-' + value.day
+            this.settingParams.freshDate = this.text
+          }
+        })
+      })
     }
     .width('100%')
     .height(35)
