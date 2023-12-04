@@ -1,5 +1,6 @@
 import { FoodViewModel } from '../../viewModel/FoodViewModel'
 import {FoodInfo} from '../../model/DataModels'
+import router from '@ohos.router'
 
 @Component
 struct titleLine{
@@ -38,8 +39,9 @@ struct foodItem{
     .margin({left: '5%'})
     .borderRadius(10)
     .backgroundColor('#f1f3f5')
-
-
+    .onClick(() => {
+      router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: this.food.id} })
+    })
   }
 
 
