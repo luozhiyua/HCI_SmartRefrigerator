@@ -27,7 +27,7 @@ struct titleLine{
 @Component
 struct MenuListItem {
   private menu : MenuInfo;
-  private menuID: number;
+  @State menuID: number = 0;
 
   build(){
     Row(){

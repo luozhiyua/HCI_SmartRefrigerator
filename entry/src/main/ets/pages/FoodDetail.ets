@@ -23,9 +23,9 @@ function buttonStyle() {
 @Styles
 function cardStyle() {
   .height('100%')
-  .padding({ top: 30, right: 50, left: 50 })
+  .padding({ top: 20, right: 30, left: 20 })
   .backgroundColor(Color.White)
-  .borderRadius(40)
+  .borderRadius(30)
 }
 
 @Component
@@ -34,18 +34,18 @@ struct PageTitle {
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(35)
-        .height(35)
+        .width(25)
+        .height(25)
         .onClick(() => {
           // router.replaceUrl({ url: 'pages/Home'})
           router.back()
         })
       Text("食物详情")
-        .fontSize(40)
-        .margin({ left: 20 })
+        .fontSize(30)
+        .margin({ left: 10 })
       Blank()
       Button('自动识别',{ type: ButtonType.Normal})
-        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(30).height(60)
+        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(22).height(30)
         .onClick(()=>{
           this.autoMode = !this.autoMode
         })
@@ -68,17 +68,17 @@ struct CheckDelete {
   build() {
     Column() {
       Text('确定删除吗？')
-        .fontSize(28)
+        .fontSize(25)
         .margin({ top: 15, bottom: 15 })
 
       Flex({ justifyContent: FlexAlign.SpaceAround }) {
         Button('取消')
-          .fontSize(25)
+          .fontSize(22)
           .onClick(() => {
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Black)
         Button('确定')
-          .fontSize(25)
+          .fontSize(22)
           .onClick(() => {
             this.mockDB.deleteFood(this.foodItemID)
             // router.replaceUrl({ url: 'pages/Home'})
@@ -95,7 +95,6 @@ struct CheckDelete {
 struct FoodImageDisplay {
   private foodInfo: FoodInfo
   @State imageBgColorA: number = 0
-  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
 
   build() {
     Stack({ alignContent: Alignment.BottomStart }) {
@@ -103,9 +102,9 @@ struct FoodImageDisplay {
         .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
         .objectFit(ImageFit.Contain)
       Text(this.foodInfo.name)
-        .fontSize(50)
+        .fontSize(35)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 45, bottom: 18 })
+        .margin({ left: 25, bottom: 13 })
     }
     .height(280)
   }
@@ -139,7 +138,7 @@ struct inputSelectItem{
       }.margin({ left:8,right:8})
     }
     .width('100%')
-    .height(35)
+    .height(30)
     .boardItemStyle()
   }
 }
@@ -154,8 +153,8 @@ struct DateSelectItem{
       Flex({justifyContent: FlexAlign.SpaceBetween}){
         Text(this.text).fontSize(20)
         Image($r('app.media.selector'))
-          .width(25)
-          .height(25)
+          .width(22)
+          .height(22)
           .onClick(()=>{
             DatePickerDialog.show({
               start: new Date('2023-1-1'),
@@ -171,7 +170,7 @@ struct DateSelectItem{
       }.margin({ left:8,right:8})
     }
     .width('100%')
-    .height(35)
+    .height(30)
     .boardItemStyle()
   }
 }
@@ -188,7 +187,7 @@ struct IngredientItem{
   @Consume editParams: FoodInfo
   @State quantityValue: string = this.value
 
-  fontSize: number = 30
+  fontSize: number = 22
 
   build(){
     Row() {
@@ -199,7 +198,7 @@ struct IngredientItem{
         .align(Alignment.Start)
       Row() {
         Circle({ width: 9, height: 9 })
-          .margin({ right: 15 })
+          .margin({ right: 12 })
           .fill(this.colorValue)
 
         if(this.chooseKey == 'category' || !this.whe_edit){
@@ -211,22 +210,23 @@ struct IngredientItem{
               this.quantityValue = newValue
               this.editParams.quantity = this.quantityValue
             })
-            .width('20%')
-          Text(this.value.split(' ')[1]).padding({left:5}).fontSize(this.fontSize)
+            .width('30%')
+            .height(50)
+          Text(this.value.split(' ')[1]).padding({left:10}).fontSize(this.fontSize)
 
-          Row().width('20%')
+          Row().width('10%')
 
           Button('+',{type: ButtonType.Circle}).onClick(()=>{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) + 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).margin(5).fontSize(25).backgroundColor('#73CD57')
+          }).margin(5).fontSize(20).backgroundColor('#73CD57')
 
           Button('-',{type: ButtonType.Circle}).onClick(()=>{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) - 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).fontSize(25).backgroundColor('#73CD57')
+          }).fontSize(20).backgroundColor('#73CD57')
 
         }else if(this.chooseKey == 'freshDate'){
           DateSelectItem({text: this.value}).width('80%')
@@ -239,7 +239,7 @@ struct IngredientItem{
       .width('100%')
       .layoutWeight(2)
     }
-    .margin({ bottom: 20,top: 6 })
+    .margin({ bottom: 12,top: 6 })
   }
 
 }
@@ -283,19 +283,19 @@ struct FoodDetail {
               chooseRange: this.nullValue
             }).height('15%')
             IngredientItem({
-              title: '保质期',
-              colorValue: '#9E9EFF',
-              name: "日期",
-              value: this.foodInfo.freshDate,
-              chooseKey: "freshDate",
-              chooseRange: this.nullValue
-            }).height('15%')
-            IngredientItem({
               title: '数量',
               colorValue: '#F5D640',
               name: "数量",
               value: this.quanShow,
               chooseKey: "quantity",
+              chooseRange: this.nullValue
+            }).height('15%')
+            IngredientItem({
+              title: '保质期',
+              colorValue: '#9E9EFF',
+              name: "日期",
+              value: this.foodInfo.freshDate,
+              chooseKey: "freshDate",
               chooseRange: this.nullValue
             }).height('15%')
             IngredientItem({
@@ -325,33 +325,33 @@ struct FoodDetail {
           }
           .cardStyle()
         }
-        .height(400)
-        .margin({ top: 10, right: 30, left: 30 })
+        .height(300)
+        .margin({ top: 10, right: 10, left: 10 })
         .backgroundColor("#EDF2F5")
 
         Row() {
           if (!this.whe_edit) {
             Button('删除', { type: ButtonType.Normal }).onClick(() => {
               this.deleteCheckController.open()
-            }).buttonStyle().fontSize(30)
-            Row().width('25%')
+            }).buttonStyle().fontSize(22)
+            Row().width('15%')
             Button('编辑', { type: ButtonType.Normal }).onClick(() => {
               this.whe_edit = true
-            }).buttonStyle().fontSize(30)
+            }).buttonStyle().fontSize(22)
           } else {
             Button('取消', { type: ButtonType.Normal }).onClick(() => {
               this.editParams = this.foodInfo
               this.whe_edit = false
-            }).buttonStyle().fontSize(30)
-            Row().width('25%')
+            }).buttonStyle().fontSize(22)
+            Row().width('15%')
             Button('完成', { type: ButtonType.Normal }).onClick(() => {
               this.editParams.id = foodItemID
               this.mockDB.editFoodInfo(this.editParams)
               this.foodInfo = this.editParams
               router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID } })
-            }).buttonStyle().fontSize(30)
+            }).buttonStyle().fontSize(22)
           }
-        }.margin({ top: 30 })
+        }.margin({ top: 20 , left: 20, right: 20})
 
       }
       .alignItems(HorizontalAlign.Center)

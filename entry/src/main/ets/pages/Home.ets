@@ -28,17 +28,17 @@ struct FoodGridItem {
         .objectFit(ImageFit.Contain)
         .backgroundColor('#f1f3f5')
         .width('100%')
-        .height(180)
+        .height(152)
       Row() {
         Text(this.foodItem?.name)
-          .fontSize(35)
+          .fontSize(22)
       }
-      .padding({ left: 20, right: 20 })
+      .padding({ left: 12, right: 12 })
       .width('100%')
-      .height(50)
+      .height(32)
       .backgroundColor('#E5E5E5')
     }
-    .height(230)
+    .height(180)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
       router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
@@ -59,8 +59,8 @@ struct FoodGrid {
       })
     }
     .columnsTemplate('1fr 1fr')
-    .columnsGap(15)
-    .rowsGap(15)
+    .columnsGap(8)
+    .rowsGap(8)
     .padding({ left: 16, right: 16 })
   }
 }
@@ -76,9 +76,9 @@ struct CategoryModeFoods {
   tabBarItemBuilder(value: string, index: number) {
     Text(value)
       .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 30 : 24)
+      .fontSize(this.currentTabIndex === index ? 24 : 18)
       .margin({ top: 2 })
-      .height(56)
+      .height(50)
   }
 
   build() {
