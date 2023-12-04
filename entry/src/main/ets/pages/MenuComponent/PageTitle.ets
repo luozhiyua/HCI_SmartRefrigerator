@@ -14,11 +14,11 @@ export struct PageTitle {
       Text(this.pageName)
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 20 })
+        .margin({ left: 1 })
         .textAlign(TextAlign.Center)
         .width("85%")
     }
-    .padding(12)
+    .padding(10)
     .width('100%')
     .height("7%")
     .backgroundColor('#EDF2F5')

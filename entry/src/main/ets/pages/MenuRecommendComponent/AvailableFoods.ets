@@ -1,5 +1,6 @@
 import { FoodViewModel } from '../../viewModel/FoodViewModel'
 import {FoodInfo} from '../../model/DataModels'
+import router from '@ohos.router'
 
 @Component
 struct titleLine{
@@ -38,8 +39,9 @@ struct foodItem{
     .margin({left: '5%'})
     .borderRadius(10)
     .backgroundColor('#f1f3f5')
-
-
+    .onClick(() => {
+      router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: this.food.id, showEdit : false} })
+    })
   }
 
 
@@ -47,7 +49,7 @@ struct foodItem{
 
 @Component
 export struct foodList{
-  private foods : FoodViewModel
+  private foods: FoodInfo[];
 
   scroller: Scroller = new Scroller();
   build(){
@@ -55,7 +57,7 @@ export struct foodList{
       titleLine()
       Scroll(this.scroller){
         Row(){
-          ForEach(this.foods.getData(), (item: FoodInfo) => {
+          ForEach(this.foods, (item: FoodInfo) => {
             foodItem({food: item})
           })
         }
