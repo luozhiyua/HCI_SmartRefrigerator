@@ -38,8 +38,9 @@ struct PageTitle {
         .width(25)
         .height(25)
         .onClick(() => {
-          // router.replaceUrl({ url: 'pages/Home'})
-          router.back()
+          if(show_edit)router.replaceUrl({ url: 'pages/FoodManage'})
+          else router.back()
+          // router.back()
         })
       Text("食物详情")
         .fontSize(30)
@@ -84,8 +85,7 @@ struct CheckDelete {
           .fontSize(22)
           .onClick(() => {
             this.mockDB.deleteFood(this.foodItemID)
-            router.replaceUrl({ url: 'pages/Home'})
-            // router.back()
+            router.replaceUrl({ url: 'pages/FoodManage'})
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Red)
       }.margin({ bottom: 5 })

@@ -6,15 +6,15 @@
     },
     {
       "name": "food_management",
-      "value": "#87CEFA"
-    },
-    {
-      "name": "menu_recommend",
       "value": "#9ACD32"
     },
     {
-      "name": "temperature",
+      "name": "menu_recommend",
       "value": "#FF8C69"
+    },
+    {
+      "name": "temperature",
+      "value": "#87CEFA"
     },
     {
       "name": "main_background",
