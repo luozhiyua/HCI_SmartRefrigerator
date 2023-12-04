@@ -3,6 +3,22 @@
     {
       "name": "start_window_background",
       "value": "#FFFFFF"
+    },
+    {
+      "name": "food_management",
+      "value": "#87CEFA"
+    },
+    {
+      "name": "menu_recommend",
+      "value": "#9ACD32"
+    },
+    {
+      "name": "temperature",
+      "value": "#FF8C69"
+    },
+    {
+      "name": "main_background",
+      "value": "#363636"
     }
   ]
 }
