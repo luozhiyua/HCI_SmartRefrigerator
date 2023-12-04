@@ -45,11 +45,13 @@ struct PageTitle {
         .fontSize(30)
         .margin({ left: 10 })
       Blank()
-      Button('自动识别',{ type: ButtonType.Normal})
-        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(22).height(30)
-        .onClick(()=>{
-          this.autoMode = !this.autoMode
-        })
+      if(show_edit) {
+        Button('自动识别',{ type: ButtonType.Normal})
+          .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(22).height(30)
+          .onClick(()=>{
+            this.autoMode = !this.autoMode
+          })
+      }
     }
     .padding(20)
     .width('100%')
@@ -330,7 +332,7 @@ struct FoodDetail {
         .margin({ top: 10, right: 10, left: 10 })
         .backgroundColor("#EDF2F5")
 
-        // if(show_edit) {
+        if(show_edit) {
           Row() {
             if (!this.whe_edit) {
               Button('删除', { type: ButtonType.Normal }).onClick(() => {
@@ -350,12 +352,12 @@ struct FoodDetail {
                 this.editParams.id = foodItemID
                 this.mockDB.editFoodInfo(this.editParams)
                 this.foodInfo = this.editParams
-                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID } })
+                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID, showEdit : true } })
               }).buttonStyle().fontSize(22)
             }
           }.margin({ top: 20 , left: 20, right: 20})
         }
-      // }
+      }
       .alignItems(HorizontalAlign.Center)
     }
     .height('100%')
