@@ -1,5 +1,6 @@
 import { MockDB } from '../mock/MockDB'
 import router from '@ohos.router'
+
 @Entry
 @Component
 struct Index {
@@ -20,6 +21,11 @@ struct Index {
         Button('菜谱').onClick(()=>{
           router.pushUrl({
             url: 'pages/Menus',
+          })
+        })
+        Button('时钟').onClick(()=>{
+          router.pushUrl({
+            url: 'pages/Clock',
           })
         })
       }

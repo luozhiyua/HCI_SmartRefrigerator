@@ -5,6 +5,8 @@
     "pages/Menus",
     "pages/MenuDetail",
     "pages/Home",
-    "pages/AddFoodPage"
+    "pages/AddFoodPage",
+    "pages/CountDown",
+    "pages/Clock"
   ]
 }
