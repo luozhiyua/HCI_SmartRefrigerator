@@ -47,7 +47,7 @@ struct foodItem{
 
 @Component
 export struct foodList{
-  private foods : FoodViewModel
+  private foods: FoodInfo[];
 
   scroller: Scroller = new Scroller();
   build(){
@@ -55,7 +55,7 @@ export struct foodList{
       titleLine()
       Scroll(this.scroller){
         Row(){
-          ForEach(this.foods.getData(), (item: FoodInfo) => {
+          ForEach(this.foods, (item: FoodInfo) => {
             foodItem({food: item})
           })
         }

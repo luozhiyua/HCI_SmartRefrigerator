@@ -207,8 +207,8 @@ struct IngredientItem{
         }else if(this.chooseKey == 'quantity'){
           TextInput({placeholder:this.value.split(' ')[0], text: this.quantityValue})
             .onChange((newValue : string)=>{
-              this.quantityValue = newValue
-              this.editParams.quantity = this.quantityValue
+                this.quantityValue = newValue
+                this.editParams.quantity = this.quantityValue == '' ? this.value.split(' ')[0] : this.quantityValue
             })
             .width('30%')
             .height(50)
