@@ -5,6 +5,7 @@ import { getAddrLists, getSideLists } from '../model/DataUtil'
 
 const params = router.getParams(); // 获取传递过来的参数对象
 const foodItemID = params['foodId']
+const show_edit = params['showEdit']
 
 @Styles
 function boardItemStyle() {
@@ -277,30 +278,31 @@ struct FoodDetail {
         .height(400)
         .margin({ top: 10, right: 10, left: 10 })
 
-        Row(){
-          if(!this.whe_edit){
-            Button('删除',{ type: ButtonType.Normal}).onClick(()=>{
-              this.deleteCheckController.open()
-            }).buttonStyle().fontSize(20)
-            Row().width('25%')
-            Button('编辑',{ type: ButtonType.Normal}).onClick(()=>{
-              this.whe_edit = true
-            }).buttonStyle().fontSize(20)
-          }else{
-            Button('取消',{ type: ButtonType.Normal}).onClick(()=>{
-              this.editParams = this.foodInfo
-              this.whe_edit = false
-            }).buttonStyle().fontSize(20)
-            Row().width('25%')
-            Button('完成',{ type: ButtonType.Normal}).onClick(()=>{
-              this.editParams.id = foodItemID
-              this.mockDB.editFoodInfo(this.editParams)
-              this.foodInfo = this.editParams
-              router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID} })
-            }).buttonStyle().fontSize(20)
-          }
-        }.margin({top:30})
-
+        if(show_edit){
+          Row(){
+            if(!this.whe_edit){
+              Button('删除',{ type: ButtonType.Normal}).onClick(()=>{
+                this.deleteCheckController.open()
+              }).buttonStyle().fontSize(20)
+              Row().width('25%')
+              Button('编辑',{ type: ButtonType.Normal}).onClick(()=>{
+                this.whe_edit = true
+              }).buttonStyle().fontSize(20)
+            }else{
+              Button('取消',{ type: ButtonType.Normal}).onClick(()=>{
+                this.editParams = this.foodInfo
+                this.whe_edit = false
+              }).buttonStyle().fontSize(20)
+              Row().width('25%')
+              Button('完成',{ type: ButtonType.Normal}).onClick(()=>{
+                this.editParams.id = foodItemID
+                this.mockDB.editFoodInfo(this.editParams)
+                this.foodInfo = this.editParams
+                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID} })
+              }).buttonStyle().fontSize(20)
+            }
+          }.margin({top:30})
+        }
       }
       .alignItems(HorizontalAlign.Center)
     }

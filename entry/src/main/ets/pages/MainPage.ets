@@ -3,7 +3,6 @@ import { MockDB } from '../mock/MockDB'
 import systemDateTime from '@ohos.systemDateTime'
 import { beforeAll } from '@ohos/hypium'
 
-
 @Component
 struct time {
   // @State time: string = getTime()
@@ -59,7 +58,7 @@ struct time {
 @Entry
 struct MainPage {
 
-  onPageShow(){
+  aboutToAppear(){
     AppStorage.SetOrCreate('appDB', new MockDB());
   }
 
@@ -79,7 +78,7 @@ struct MainPage {
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .onClick(() => {
-            router.push({url: 'pages/Home'})
+            router.pushUrl({url: 'pages/Home'})
           })
           .borderRadius(20)
 

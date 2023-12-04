@@ -41,7 +41,7 @@ struct FoodGridItem {
     .height(184)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
-      router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
+      router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id, showEdit: true} })
     })
   }
 }
