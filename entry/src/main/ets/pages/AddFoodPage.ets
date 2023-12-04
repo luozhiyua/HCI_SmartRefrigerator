@@ -30,7 +30,7 @@ struct CustomDialogExample {
       Button('确认',{ type: ButtonType.Normal})
         .onClick(() => {
           this.controller.close()
-          if(this.text == "提交已成功") router.replaceUrl({url:'pages/Home'})
+          if(this.text == "提交已成功") router.replaceUrl({url:'pages/FoodManage'})
         }).backgroundColor('#F5F5F5').fontColor(Color.Red).fontSize(20).width('100%').height('55%')
     }.margin({ bottom: 10 }).height(130)
   }
@@ -165,7 +165,7 @@ struct FoodAddPage {
           .width(28)
           .height(28)
           .onClick(() => {
-            router.replaceUrl({url:'pages/Home'})
+            router.replaceUrl({url:'pages/FoodManage'})
           })
         Column().width(5)
         Text('添加食物').fontSize(25)

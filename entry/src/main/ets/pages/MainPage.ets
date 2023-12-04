@@ -78,7 +78,7 @@ struct MainPage {
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .onClick(() => {
-            router.pushUrl({url: 'pages/Home'})
+            router.pushUrl({url: 'pages/FoodManage'})
           })
           .borderRadius(20)
 

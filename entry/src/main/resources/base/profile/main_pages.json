@@ -3,7 +3,7 @@
     "pages/FoodDetail",
     "pages/Menus",
     "pages/MenuDetail",
-    "pages/Home",
+    "pages/FoodManage",
     "pages/AddFoodPage",
     "pages/MainPage",
     "pages/CountDown",
