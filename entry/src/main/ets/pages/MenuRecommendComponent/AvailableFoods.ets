@@ -1,4 +1,3 @@
-import { FoodViewModel } from '../../viewModel/FoodViewModel'
 import {FoodInfo} from '../../model/DataModels'
 import router from '@ohos.router'
 

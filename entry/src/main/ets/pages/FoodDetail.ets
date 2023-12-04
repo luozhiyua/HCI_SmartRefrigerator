@@ -38,19 +38,21 @@ struct PageTitle {
         .width(35)
         .height(35)
         .onClick(() => {
-          // router.replaceUrl({ url: 'pages/Home'})
-          router.back()
+          if(show_edit)router.replaceUrl({ url: 'pages/FoodManage'})
+          else router.back()
+          // router.back()
         })
       Text("食物详情")
         .fontSize(40)
         .margin({ left: 20 })
-        .fontWeight(FontWeight.Bold)
       Blank()
-      Button('自动识别',{ type: ButtonType.Normal})
-        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(30).height(60)
-        .onClick(()=>{
-          this.autoMode = !this.autoMode
-        })
+      if(show_edit) {
+        Button('自动识别',{ type: ButtonType.Normal})
+          .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(30).height(60)
+          .onClick(()=>{
+            this.autoMode = !this.autoMode
+          })
+      }
     }
     .padding(20)
     .width('100%')
@@ -83,8 +85,7 @@ struct CheckDelete {
           .fontSize(25)
           .onClick(() => {
             this.mockDB.deleteFood(this.foodItemID)
-            router.replaceUrl({ url: 'pages/Home'})
-            // router.back()
+            router.replaceUrl({ url: 'pages/FoodManage'})
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Red)
       }.margin({ bottom: 5 })
@@ -351,7 +352,7 @@ struct FoodDetail {
                 this.editParams.id = foodItemID
                 this.mockDB.editFoodInfo(this.editParams)
                 this.foodInfo = this.editParams
-                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID } })
+                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID, showEdit : true } })
               }).buttonStyle().fontSize(30)
             }
           }.margin({ top: 30 , left: 20, right: 20})
