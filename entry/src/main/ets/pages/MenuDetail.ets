@@ -13,7 +13,7 @@ import {FoodInfo, MenuInfo, MenuIngredientInfo} from '../model/DataModels'
 import thermal from '@ohos.thermal'
 
 const params = router.getParams();
-const menuID = params['menuId']
+const menuID = params['menuID']
 
 
 @CustomDialog
@@ -138,10 +138,9 @@ struct MenuDetail {
         Scroll(this.scroller) {
           Column() {
             Column(){
-              //TODO: menuID传递有问题
-              MenuImage({ image: this.menuViewModel.getMenuInfo(0).image, name: this.menuViewModel.getMenuInfo(0).name })
-              IngredientList({ ingredients: this.menuViewModel.getMenuInfo(0).ingredients })
-              StepList({ steps: this.menuViewModel.getMenuInfo(0).steps })
+              MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name })
+              IngredientList({ ingredients: this.menuInfo.ingredients })
+              StepList({ steps: this.menuInfo.steps })
             }
           }
           // .backgroundColor('#EDF2F5')
