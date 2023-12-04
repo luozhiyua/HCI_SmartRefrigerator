@@ -19,6 +19,42 @@ import { FoodInfo } from '../model/DataModels'
 import { getFoodCategories } from '../model/DataUtil'
 
 @Component
+struct PageTitle {
+  build() {
+    Row() {
+      Image($r('app.media.back'))
+        .width(35)
+        .height(35)
+        .onClick(() => {
+          router.back()
+        })
+      Text("食物列表")
+        .fontSize(40)
+        .margin({ left: 20 })
+        .fontWeight(FontWeight.Bold)
+    }
+    .padding(20)
+    .width('100%')
+    .linearGradient({
+      angle: 60,
+      colors: [['#EDF2F5', 0.0], ['#73CD57', 0.9]]
+    })
+  }
+}
+
+@Component
+export default struct AddBtn {
+  build() {
+    Button('添加食材')
+      .borderRadius(12).backgroundColor('#73CD57').fontSize(36)
+      .position({ x: '70%', y: '90%' })
+      .onClick(()=>{
+      router.replaceUrl({url:'pages/AddFoodPage'})
+    })
+  }
+}
+
+@Component
 struct FoodGridItem {
   private foodItem?: FoodInfo
 
@@ -28,17 +64,17 @@ struct FoodGridItem {
         .objectFit(ImageFit.Contain)
         .backgroundColor('#f1f3f5')
         .width('100%')
-        .height(152)
+        .height(180)
       Row() {
         Text(this.foodItem?.name)
-          .fontSize(22)
+          .fontSize(30)
       }
       .padding({ left: 12, right: 12 })
       .width('100%')
-      .height(32)
+      .height(40)
       .backgroundColor('#E5E5E5')
     }
-    .height(180)
+    .height(230)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
       router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id, showEdit: true} })
@@ -59,8 +95,8 @@ struct FoodGrid {
       })
     }
     .columnsTemplate('1fr 1fr')
-    .columnsGap(8)
-    .rowsGap(8)
+    .columnsGap(15)
+    .rowsGap(15)
     .padding({ left: 16, right: 16 })
   }
 }
@@ -76,7 +112,7 @@ struct CategoryModeFoods {
   tabBarItemBuilder(value: string, index: number) {
     Text(value)
       .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 24 : 18)
+      .fontSize(this.currentTabIndex === index ? 35 : 28)
       .margin({ top: 2 })
       .height(50)
   }
@@ -96,7 +132,7 @@ struct CategoryModeFoods {
     }
     .vertical(true)
     .animationDuration(0)
-    .barWidth('15%')
+    .barWidth('18%')
     .onChange((index) => {
       this.currentTabIndex = index
     })
@@ -109,11 +145,12 @@ struct Home {
   @State isCategoryMode: boolean = true
 
   build() {
-    Stack({ alignContent: Alignment.TopEnd }) {
-      CategoryModeFoods()
-      Button('添加').onClick(()=>{
-        router.replaceUrl({url:'pages/AddFoodPage'})
-      })
+    Column() {
+      PageTitle()
+      Stack({ alignContent: Alignment.TopEnd }) {
+        CategoryModeFoods()
+      }
+      AddBtn()
     }
   }
 }

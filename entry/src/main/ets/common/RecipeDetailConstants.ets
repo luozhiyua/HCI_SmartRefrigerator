@@ -65,7 +65,7 @@ RecipeInfo2{
 
   static readonly recipe_name:string = "鸡蛋炒西红柿";
 
-  static readonly image: Resource = $r('app.media.menu_tomatoEgg')
+  static readonly image: Resource = $r('app.media.tomato')
 
   static readonly steps: Array<string> = [
     "西红柿洗净，切成小块；鸡蛋打散备用。",

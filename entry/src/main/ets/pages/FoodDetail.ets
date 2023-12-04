@@ -24,9 +24,9 @@ function buttonStyle() {
 @Styles
 function cardStyle() {
   .height('100%')
-  .padding({ top: 20, right: 30, left: 20 })
+  .padding({ top: 30, right: 50, left: 50 })
   .backgroundColor(Color.White)
-  .borderRadius(30)
+  .borderRadius(40)
 }
 
 @Component
@@ -35,29 +35,27 @@ struct PageTitle {
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(25)
-        .height(25)
+        .width(35)
+        .height(35)
         .onClick(() => {
-          if(show_edit)router.replaceUrl({ url: 'pages/FoodManage'})
-          else router.back()
-          // router.back()
+          // router.replaceUrl({ url: 'pages/Home'})
+          router.back()
         })
       Text("食物详情")
-        .fontSize(30)
-        .margin({ left: 10 })
+        .fontSize(40)
+        .margin({ left: 20 })
+        .fontWeight(FontWeight.Bold)
       Blank()
-      if(show_edit) {
-        Button('自动识别',{ type: ButtonType.Normal})
-          .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(22).height(30)
-          .onClick(()=>{
-            this.autoMode = !this.autoMode
-          })
-      }
+      Button('自动识别',{ type: ButtonType.Normal})
+        .borderRadius(12).backgroundColor('#73CD57').opacity(0.9).fontSize(30).height(60)
+        .onClick(()=>{
+          this.autoMode = !this.autoMode
+        })
     }
     .padding(20)
     .width('100%')
     .linearGradient({
-      angle: 90,
+      angle: 60,
       colors: [['#EDF2F5', 0.0], ['#73CD57', 0.9]]
     })
   }
@@ -72,20 +70,21 @@ struct CheckDelete {
   build() {
     Column() {
       Text('确定删除吗？')
-        .fontSize(25)
+        .fontSize(28)
         .margin({ top: 15, bottom: 15 })
 
       Flex({ justifyContent: FlexAlign.SpaceAround }) {
         Button('取消')
-          .fontSize(22)
+          .fontSize(25)
           .onClick(() => {
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Black)
         Button('确定')
-          .fontSize(22)
+          .fontSize(25)
           .onClick(() => {
             this.mockDB.deleteFood(this.foodItemID)
-            router.replaceUrl({ url: 'pages/FoodManage'})
+            router.replaceUrl({ url: 'pages/Home'})
+            // router.back()
             this.controller.close()
           }).backgroundColor(0xffffff).fontColor(Color.Red)
       }.margin({ bottom: 5 })
@@ -105,11 +104,11 @@ struct FoodImageDisplay {
         .backgroundColor(`rgba(255, 255, 255, ${this.imageBgColorA})`)
         .objectFit(ImageFit.Contain)
       Text(this.foodInfo.name)
-        .fontSize(35)
+        .fontSize(50)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 25, bottom: 13 })
+        .margin({ left: 45, bottom: 18 })
     }
-    .height(280)
+    .height(300)
   }
 }
 
@@ -141,7 +140,7 @@ struct inputSelectItem{
       })
     }
     .width('100%')
-    .height(30)
+    .height(35)
     .boardItemStyle()
   }
 }
@@ -173,7 +172,7 @@ struct DateSelectItem{
       })
     }
     .width('100%')
-    .height(30)
+    .height(35)
     .boardItemStyle()
   }
 }
@@ -190,7 +189,7 @@ struct IngredientItem{
   @Consume editParams: FoodInfo
   @State quantityValue: string = this.value
 
-  fontSize: number = 22
+  fontSize: number = 30
 
   build(){
     Row() {
@@ -201,7 +200,7 @@ struct IngredientItem{
         .align(Alignment.Start)
       Row() {
         Circle({ width: 9, height: 9 })
-          .margin({ right: 12 })
+          .margin({ right: 15 })
           .fill(this.colorValue)
 
         if(this.chooseKey == 'category' || !this.whe_edit){
@@ -223,13 +222,13 @@ struct IngredientItem{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) + 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).margin(5).fontSize(20).backgroundColor('#73CD57')
+          }).margin(5).fontSize(25).backgroundColor('#73CD57')
 
           Button('-',{type: ButtonType.Circle}).onClick(()=>{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) - 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).fontSize(20).backgroundColor('#73CD57')
+          }).fontSize(25).backgroundColor('#73CD57')
 
         }else if(this.chooseKey == 'freshDate'){
           DateSelectItem({text: this.value}).width('80%')
@@ -242,7 +241,7 @@ struct IngredientItem{
       .width('100%')
       .layoutWeight(2)
     }
-    .margin({ bottom: 12,top: 6 })
+    .margin({ bottom: 20,top: 6 })
   }
 
 }
@@ -328,8 +327,8 @@ struct FoodDetail {
           }
           .cardStyle()
         }
-        .height(300)
-        .margin({ top: 10, right: 10, left: 10 })
+        .height(400)
+        .margin({ top: 10, right: 30, left: 30 })
         .backgroundColor("#EDF2F5")
 
         if(show_edit) {
@@ -337,25 +336,25 @@ struct FoodDetail {
             if (!this.whe_edit) {
               Button('删除', { type: ButtonType.Normal }).onClick(() => {
                 this.deleteCheckController.open()
-              }).buttonStyle().fontSize(22)
-              Row().width('15%')
+              }).buttonStyle().fontSize(30)
+              Row().width('25%')
               Button('编辑', { type: ButtonType.Normal }).onClick(() => {
                 this.whe_edit = true
-              }).buttonStyle().fontSize(22)
+              }).buttonStyle().fontSize(30)
             } else {
               Button('取消', { type: ButtonType.Normal }).onClick(() => {
                 this.editParams = this.foodInfo
                 this.whe_edit = false
-              }).buttonStyle().fontSize(22)
-              Row().width('15%')
+              }).buttonStyle().fontSize(30)
+              Row().width('25%')
               Button('完成', { type: ButtonType.Normal }).onClick(() => {
                 this.editParams.id = foodItemID
                 this.mockDB.editFoodInfo(this.editParams)
                 this.foodInfo = this.editParams
-                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID, showEdit : true } })
-              }).buttonStyle().fontSize(22)
+                router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: foodItemID } })
+              }).buttonStyle().fontSize(30)
             }
-          }.margin({ top: 20 , left: 20, right: 20})
+          }.margin({ top: 30 , left: 20, right: 20})
         }
       }
       .alignItems(HorizontalAlign.Center)
