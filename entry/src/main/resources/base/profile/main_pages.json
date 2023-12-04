@@ -1,10 +1,10 @@
 {
   "src": [
-    "pages/Index",
     "pages/FoodDetail",
     "pages/Menus",
     "pages/MenuDetail",
     "pages/Home",
-    "pages/AddFoodPage"
+    "pages/AddFoodPage",
+    "pages/MainPage"
   ]
 }
