@@ -31,24 +31,23 @@ struct FoodGridItem {
         .height(152)
       Row() {
         Text(this.foodItem?.name)
-          .fontSize(20)
+          .fontSize(22)
       }
       .padding({ left: 12, right: 12 })
       .width('100%')
       .height(32)
       .backgroundColor('#E5E5E5')
     }
-    .height(184)
+    .height(180)
     .clip(new Rect({ width: '100%', height: '100%', radius: 12 }))
     .onClick(() => {
-      router.replaceUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
+      router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: this.foodItem.id} })
     })
   }
 }
 
 @Component
 struct FoodGrid {
-  @StorageProp('currentBreakpoint') currentBreakpoint: string = 'sm'
   private foodItems?: FoodInfo[]
 
   build() {
@@ -70,16 +69,16 @@ struct FoodGrid {
 struct CategoryModeFoods {
   mockDB : MockDB = AppStorage.Link('appDB').get();
   @State currentTabIndex: number = 0
-  foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
+  @State foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
   private foodCategories: string[] = getFoodCategories()
 
   @Builder
   tabBarItemBuilder(value: string, index: number) {
     Text(value)
       .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 30 : 24)
+      .fontSize(this.currentTabIndex === index ? 24 : 18)
       .margin({ top: 2 })
-      .height(56)
+      .height(50)
   }
 
   build() {
@@ -95,8 +94,9 @@ struct CategoryModeFoods {
           index! + 1))
       })
     }
+    .vertical(true)
     .animationDuration(0)
-    .barWidth('80%')
+    .barWidth('15%')
     .onChange((index) => {
       this.currentTabIndex = index
     })

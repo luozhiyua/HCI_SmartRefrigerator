@@ -120,6 +120,9 @@ struct MainPage {
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
+          .onClick(() => {
+            router.push({url: 'pages/Clock'})
+          })
 
         Text("温度调节")
           .height("90%")
