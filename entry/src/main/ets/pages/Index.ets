@@ -17,6 +17,17 @@ struct Index {
             url: 'pages/Home',
           })
         })
+
+        Row(){
+          Button('测试').onClick(()=>{
+            TextPickerDialog.show({
+              range: ['好啊','妈的'],
+              onAccept: (value: TextPickerResult) => {
+
+              }
+            })
+          })
+        }
       }
       .width('100%')
     }

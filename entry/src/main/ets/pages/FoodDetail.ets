@@ -200,7 +200,7 @@ struct IngredientItem{
           TextInput({placeholder:this.value.split(' ')[0], text: this.quantityValue})
             .onChange((newValue : string)=>{
               this.quantityValue = newValue
-              this.editParams.quantity = this.quantityValue
+              this.editParams.quantity = this.quantityValue == '' ? this.value.split(' ')[0] : this.quantityValue
             })
             .width('20%')
           Text(this.value.split(' ')[1]).padding({left:5}).fontSize(this.fontSize)
