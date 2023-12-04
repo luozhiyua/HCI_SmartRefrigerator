@@ -14,7 +14,7 @@ export struct PageTitle {
       Text(this.pageName)
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 20 })
+        //.margin({ left: 5 })
         .textAlign(TextAlign.Center)
         .width("85%")
     }
