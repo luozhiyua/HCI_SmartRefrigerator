@@ -94,8 +94,9 @@ struct CategoryModeFoods {
           index! + 1))
       })
     }
+    .vertical(true)
     .animationDuration(0)
-    .barWidth('80%')
+    .barWidth('15%')
     .onChange((index) => {
       this.currentTabIndex = index
     })
