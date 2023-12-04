@@ -123,27 +123,6 @@ export struct IngredientList {
 
 }
 
-@Component
-struct MenuTitle {
-  private title: string | Resource | undefined = '';
-  private subtitle: string | Resource | undefined = '';
-
-  build() {
-    Row() {
-      Text(this.title)
-        .fontSize(26)
-      Blank()
-      Text(this.subtitle)
-        .fontSize(13)
-        .fontColor('rgba(0,0,0,0.6)')
-    }
-    .width('100%')
-    .height(26)
-  }
-}
-
-
-
 @Entry
 @Component
 struct MenuDetail {
