@@ -14,15 +14,6 @@ struct time {
 
   build(){
     Column(){
-      // Text("2023/12/4")
-      //   .fontSize(30)
-      //   .width("90%")
-      //   .alignSelf(ItemAlign.Start)
-      //   .margin({
-      //     top: '2%', bottom: '2%', left: '2%'
-      //   })
-      //   .fontWeight(FontWeight.Bold)
-      //   .fontColor(Color.White)
       TextClock({ timeZoneOffset: -8, controller: this.DateController })
         .format('yyyy/MM/dd')
         .fontSize(30)
@@ -49,10 +40,6 @@ struct time {
         left: "2%"
       })
 
-      // Text("13:00")
-      //   .fontSize(80)
-      //   .fontWeight(FontWeight.Bolder)
-      //   .fontColor(Color.White)
       TextClock({ timeZoneOffset: -8, controller: this.TimeController })
         .format('Hm')
         .onDateChange((value: number) => {
@@ -83,7 +70,7 @@ struct MainPage {
         Text("食物管理")
           .height("90%")
           .width("48%")
-          .backgroundColor("#87CEFA")
+          .backgroundColor($r('app.color.food_management'))
           .margin({
              right: "4%",top: "5%", bottom: "5%"
           })
@@ -99,7 +86,7 @@ struct MainPage {
         Text("菜谱推荐")
           .height("90%")
           .width("48%")
-          .backgroundColor("#9ACD32")
+          .backgroundColor($r('app.color.menu_recommend'))
           .margin({
             top: "5%", bottom: "5%"
           })
@@ -137,7 +124,7 @@ struct MainPage {
         Text("温度调节")
           .height("90%")
           .width("48%")
-          .backgroundColor("#FF8C69")
+          .backgroundColor($r('app.color.temperature'))
           .margin({
             bottom: "5%"
           })
@@ -155,7 +142,6 @@ struct MainPage {
 
     }
     .width("100%")
-    // .backgroundColor("#f1f3f5")
-    .backgroundColor("#363636")
+    .backgroundColor($r('app.color.main_background'))
   }
 }
