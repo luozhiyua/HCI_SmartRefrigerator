@@ -82,6 +82,7 @@ struct MainPage {
           })
           .borderRadius(20)
 
+
         Text("菜谱推荐")
           .height("90%")
           .width("48%")
@@ -122,6 +123,8 @@ struct MainPage {
           .onClick(() => {
             router.push({url: 'pages/Clock'})
           })
+
+
 
         Text("温度调节")
           .height("90%")
