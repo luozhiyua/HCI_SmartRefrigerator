@@ -16,6 +16,10 @@ struct clock {
   @State text: string = ''
   textController: TextInputController = new TextInputController()
   @State timeCount :number = 10;
+  @State private hourNum:number = 0;
+  @State private minuteNum:number = 0;
+  private selfTimeCount:Boolean = false;
+
 
   aboutToAppear(){
     for (let i = 0; i < 24; i++) {
@@ -24,22 +28,31 @@ struct clock {
     for (let i = 0; i < 60; i++) {
       this.minutes.push(i.toString());
     }
+    this.text = ""
+  }
+  onPageShow(){
+    this.text = ""
   }
 
   build() {
     Column() {
-      PageTitle({ pageName: "定时" })
+      PageTitle({ pageName: "定时",bgColor:Color.Pink,titleColor:Color.Black })
       // 以12小时制显示东八区的系统时间，精确到秒。
       TextClock({ timeZoneOffset: -8, controller: this.controller })
         .format('YYYYMMddHHm')
         .onDateChange((value: number) => {
           this.accumulateTime = value
         })
-          //.borderRadius(10)
-          //.shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+        .fontColor(Color.White)
+        .borderRadius(10)
+        .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
         .margin({ left: 10, top: 10 })
         .width('90%')
-        .fontSize(30)
+        .height('8%')
+        .fontSize(40)
+        .fontWeight(FontWeight.Bold)
+        .backgroundColor(Color.Pink)
+        .padding({left:100})
       // Button("start TextClock")
       //   .margin({ bottom: 10 })
       //   .onClick(() => {
@@ -57,41 +70,79 @@ struct clock {
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
           .onClick(()=>{
-            this.timeCount = 5;
+            this.minuteNum = 5;
+            this.hourNum = 0;
+            this.selfTimeCount = true;
           })
+          .backgroundColor("#D8BFD8")
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
         Button('15分钟',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
-            this.timeCount = 15;
+            this.minuteNum = 15;
+            this.hourNum = 0;
+            this.selfTimeCount = true;
+
           })
+          .backgroundColor("#DB7093")
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+
         Button('30分钟',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
-            this.timeCount = 30;
+            this.minuteNum = 30;
+            this.hourNum = 0;
+            this.selfTimeCount = true;
+
           })
+          .backgroundColor("#B0C4DE")
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+
         Button('45分钟',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
-            this.timeCount = 45;
+            this.minuteNum = 45;
+            this.hourNum = 0;
+            this.selfTimeCount = true;
+
           })
+          .backgroundColor("#9370DB")
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+
         Button('1小时',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
+          .fontColor(Color.White)
+          .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
-            this.timeCount = 60;
+            this.minuteNum = 60;
+            this.hourNum = 0;
+            this.selfTimeCount = true;
+
           })
+          .backgroundColor("#BA55D3")
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+
       }
       .width('90%')
       .height(120)
@@ -102,23 +153,30 @@ struct clock {
         //TODO：调整滑动器文本大小
         TextPicker({ range: this.hours, selected: this.select1 })
           .onChange((value: string, index: number) => {
-            this.timeCount = 60 * index;
+            this.hourNum = index;
+            this.selfTimeCount = false;
           })
+          .backgroundColor("#FFF0F5")
           .width('35%')
           .height('90%')
+          .margin({left:15})
         Text("小时")
           .width('15%')
           .fontSize(30)
+          .fontColor(Color.Gray)
 
         TextPicker({ range: this.minutes, selected: this.select2 })
           .onChange((value: string, index: number) => {
-            this.timeCount += index;
+            this.minuteNum = index;
+            this.selfTimeCount = false;
           })
+          .backgroundColor("#FFF0F5")
           .width('35%')
           .height('90%')
         Text("分钟")
           .width('15%')
           .fontSize(30)
+          .fontColor(Color.Gray)
       }
       .width('90%')
       .height('40%')
@@ -136,6 +194,8 @@ struct clock {
         .onChange((value: string) => {
           this.text = value
         })
+        .maxLength(100)
+
 
       Row() {
         // Button("取消")
@@ -147,12 +207,23 @@ struct clock {
         //     this.timeCount = 0;
         //   })
 
-        Button("开始计时:" + this.timeCount + "分钟")
+        Button("开始计时:" + this.hourNum + "小时" + this.minuteNum + "分钟",{type:ButtonType.Normal,stateEffect:true})
           .height('7%')
           .width('100%')
           //.margin({ top: 15,left:100,right:0})
           .fontSize(30)
+          .fontWeight(FontWeight.Bold)
+          .backgroundColor(Color.Pink)
+          .fontColor(Color.White)
+          .borderRadius(10)
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
           .onClick(()=>{
+            if (this.selfTimeCount) {
+              this.timeCount = this.minuteNum
+            }
+            else{
+              this.timeCount = this.minuteNum + 60 * this.hourNum
+            }
             //TODO：跳转到倒计时
             router.pushUrl({
               url: 'pages/CountDown',
@@ -167,5 +238,8 @@ struct clock {
       .align(Alignment.Center)
       .margin(20)
     }
+    //.backgroundColor("#C0C0C0")
+    .height("100%")
+    .backgroundColor("#FFF0F5")
   }
 }

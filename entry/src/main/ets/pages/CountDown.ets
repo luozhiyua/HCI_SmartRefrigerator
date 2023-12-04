@@ -22,30 +22,40 @@ struct countDown {
 
   build() {
     Column() {
-      PageTitle({ pageName: "倒计时" })
+      PageTitle({ pageName: "倒计时",bgColor:Color.Pink,titleColor:Color.Black })
       // 以12小时制显示东八区的系统时间，精确到秒。
       TextClock({ timeZoneOffset: -8, controller: this.controller })
-        .format('YYYYMMddHHm')
+        .format('HHm')
         .onDateChange((value: number) => {
           this.accumulateTime = value
         })
-          //.borderRadius(10)
-          //.shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
         .margin({ left: 10, top: 10 })
         .width('90%')
-        .fontSize(35)
+        .height("15%")
+        .fontSize(70)
+        .fontColor(Color.Gray)
+        .fontWeight(FontWeight.Bold)
+        //.backgroundColor(Color.Pink)
+        //.shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
       Text("备注：" + this.text)
-        .fontSize(50)
+        .fontSize(30)
+        .fontColor(Color.Gray)
         .width('90%')
         .height('10%')
+        .borderRadius(10)
+        .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+        .padding({left:25})
 
       TextTimer({ isCountDown: true, count: this.timeCount * 60000, controller: this.textTimerController })
         .format('hh:mm:ss')
-        .fontColor(Color.Black)
+        .fontColor(Color.Gray)
         .fontSize(100)
         .onTimer((utc: number, elapsedTime: number) => {
-          console.info('textTimer notCountDown utc is：' + utc + ', elapsedTime: ' + elapsedTime)
+          console.info(elapsedTime.toString() + " " + this.timeCount.toString())
+          if (elapsedTime <= this.timeCount*60000 && elapsedTime >= (this.timeCount - 0.05) * 60000) {
+            console.info("倒计时完成")
+          }
         })
         .padding(90)
         .width('90%')
@@ -61,6 +71,11 @@ struct countDown {
           .height('8%')
           .width('40%')
           .fontSize(30)
+          .fontWeight(FontWeight.Bold)
+          .backgroundColor(Color.Pink)
+          .fontColor(Color.White)
+          .borderRadius(10)
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
         Button("重新开始").onClick(() => {
           this.textTimerController.reset()
           this.textTimerController.start()
@@ -69,6 +84,11 @@ struct countDown {
           .width('40%')
           .margin({left:20})
           .fontSize(30)
+          .fontWeight(FontWeight.Bold)
+          .backgroundColor(Color.Pink)
+          .fontColor(Color.White)
+          .borderRadius(10)
+          .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
       }
 
       // Row() {
@@ -91,5 +111,7 @@ struct countDown {
       // .width('90%')
       // .align(Alignment.Center)
     }
+    .height("100%")
+    .backgroundColor("#FFF0F5")
   }
 }

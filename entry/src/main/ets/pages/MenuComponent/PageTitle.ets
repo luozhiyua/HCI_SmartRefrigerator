@@ -2,6 +2,8 @@ import router from '@ohos.router'
 @Component
 export struct PageTitle {
   private pageName: string
+  private bgColor:Color
+  private titleColor:Color
 
   build() {
     Row() {
@@ -17,10 +19,11 @@ export struct PageTitle {
         .margin({ left: 1 })
         .textAlign(TextAlign.Center)
         .width("85%")
+        .fontColor(this.titleColor)
     }
     .padding(10)
     .width('100%')
     .height("7%")
-    .backgroundColor('#EDF2F5')
+    .backgroundColor(this.bgColor)
   }
 }
