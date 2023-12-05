@@ -124,7 +124,7 @@ struct inputSelectItem{
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
-        Text(this.text).fontSize(20)
+        Text(this.text).fontSize(25)
         Image($r('app.media.selector'))
           .width(25)
           .height(25)
@@ -154,7 +154,7 @@ struct DateSelectItem{
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
-        Text(this.text).fontSize(20)
+        Text(this.text).fontSize(25)
         Image($r('app.media.selector'))
           .width(22)
           .height(22)
@@ -186,11 +186,14 @@ struct IngredientItem{
   value: string = ''
   chooseKey: string
   chooseRange: string[]
-  @Consume whe_edit: boolean
+  @Consume @Watch('onEditCancel') whe_edit: boolean
   @Consume editParams: FoodInfo
   @State quantityValue: string = this.value
-
   fontSize: number = 30
+
+  onEditCancel(){
+    if(this.whe_edit == false)this.quantityValue = ''
+  }
 
   build(){
     Row() {
@@ -208,13 +211,14 @@ struct IngredientItem{
           Text(this.value)
             .fontSize(this.fontSize)
         }else if(this.chooseKey == 'quantity'){
-          TextInput({placeholder:this.value.split(' ')[0], text: this.quantityValue})
+          TextInput({placeholder:this.editParams.quantity, text: this.quantityValue})
             .onChange((newValue : string)=>{
               this.quantityValue = newValue
               this.editParams.quantity = this.quantityValue == '' ? this.value.split(' ')[0] : this.quantityValue
             })
+            .fontSize(25)
             .width('30%')
-            .height(50)
+            .height('85%')
           Text(this.value.split(' ')[1]).padding({left:10}).fontSize(this.fontSize)
 
           Row().width('10%')
@@ -284,7 +288,7 @@ struct FoodDetail {
               value: this.foodInfo.category,
               chooseKey: "category",
               chooseRange: this.nullValue
-            }).height('15%')
+            }).height('20%')
             IngredientItem({
               title: '数量',
               colorValue: '#F5D640',
@@ -292,7 +296,7 @@ struct FoodDetail {
               value: this.quanShow,
               chooseKey: "quantity",
               chooseRange: this.nullValue
-            }).height('15%')
+            }).height('20%')
             IngredientItem({
               title: '保质期',
               colorValue: '#9E9EFF',
@@ -300,7 +304,7 @@ struct FoodDetail {
               value: this.foodInfo.freshDate,
               chooseKey: "freshDate",
               chooseRange: this.nullValue
-            }).height('15%')
+            }).height('20%')
             IngredientItem({
               title: '位置',
               colorValue: '#AFEEEE',
@@ -308,23 +312,15 @@ struct FoodDetail {
               value: this.foodInfo.whe_frozen ? "冷冻" : "冷藏",
               chooseKey: "whe_frozen",
               chooseRange: ['冷藏', '冷冻']
-            }).height('15%')
+            }).height('20%')
             IngredientItem({
               title: '',
               colorValue: '#AFEEEE',
-              name: "左/右",
-              value: this.foodInfo.side,
-              chooseKey: "side",
-              chooseRange: getSideLists()
-            }).height('15%')
-            IngredientItem({
-              title: '',
-              colorValue: '#AFEEEE',
-              name: "层数",
+              name: "位置",
               value: this.foodInfo.addr,
               chooseKey: "addr",
               chooseRange: getAddrLists()
-            }).height('15%')
+            }).height('20%')
           }
           .cardStyle()
         }

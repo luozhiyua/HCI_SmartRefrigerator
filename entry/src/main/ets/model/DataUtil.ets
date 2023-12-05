@@ -25,7 +25,7 @@ export function getSideLists(): string[] {
 }
 
 export function getAddrLists(): string[] {
-  return ['一层','二层','三层']
+  return ['左边一层','左边二层','左边三层','右边一层','右边二层','右边三层']
 }
 export function getunitLists(): string[] {
   return ['个','千克','升']
