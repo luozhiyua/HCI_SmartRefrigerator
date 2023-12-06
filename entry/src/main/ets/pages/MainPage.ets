@@ -138,6 +138,9 @@ struct MainPage {
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
+          .onClick(() => {
+            router.push({url: 'pages/TemperatureController'})
+          })
       }
       .height("40%")
       .width("84%")
