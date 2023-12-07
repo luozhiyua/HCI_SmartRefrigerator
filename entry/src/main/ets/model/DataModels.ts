@@ -4,20 +4,18 @@ export class FoodInfo {
   image: Resource
   category: string;
   freshDate: string
-  side: string
   addr: string
   quantity: string
   unit: string
   whe_frozen: boolean
 
   constructor(id:number,name: string, image: Resource,category: string,
-  freshDate: string,side: string,addr: string,quantity: string,unit: string,whe_frozen: boolean) {
+  freshDate: string,addr: string,quantity: string,unit: string,whe_frozen: boolean) {
     this.id = id;
     this.name = name;
     this.image = image;
     this.category = category;
     this.freshDate = freshDate;
-    this.side = side;
     this.addr = addr;
     this.quantity = quantity;
     this.unit = unit;

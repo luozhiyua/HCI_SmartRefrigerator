@@ -84,6 +84,7 @@ struct MainPage {
           })
           .borderRadius(20)
 
+
         Text("菜谱推荐")
           .height("90%")
           .width("48%")
@@ -125,6 +126,8 @@ struct MainPage {
             router.push({url: 'pages/Clock'})
           })
 
+
+
         Text("温度调节")
           .height("90%")
           .width("48%")
@@ -137,6 +140,9 @@ struct MainPage {
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
+          .onClick(() => {
+            router.push({url: 'pages/TemperatureController'})
+          })
       }
       .height("40%")
       .width("84%")

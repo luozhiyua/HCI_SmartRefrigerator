@@ -47,12 +47,19 @@ struct PageTitle {
 @Component
 export default struct AddBtn {
   build() {
-    Button('添加食材')
-      .borderRadius(12).backgroundColor('#73CD57').fontSize(36)
-      .position({ x: '70%', y: '90%' })
+    Image($r('app.media.Addbtn'))
+      .width(80)
+      .height(80)
+      .position({ x: '85%', y: '86%' })
       .onClick(()=>{
-      router.replaceUrl({url:'pages/AddFoodPage'})
-    })
+        router.replaceUrl({url:'pages/AddFoodPage'})
+      })
+    // Button('添加食材')
+    //   .borderRadius(12).backgroundColor('#73CD57').fontSize(36)
+    //   .position({ x: '70%', y: '90%' })
+    //   .onClick(()=>{
+    //   router.replaceUrl({url:'pages/AddFoodPage'})
+    // })
   }
 }
 
