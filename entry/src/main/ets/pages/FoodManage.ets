@@ -17,6 +17,8 @@ import router from '@ohos.router'
 import { MockDB } from '../mock/MockDB'
 import { FoodInfo } from '../model/DataModels'
 import { getFoodCategories } from '../model/DataUtil'
+import systemDateTime from '@ohos.systemDateTime'
+import systemTime from '@ohos.systemTime'
 
 @Component
 struct PageTitle {
@@ -57,6 +59,41 @@ export default struct AddBtn {
 @Component
 struct FoodGridItem {
   private foodItem?: FoodInfo
+  @State date:Date = new Date();
+  outDate:Boolean = false;
+  outDateNum:number = -1;
+
+  aboutToAppear(){
+    try {
+      systemTime.getDate().then((date) => {
+        this.date = date
+        console.info(this.date.toString())
+      }).catch((error) => {
+        console.info(`Failed to getting date. message: ${error.message}, code: ${error.code}`);
+      });
+    } catch(e) {
+      console.info(`Failed to get date. message: ${e.message}, code: ${e.code}`);
+    }
+    const freshDate = new Date(this.foodItem.freshDate)
+
+    if (freshDate.getMonth() === this.date.getMonth() && freshDate.getFullYear() === this.date.getFullYear()) {
+      //同年同月
+      if (freshDate.getDate() - this.date.getDate() >= 0) {
+        this.outDate = false;
+        if (freshDate.getDate() - this.date.getDate() <= 3) {
+          this.outDateNum = freshDate.getDate() - this.date.getDate()
+        }
+      }
+      else{
+        this.outDate = true;
+      }
+    }
+    else if (freshDate < this.date) {
+      //已过期
+      // console.info("过期：" + "过期时间："+ freshDate + "现在时间：" + this.date)
+      this.outDate = true;
+    }
+  }
 
   build() {
     Column() {
@@ -68,6 +105,23 @@ struct FoodGridItem {
       Row() {
         Text(this.foodItem?.name)
           .fontSize(30)
+        // .onClick(()=>{
+        //   console.info(this.outDate.toString())
+        // })
+        if (this.outDate){
+          Text("已过期")
+            .fontSize(20)
+            .padding({left:100})
+            .fontColor(Color.Red)
+            .fontWeight(FontWeight.Medium)
+        }
+        else if (this.outDateNum >= 0 ){
+          Text(this.outDateNum.toString() + "天后过期")
+            .fontSize(20)
+            .padding({left:70})
+            .fontColor(Color.Orange)
+            .fontWeight(FontWeight.Medium)
+        }
       }
       .padding({ left: 12, right: 12 })
       .width('100%')

@@ -60,6 +60,8 @@ struct MainPage {
 
   aboutToAppear(){
     AppStorage.SetOrCreate('appDB', new MockDB());
+    //TODO:发送最后一天食物过期消息到手机
+
   }
 
   build(){
