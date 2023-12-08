@@ -66,7 +66,7 @@ export default struct AddBtn {
 @Component
 struct FoodGridItem {
   private foodItem?: FoodInfo
-  @State date:Date = new Date();
+  date:Date = new Date();
   outDate:Boolean = false;
   outDateNum:number = -1;
 
@@ -95,11 +95,26 @@ struct FoodGridItem {
         this.outDate = true;
       }
     }
-    else if (freshDate < this.date) {
+    else if (freshDate.getFullYear() === this.date.getFullYear()){
+      //同年
+      if (freshDate.getMonth() - this.date.getMonth() > 0) {
+        this.outDate = false;
+      }
+      else{
+        this.outDate = true;
+      }
+    }
+    else if (freshDate.getFullYear() < this.date.getFullYear()) {
       //已过期
-      // console.info("过期：" + "过期时间："+ freshDate + "现在时间：" + this.date)
       this.outDate = true;
     }
+    else if (freshDate.getFullYear() > this.date.getFullYear()){
+      this.outDate = false;
+    }
+    // console.info(this.foodItem.name)
+    // console.info((freshDate < this.date).toString())
+    // console.info("过期：" + "过期时间："+ freshDate + "现在时间：" + this.date)
+
   }
 
   build() {
