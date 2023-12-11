@@ -11,23 +11,23 @@ struct MenuPageTitle {
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(35)
-        .height(35)
+        .width(30)
+        .height(30)
         .onClick(() => {
-          // router.replaceUrl({ url: 'pages/Home'})
           router.back()
         })
       Text("菜谱")
-        .fontSize(40)
-        .margin({ left: 20 })
+        .fontSize(30)
         .fontWeight(FontWeight.Bold)
+        .margin({ left: 1 })
+        .textAlign(TextAlign.Center)
+        .width("85%")
+        .fontColor(Color.Black)
     }
-    .padding(20)
+    .padding(10)
     .width('100%')
-    .linearGradient({
-      angle: 60,
-      colors: [['#EDF2F5', 0.0], ['#FF8C69', 0.9]]
-    })
+    .height("7%")
+    .backgroundColor('#FF8C69')
   }
 }
 

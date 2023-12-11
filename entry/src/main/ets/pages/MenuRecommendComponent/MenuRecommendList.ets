@@ -8,7 +8,7 @@ struct titleLine{
     Column(){
       Text("推荐菜谱")
         .width('90%')
-        .fontSize(30)
+        .fontSize(35)
         .fontWeight(FontWeight.Bold)
         .fontColor(Color.Gray)
         .margin({top: '4%'})
@@ -38,7 +38,7 @@ struct MenuListItem {
         .borderRadius(10)
 
       Text(this.menu.name)
-        .fontSize(25)
+        .fontSize(30)
         .margin({left: '5%'})
     }
     .height('25%')

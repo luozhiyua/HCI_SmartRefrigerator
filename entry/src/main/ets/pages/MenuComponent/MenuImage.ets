@@ -7,10 +7,10 @@ export struct MenuImage {
     Row(){
       Image(this.image)
         .width('40%')
-        .height('30%')
+        .height('35%')
         .borderRadius(20)
       Text(this.name)
-        .fontSize(26)
+        .fontSize(35)
         .fontWeight(FontWeight.Bold)
         .margin({ left : 18, bottom: 18, top : 5 })
         .width('50%')
@@ -21,8 +21,8 @@ export struct MenuImage {
       // .width('100%')
       // .justifyContent(FlexAlign.Start)
 
-
     }
+    .margin({top: 40})
     .justifyContent(FlexAlign.Start)
   }
 }

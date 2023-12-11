@@ -1,8 +1,6 @@
 import router from '@ohos.router'
 @Component
 export struct headline {
-  private pageName: string
-
   build() {
     Row() {
       Image($r('app.media.back'))
@@ -11,16 +9,17 @@ export struct headline {
         .onClick(() => {
           router.back()
         })
-      Text(this.pageName)
+      Text("菜谱详情")
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
-        .margin({ left: 20 })
-        // .textAlign(TextAlign.Center)
+        .margin({ left: 1 })
+        .textAlign(TextAlign.Center)
         .width("85%")
+        .fontColor(Color.Black)
     }
-    .padding(12)
+    .padding(10)
     .width('100%')
     .height("7%")
-    .backgroundColor('#EDF2F5')
+    .backgroundColor('#FF8C69')
   }
 }

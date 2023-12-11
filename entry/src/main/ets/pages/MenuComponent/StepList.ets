@@ -6,8 +6,8 @@ export struct StepList{
   build(){
     Column(){
       Text($r('app.string.recipe_detail_step_title'))
-        .fontSize($r('app.float.TitleSizeM'))
-        .fontWeight(FontWeight.Normal)
+        .fontSize(35)
+        .fontWeight(FontWeight.Bold)
         .width($r('app.string.recipe_width'))
         .height('6%')
         .align(Alignment.Center)
@@ -18,11 +18,12 @@ export struct StepList{
           Text('第' + (index + 1) + '步')
             .textAlign(TextAlign.Start)
             .fontWeight(FontWeight.Bold)
-            .fontSize('18fp')
+            .fontSize(30)
             .width($r('app.string.recipe_width'))
             .margin({ top: $r('app.float.recipeDetail_margin_top') })
           Text(item)
             .width($r('app.string.recipe_width'))
+            .fontSize(25)
             .margin({ top: $r('app.float.recipeDetail_margin_top') })
         }
       })

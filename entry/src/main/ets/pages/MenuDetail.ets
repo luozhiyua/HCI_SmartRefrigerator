@@ -15,7 +15,6 @@ import thermal from '@ohos.thermal'
 const params = router.getParams();
 const menuID = params['menuID']
 
-
 @CustomDialog
 struct FoodNotFound {
   controller: CustomDialogController
@@ -51,24 +50,22 @@ export struct IngredientList {
     // List(){
     Column() {
       Text($r('app.string.recipe_detail_ingredient_title'))
-        .fontSize($r('app.float.TitleSizeM'))
-        .fontWeight(FontWeight.Normal)
+        .fontSize(35)
+        .fontWeight(FontWeight.Bold)
         .width($r('app.string.recipe_width'))
         .height('6%')
-        .align(Alignment.Center)
       // .backgroundColor(Color.Pink)
 
       ForEach(this.ingredients, (item: MenuIngredientInfo) => {
         Row() {
           Text(item.name)
             .width('50%')
-            .height(20)
-            .fontSize($r('app.float.textSize'))
+            .height(28)
+            .fontSize(25)
             .textAlign(TextAlign.Start)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
-              // left: 20
 
             })
             .padding({left:30})
@@ -88,26 +85,28 @@ export struct IngredientList {
 
           Text(item.quantity)
             .width('50%')
-            .height(20)
-            .fontSize($r('app.float.textSize'))
+            .height(28)
+            .fontSize(25)
             .textAlign(TextAlign.End)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
 
             })
-            .padding({right:40})
+            .padding({right:50})
         }
-        .height(20)
+        .height(35)
         // .backgroundColor(Color.Yellow)
 
         Text($r('app.string.dotted_line'))
-          .width('85%')
+          .width('90%')
           .textOverflow({overflow: TextOverflow.Clip})
           .height(20)
       })
 
     }
+    // .backgroundColor("#f1f3f5")
+    .borderRadius(40)
     // .width('50%')
     // .border({width: 4,
     //   color: Color.Gray,
@@ -138,7 +137,9 @@ struct MenuDetail {
         Scroll(this.scroller) {
           Column() {
             Column(){
+              Blank().height("4%")
               MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name })
+              Blank().height("2%")
               IngredientList({ ingredients: this.menuInfo.ingredients })
               StepList({ steps: this.menuInfo.steps })
             }
@@ -155,7 +156,7 @@ struct MenuDetail {
         .edgeEffect(EdgeEffect.Spring)
 
         // PageTitle({pageName: "菜谱详情"})
-        headline({pageName: "菜谱详情"})
+        headline()
       }
     }
   }
