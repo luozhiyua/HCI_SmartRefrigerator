@@ -17,6 +17,7 @@ import url from '@ohos.url'
 const params = router.getParams();
 const menuID = params['menuID']
 
+
 @CustomDialog
 struct FoodNotFound {
   controller: CustomDialogController
@@ -42,16 +43,17 @@ export struct CookTime{
   build(){
     Row() {
       Text("烹饪时间  :   ")
-        .fontSize(30)
+        .fontSize(35)
         .fontWeight(FontWeight.Bold)
+        .padding({left:25})
       Text(this.time)
         .fontSize(30)
         .fontColor(Color.Gray)
         .align(Alignment.TopEnd)
     }
-    .width('90%')
-    .height('5%')
-    .margin({top:30})
+    .width('55%')
+    .height('7%')
+    .margin({top:30,left:25,right:15})
     .padding({ left: 6})
     .borderRadius(10)
     .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
@@ -86,15 +88,23 @@ export struct menuDetailPageTitle{
 
 @Component
 export struct ButtonBeginCook{
-  steps: Array<string>
+  steps: Array<Array<string>>
+  menuName:string
 
   build(){
-    Button("确认做菜")
+    Button("开始做菜",{type:ButtonType.Normal,stateEffect:true})
+      .height('7%')
+      .width('35%')
+        //.margin({ top: 15,left:100,right:0})
+      .fontSize(30)
+      .fontWeight(FontWeight.Bold)
+      .backgroundColor('#FF8C69')
+      .fontColor(Color.White)
       .borderRadius(10)
       .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
-      .margin({top:20,bottom:20})
+      .margin({top:30,right:30})
       .onClick(()=>{
-        router.pushUrl({url:'pages/CookProcess',params:{steps:this.steps}})
+        router.pushUrl({url:'pages/CookProcess',params:{steps:this.steps,index:0,menuName:this.menuName}})
       })
   }
 }
@@ -115,35 +125,24 @@ export struct IngredientList {
     // List(){
     Column() {
       Text($r('app.string.recipe_detail_ingredient_title'))
-<<<<<<< HEAD
-        .fontSize(30)
+        .fontSize(35)
         .fontWeight(FontWeight.Bold)
         .width($r('app.string.recipe_width'))
         .height('5%')
         .align(Alignment.Center)
-=======
-        .fontSize(35)
-        .fontWeight(FontWeight.Bold)
-        .width($r('app.string.recipe_width'))
-        .height('6%')
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
       // .backgroundColor(Color.Pink)
 
       ForEach(this.ingredients, (item: MenuIngredientInfo) => {
         Row() {
           Text(item.name)
             .width('50%')
-<<<<<<< HEAD
             .height(40)
-            .fontSize(20)
-=======
-            .height(28)
             .fontSize(25)
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
             .textAlign(TextAlign.Start)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
+              // left: 20
 
             })
             .padding({left:30})
@@ -163,53 +162,33 @@ export struct IngredientList {
 
           Text(item.quantity)
             .width('50%')
-<<<<<<< HEAD
             .height(40)
             .fontSize(20)
-=======
-            .height(28)
-            .fontSize(25)
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
             .textAlign(TextAlign.End)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
             })
-            .padding({right:50})
+            .padding({right:40})
         }
-        .height(35)
+        .height(20)
         // .backgroundColor(Color.Yellow)
 
         Text($r('app.string.dotted_line'))
           .width('90%')
           .textOverflow({overflow: TextOverflow.Clip})
           .height(20)
-          .margin({top:3,bottom:3})
+          .margin({top:12,bottom:3})
           .fontColor(Color.Gray)
       })
 
     }
-<<<<<<< HEAD
     .width('90%')
     .padding({left:6})
     .margin({top: 30 })
-    .borderRadius(10)
-    .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+    //.borderRadius(10)
+    //.shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
-=======
-    // .backgroundColor("#f1f3f5")
-    .borderRadius(40)
-    // .width('50%')
-    // .border({width: 4,
-    //   color: Color.Gray,
-    //   radius: 30,
-    //   style:{
-    //   left: BorderStyle.Dashed,
-    //   right: BorderStyle.Dashed,
-    //   top: BorderStyle.Dashed,
-    //   bottom: BorderStyle.Dashed
-    // }})
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
   }
 
 
@@ -226,46 +205,24 @@ struct MenuDetail {
 
     Column(){
 
-<<<<<<< HEAD
       //Stack({alignContent: Alignment.TopStart}) {
       Scroll(this.scroller) {
         Column() {
           Column(){
             menuDetailPageTitle()
             MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name,description:this.menuInfo.description })
-            CookTime({time:this.menuInfo.cookTime})
+            Row() {
+              CookTime({ time: this.menuInfo.cookTime })
+              ButtonBeginCook({steps:this.menuInfo.steps,menuName:this.menuInfo.name})
+            }
             IngredientList({ ingredients: this.menuInfo.ingredients })
             StepList({ steps: this.menuInfo.steps })
-            ButtonBeginCook()
-=======
-      Stack({alignContent: Alignment.TopStart}) {
-        Scroll(this.scroller) {
-          Column() {
-            Column(){
-              Blank().height("4%")
-              MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name })
-              Blank().height("2%")
-              IngredientList({ ingredients: this.menuInfo.ingredients })
-              StepList({ steps: this.menuInfo.steps })
-            }
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
           }
         }
-<<<<<<< HEAD
         // .backgroundColor('#EDF2F5')
         //.height('100%')
         .align(Alignment.Top)
         .justifyContent(FlexAlign.Start)
-=======
-        .scrollBar(BarState.On)
-        .scrollable(ScrollDirection.Vertical)
-        .scrollBarColor(Color.Gray)
-        .scrollBarWidth(10)
-        .edgeEffect(EdgeEffect.Spring)
-
-        // PageTitle({pageName: "菜谱详情"})
-        headline()
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
       }
       .scrollBar(BarState.On)
       .scrollable(ScrollDirection.Vertical)

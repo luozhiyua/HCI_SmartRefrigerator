@@ -1,39 +1,49 @@
 
 @Component
 export struct StepList{
-  steps: Array<string>
+  steps: Array<Array<string>>
 
   build(){
     Column(){
       Text($r('app.string.recipe_detail_step_title'))
-<<<<<<< HEAD
-        .fontSize(30)
-=======
         .fontSize(35)
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
         .fontWeight(FontWeight.Bold)
         .width($r('app.string.recipe_width'))
         .height('5%')
         .align(Alignment.Center)
         // .backgroundColor(Color.Pink)
         .margin({top: 20})
-      ForEach(this.steps, (item: string, index?: number) =>{
+      ForEach(this.steps, (item: Array<string>, index?: number) =>{
         Column() {
-          Text('第' + (index + 1) + '步')
-            .textAlign(TextAlign.Start)
-            .fontWeight(FontWeight.Bold)
-<<<<<<< HEAD
-            .fontSize(25)
-=======
-            .fontSize(30)
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
-            .width($r('app.string.recipe_width'))
-            .margin({ top: $r('app.float.recipeDetail_margin_top') })
-          Text(item)
-            .width($r('app.string.recipe_width'))
-            .fontSize(25)
-            .margin({ top: $r('app.float.recipeDetail_margin_top') })
-            .fontSize(20)
+          Row() {
+            Text('step ' + (index + 1).toString())
+              .borderColor(Color.Orange)
+              .borderRadius(50)
+              .borderWidth(10)
+              .backgroundColor(Color.Orange)
+              .textAlign(TextAlign.Start)
+              .fontWeight(FontWeight.Bold)
+              .fontSize(30)
+              .fontColor(Color.White)
+              .margin({ top: 10})
+
+            Text(item[0])
+              .margin({ top: 10})
+              .fontSize(25)
+              .textAlign(TextAlign.Center)
+              .width('80%')
+          }
+          .width('100%')
+          .margin({top:30,left:10})
+
+          Image(this.steps[index][1])
+            //.width('100%')
+            .height('30%')
+            .align(Alignment.Center)
+            .borderRadius(20)
+            .margin({top:15})
+            .shadow({ radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20 })
+
         }
       })
     }

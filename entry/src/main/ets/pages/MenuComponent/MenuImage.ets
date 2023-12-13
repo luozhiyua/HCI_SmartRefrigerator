@@ -1,6 +1,6 @@
 @Component
 export struct MenuImage {
-  private image: Resource
+  private image: string
   private name: string
   private description:string
 
