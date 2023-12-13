@@ -229,10 +229,6 @@ struct MenuDetail {
       .scrollBarColor(Color.Gray)
       .scrollBarWidth(10)
       .edgeEffect(EdgeEffect.Spring)
-
-      // PageTitle({pageName: "菜谱详情"})
-      headline({pageName: "菜谱详情"})
-      //}
     }
   }
 }

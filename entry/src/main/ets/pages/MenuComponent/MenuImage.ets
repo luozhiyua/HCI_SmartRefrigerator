@@ -8,7 +8,6 @@ export struct MenuImage {
     Row(){
       Image(this.image)
         .width('40%')
-<<<<<<< HEAD
         .height('25%')
         .borderRadius(20)
       Column() {
@@ -32,24 +31,5 @@ export struct MenuImage {
     }
     //.justifyContent(FlexAlign.Start)
     .margin({top:20})
-=======
-        .height('35%')
-        .borderRadius(20)
-      Text(this.name)
-        .fontSize(35)
-        .fontWeight(FontWeight.Bold)
-        .margin({ left : 18, bottom: 18, top : 5 })
-        .width('50%')
-
-      // Row(){
-      //
-      // }
-      // .width('100%')
-      // .justifyContent(FlexAlign.Start)
-
-    }
-    .margin({top: 40})
-    .justifyContent(FlexAlign.Start)
->>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
   }
 }
