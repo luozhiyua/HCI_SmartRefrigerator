@@ -31,6 +31,10 @@ export class RecipeInfo1{
 
   static readonly image: Resource = $r('app.media.menu_tomatoEgg')
 
+  static readonly cookTime:string = "5 min";
+
+  static readonly description:string = "西红柿炒鸡蛋，又名番茄炒蛋。是许多百姓家庭中一道普通的大众菜肴。它的烹调方法简单易学，营养搭配合理。在口感方面，它色泽鲜艳，口味宜人，爽口、开胃，深受大众喜爱。"
+
   static readonly steps: Array<string> = [
     "西红柿洗净，切成小块；鸡蛋打散备用。",
     "热锅凉油，将鸡蛋液煎至金黄色捞出沥干备用。",
@@ -65,7 +69,11 @@ RecipeInfo2{
 
   static readonly recipe_name:string = "鸡蛋炒西红柿";
 
+  static readonly description:string = "西红柿炒鸡蛋，又名番茄炒蛋。是许多百姓家庭中一道普通的大众菜肴。它的烹调方法简单易学，营养搭配合理。在口感方面，它色泽鲜艳，口味宜人，爽口、开胃，深受大众喜爱。"
+
   static readonly image: Resource = $r('app.media.tomato')
+
+  static readonly cookTime:string = "5 min";
 
   static readonly steps: Array<string> = [
     "西红柿洗净，切成小块；鸡蛋打散备用。",

@@ -8,7 +8,7 @@
     "pages/MainPage",
     "pages/CountDown",
     "pages/Clock",
-    "pages/TemperatureController"
-
+    "pages/TemperatureController",
+    "pages/CookProcess"
   ]
 }

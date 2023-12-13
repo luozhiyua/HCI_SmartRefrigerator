@@ -36,12 +36,16 @@ export class MenuIngredientInfo{
 export class MenuInfo{
   image: Resource
   name: string
+  description:string
+  cookTime:string
   ingredients: Array<MenuIngredientInfo>
   steps: Array<string>
 
-  constructor(image: Resource, name: string, ingredients: Array<MenuIngredientInfo>, steps: Array<string>) {
+  constructor(image: Resource, name: string,description:string,cookTime:string, ingredients: Array<MenuIngredientInfo>, steps: Array<string>) {
     this.image = image
     this.name = name
+    this.description = description
+    this.cookTime = cookTime
     this.ingredients = ingredients
     this.steps = steps
   }

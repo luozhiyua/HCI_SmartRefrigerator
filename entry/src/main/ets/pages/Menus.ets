@@ -43,7 +43,6 @@ struct Menus {
       MenuPageTitle()
       foodList({foods: this.foodList})
       MenuList({menuList: this.menuList})
-
     }
   }
 }

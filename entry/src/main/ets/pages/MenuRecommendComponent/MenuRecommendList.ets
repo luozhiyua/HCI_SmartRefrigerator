@@ -48,7 +48,7 @@ struct MenuListItem {
     .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
     .onClick(() => {
       console.info(this.menuID.toString())
-      router.replaceUrl({url: 'pages/MenuDetail', params: { menuID: this.menuID}})
+      router.pushUrl({url: 'pages/MenuDetail', params: { menuID: this.menuID}})
     })
   }
 
