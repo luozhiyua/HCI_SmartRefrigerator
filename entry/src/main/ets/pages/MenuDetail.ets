@@ -17,7 +17,6 @@ import url from '@ohos.url'
 const params = router.getParams();
 const menuID = params['menuID']
 
-
 @CustomDialog
 struct FoodNotFound {
   controller: CustomDialogController
@@ -116,24 +115,35 @@ export struct IngredientList {
     // List(){
     Column() {
       Text($r('app.string.recipe_detail_ingredient_title'))
+<<<<<<< HEAD
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
         .width($r('app.string.recipe_width'))
         .height('5%')
         .align(Alignment.Center)
+=======
+        .fontSize(35)
+        .fontWeight(FontWeight.Bold)
+        .width($r('app.string.recipe_width'))
+        .height('6%')
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
       // .backgroundColor(Color.Pink)
 
       ForEach(this.ingredients, (item: MenuIngredientInfo) => {
         Row() {
           Text(item.name)
             .width('50%')
+<<<<<<< HEAD
             .height(40)
             .fontSize(20)
+=======
+            .height(28)
+            .fontSize(25)
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
             .textAlign(TextAlign.Start)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
-              // left: 20
 
             })
             .padding({left:30})
@@ -153,16 +163,21 @@ export struct IngredientList {
 
           Text(item.quantity)
             .width('50%')
+<<<<<<< HEAD
             .height(40)
             .fontSize(20)
+=======
+            .height(28)
+            .fontSize(25)
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
             .textAlign(TextAlign.End)
             .borderRadius(10)
             .margin({
               top: $r('app.float.recipeDetail_margin_top'),
             })
-            .padding({right:40})
+            .padding({right:50})
         }
-        .height(20)
+        .height(35)
         // .backgroundColor(Color.Yellow)
 
         Text($r('app.string.dotted_line'))
@@ -174,12 +189,27 @@ export struct IngredientList {
       })
 
     }
+<<<<<<< HEAD
     .width('90%')
     .padding({left:6})
     .margin({top: 30 })
     .borderRadius(10)
     .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
+=======
+    // .backgroundColor("#f1f3f5")
+    .borderRadius(40)
+    // .width('50%')
+    // .border({width: 4,
+    //   color: Color.Gray,
+    //   radius: 30,
+    //   style:{
+    //   left: BorderStyle.Dashed,
+    //   right: BorderStyle.Dashed,
+    //   top: BorderStyle.Dashed,
+    //   bottom: BorderStyle.Dashed
+    // }})
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
   }
 
 
@@ -196,6 +226,7 @@ struct MenuDetail {
 
     Column(){
 
+<<<<<<< HEAD
       //Stack({alignContent: Alignment.TopStart}) {
       Scroll(this.scroller) {
         Column() {
@@ -206,12 +237,35 @@ struct MenuDetail {
             IngredientList({ ingredients: this.menuInfo.ingredients })
             StepList({ steps: this.menuInfo.steps })
             ButtonBeginCook()
+=======
+      Stack({alignContent: Alignment.TopStart}) {
+        Scroll(this.scroller) {
+          Column() {
+            Column(){
+              Blank().height("4%")
+              MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name })
+              Blank().height("2%")
+              IngredientList({ ingredients: this.menuInfo.ingredients })
+              StepList({ steps: this.menuInfo.steps })
+            }
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
           }
         }
+<<<<<<< HEAD
         // .backgroundColor('#EDF2F5')
         //.height('100%')
         .align(Alignment.Top)
         .justifyContent(FlexAlign.Start)
+=======
+        .scrollBar(BarState.On)
+        .scrollable(ScrollDirection.Vertical)
+        .scrollBarColor(Color.Gray)
+        .scrollBarWidth(10)
+        .edgeEffect(EdgeEffect.Spring)
+
+        // PageTitle({pageName: "菜谱详情"})
+        headline()
+>>>>>>> dcad3564301b2c0fd13ecbb945736161a7051a5e
       }
       .scrollBar(BarState.On)
       .scrollable(ScrollDirection.Vertical)

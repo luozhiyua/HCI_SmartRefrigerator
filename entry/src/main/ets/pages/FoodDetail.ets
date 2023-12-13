@@ -124,7 +124,7 @@ struct inputSelectItem{
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
-        Text(this.text).fontSize(25)
+        Text(this.text).fontSize(30)
         Image($r('app.media.selector'))
           .width(25)
           .height(25)
@@ -141,7 +141,7 @@ struct inputSelectItem{
       })
     }
     .width('100%')
-    .height(35)
+    .height(39)
     .boardItemStyle()
   }
 }
@@ -154,7 +154,7 @@ struct DateSelectItem{
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
-        Text(this.text).fontSize(25)
+        Text(this.text).fontSize(30)
         Image($r('app.media.selector'))
           .width(22)
           .height(22)
@@ -166,14 +166,14 @@ struct DateSelectItem{
           selected: this.selectedDate,
           onAccept: (value: DatePickerResult) => {
             this.selectedDate.setFullYear(value.year, value.month, value.day)
-            this.text = value.year + '-' + value.month + '-' + value.day
+            this.text = value.year + '-' + (value.month+1) + '-' + value.day
             this.editParams.freshDate = this.text
           }
         })
       })
     }
     .width('100%')
-    .height(35)
+    .height(39)
     .boardItemStyle()
   }
 }
@@ -216,9 +216,9 @@ struct IngredientItem{
               this.quantityValue = newValue
               this.editParams.quantity = this.quantityValue == '' ? this.value.split(' ')[0] : this.quantityValue
             })
-            .fontSize(25)
+            .fontSize(30)
             .width('30%')
-            .height('85%')
+            .height('100%')
           Text(this.value.split(' ')[1]).padding({left:10}).fontSize(this.fontSize)
 
           Row().width('10%')
@@ -227,13 +227,13 @@ struct IngredientItem{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) + 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).margin(5).fontSize(25).backgroundColor('#73CD57')
+          }).margin(5).fontSize(35).backgroundColor('#73CD57')
 
           Button('-',{type: ButtonType.Circle}).onClick(()=>{
             if(this.quantityValue == '')this.quantityValue = this.value.split(' ')[0]
             this.quantityValue = (Number.parseInt(this.quantityValue) - 1).toString()
             this.editParams.quantity = this.quantityValue
-          }).fontSize(25).backgroundColor('#73CD57')
+          }).fontSize(35).backgroundColor('#73CD57')
 
         }else if(this.chooseKey == 'freshDate'){
           DateSelectItem({text: this.value}).width('80%')

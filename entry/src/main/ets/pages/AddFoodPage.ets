@@ -214,7 +214,7 @@ struct DateSelectItem{
           selected: this.selectedDate,
           onAccept: (value: DatePickerResult) => {
             this.selectedDate.setFullYear(value.year, value.month, value.day)
-            this.text = value.year + '-' + value.month + '-' + value.day
+            this.text = value.year + '-' + (value.month+1) + '-' + value.day
             this.settingParams.freshDate = this.text
           }
         })
@@ -270,8 +270,15 @@ struct FoodAddPage {
           .fontSize(30).height(60)
           .borderRadius(12)
           .backgroundColor('#73CD57')
-      }.width('95%')
-      .margin(10)
+      }
+      .padding(20)
+      .width('100%')
+      .linearGradient({
+        angle: 60,
+        colors: [['#EDF2F5', 0.0], ['#73CD57', 0.9]]
+      })
+
+
 
       Row(){
         Column(){
@@ -289,7 +296,7 @@ struct FoodAddPage {
               this.whe_frozen = true;
             })
         }
-        .width('30%')
+        .width('20%')
         .height('100%')
         .justifyContent(FlexAlign.SpaceAround)
 
@@ -324,10 +331,10 @@ struct FoodAddPage {
         .margin({left:10,right:5})
       }
       .width('95%')
-      .height('50%')
+      .height('70%')
       .backgroundColor('#EDF2F5')
       .borderRadius(18)
-      .margin({top:20})
+      .margin({top:20, left:"2%", right:"2%"})
 
 
       Row(){
@@ -337,7 +344,7 @@ struct FoodAddPage {
           })
           .buttonStyle().fontSize(30)
 
-        Row().width('10%')
+        Row().width('15%')
 
         Button('提交',{ type: ButtonType.Normal, stateEffect: true })
           .onClick(()=>{

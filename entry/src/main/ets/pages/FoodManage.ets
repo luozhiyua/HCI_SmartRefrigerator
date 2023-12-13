@@ -173,7 +173,7 @@ struct FoodGrid {
     .columnsTemplate('1fr 1fr')
     .columnsGap(15)
     .rowsGap(15)
-    .padding({ left: 16, right: 16 })
+    .padding({ top: 16, left: 16, right: 16 })
   }
 }
 
@@ -187,8 +187,8 @@ struct CategoryModeFoods {
   @Builder
   tabBarItemBuilder(value: string, index: number) {
     Text(value)
-      .fontColor(this.currentTabIndex === index ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.6)')
-      .fontSize(this.currentTabIndex === index ? 35 : 28)
+      .fontColor(this.currentTabIndex === index ? '#228B22' : 'rgba(0,0,0,0.6)')
+      .fontSize(this.currentTabIndex === index ? 42 : 26)
       .margin({ top: 2 })
       .height(50)
   }
@@ -197,6 +197,10 @@ struct CategoryModeFoods {
     Tabs() {
       TabContent() {
         FoodGrid({ foodItems: this.foodItems })
+        // Column(){
+        //   FoodGrid({ foodItems: this.foodItems })
+        //   Blank().height("10%")
+        // }
       }.tabBar(this.tabBarItemBuilder("所有", 0))
 
       ForEach(this.foodCategories, (foodCategory: string, index?: number) => {
