@@ -198,7 +198,7 @@ struct CategoryModeFoods {
   build() {
     Tabs() {
       TabContent() {
-        FoodGrid({ foodItems: this.foodItems })
+        FoodGrid({ foodItems: this.foodItems }).height('100%')
         // Column(){
         //   FoodGrid({ foodItems: this.foodItems })
         //   Blank().height("10%")
@@ -229,9 +229,9 @@ struct Home {
   build() {
     Column() {
       PageTitle()
-      Stack({ alignContent: Alignment.TopEnd }) {
+      Column() {
         CategoryModeFoods()
-      }
+      }.height('90%')
       AddBtn()
     }
   }

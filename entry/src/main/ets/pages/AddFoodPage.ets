@@ -251,9 +251,9 @@ struct FoodAddPage {
   build() {
     Column(){
       Row() {
-        Image($r('app.media.return_icon'))
-          .width(32)
-          .height(32)
+        Image($r('app.media.back'))
+          .width(35)
+          .height(35)
           .onClick(() => {
             router.replaceUrl({url:'pages/FoodManage'})
           })
