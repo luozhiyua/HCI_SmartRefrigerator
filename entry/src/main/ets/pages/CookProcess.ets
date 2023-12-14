@@ -1,14 +1,16 @@
 import router from '@ohos.router'
+import { MenuInfo } from '../model/DataModels'
 @Entry
 @Component
 export struct cookProcess{
   menuName:string = router.getParams()['menuName']
   steps: Array<Array<string>> = router.getParams()['steps']
   index:number = router.getParams()['index']
+  menuID:number = router.getState()['menuID']
 
   build(){
     Column(){
-      PageTitle({menuName:this.menuName})
+      PageTitle({menuName:this.menuName,menuID:this.menuID})
       Column() {
         Image(this.steps[this.index][1])
           //.width('100%')
@@ -27,7 +29,7 @@ export struct cookProcess{
             .textAlign(TextAlign.Center)
           Text(this.steps[this.index][0])
             .width('80%')
-            .fontSize(40)
+            .fontSize(30)
             .align(Alignment.End)
             .margin({left:20})
         }
@@ -49,7 +51,7 @@ export struct cookProcess{
               .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
               .onClick(()=>{
                 //TODO：跳转到倒计时
-                var timeCount = new Number(this.steps[this.index][3].substring(0,-2))
+                var timeCount = new Number(this.steps[this.index][3].substring(0,2))
                 router.replaceUrl({
                   url: 'pages/CountDown',
                   params: {
@@ -63,7 +65,7 @@ export struct cookProcess{
         }
 
         Row() {
-          Button("<——")
+          Button("<—")
             .fontSize(50)
             .fontColor(Color.White)
             .backgroundColor('#FF8C69')
@@ -87,7 +89,7 @@ export struct cookProcess{
               .margin({left:120})
           }
           else {
-            Button("——>")
+            Button("—>")
               .fontSize(50)
               .fontColor(Color.White)
               .backgroundColor('#FF8C69')
@@ -113,6 +115,7 @@ export struct cookProcess{
 
 @Component
 struct PageTitle {
+  menuID:number
   menuName:string
   build() {
     Row() {
@@ -120,8 +123,9 @@ struct PageTitle {
         .width(35)
         .height(35)
         .onClick(() => {
-          // router.replaceUrl({ url: 'pages/Home'})
-          router.back()
+          router.clear()
+          router.replaceUrl({ url: 'pages/Menus'})
+          //router.back()
         })
       Text(this.menuName)
         .fontSize(40)

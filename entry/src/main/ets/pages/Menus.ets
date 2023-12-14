@@ -14,7 +14,8 @@ struct MenuPageTitle {
         .width(30)
         .height(30)
         .onClick(() => {
-          router.back()
+          router.clear()
+          router.replaceUrl({url:'pages/MainPage'})
         })
       Text("菜谱")
         .fontSize(30)

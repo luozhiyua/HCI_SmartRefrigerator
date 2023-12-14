@@ -37,6 +37,7 @@ struct PageTitle {
     }
     .padding(20)
     .width('100%')
+    .height('10%')
     .linearGradient({
       angle: 60,
       colors: [['#EDF2F5', 0.0], ['#73CD57', 0.9]]
@@ -161,20 +162,21 @@ struct FoodGridItem {
 @Component
 struct FoodGrid {
   private foodItems?: FoodInfo[]
+  scroller: Scroller = new Scroller()
 
   build() {
-    Grid() {
-      ForEach(this.foodItems!, (item: FoodInfo) => {
-        GridItem() {
-          FoodGridItem({ foodItem: item })
+        Grid() {
+          ForEach(this.foodItems !, (item: FoodInfo) => {
+            GridItem() {
+              FoodGridItem({ foodItem: item })
+            }
+          })
         }
-      })
-    }
-    .columnsTemplate('1fr 1fr')
-    .columnsGap(15)
-    .rowsGap(15)
-    .padding({ top: 16, left: 16, right: 16 })
-  }
+        .columnsTemplate('1fr 1fr')
+        .columnsGap(15)
+        .rowsGap(15)
+        .padding({ top: 16, left: 16, right: 16 })
+      }
 }
 
 @Component

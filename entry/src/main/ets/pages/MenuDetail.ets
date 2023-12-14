@@ -69,8 +69,8 @@ export struct menuDetailPageTitle{
         .width(35)
         .height(35)
         .onClick(() => {
-          // router.replaceUrl({ url: 'pages/Home'})
-          router.back()
+          router.replaceUrl({ url: 'pages/Menus'})
+          //router.back()
         })
       Text("菜谱详情")
         .fontSize(40)
@@ -90,6 +90,7 @@ export struct menuDetailPageTitle{
 export struct ButtonBeginCook{
   steps: Array<Array<string>>
   menuName:string
+  menuID:number
 
   build(){
     Button("开始做菜",{type:ButtonType.Normal,stateEffect:true})
@@ -104,7 +105,7 @@ export struct ButtonBeginCook{
       .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
       .margin({top:30,right:30})
       .onClick(()=>{
-        router.pushUrl({url:'pages/CookProcess',params:{steps:this.steps,index:0,menuName:this.menuName}})
+        router.pushUrl({url:'pages/CookProcess',params:{steps:this.steps,index:0,menuName:this.menuName,menuID:this.menuID}})
       })
   }
 }
@@ -199,6 +200,7 @@ export struct IngredientList {
 struct MenuDetail {
   private menuViewModel: MenuViewModel = new MenuViewModel();
   scroller: Scroller = new Scroller()
+  index:number
   @State menuInfo: MenuInfo = this.menuViewModel.getMenuInfo(menuID)
 
   build() {
@@ -213,7 +215,7 @@ struct MenuDetail {
             MenuImage({ image: this.menuInfo.image, name: this.menuInfo.name,description:this.menuInfo.description })
             Row() {
               CookTime({ time: this.menuInfo.cookTime })
-              ButtonBeginCook({steps:this.menuInfo.steps,menuName:this.menuInfo.name})
+              ButtonBeginCook({steps:this.menuInfo.steps,menuName:this.menuInfo.name,menuID:this.index})
             }
             IngredientList({ ingredients: this.menuInfo.ingredients })
             StepList({ steps: this.menuInfo.steps })
