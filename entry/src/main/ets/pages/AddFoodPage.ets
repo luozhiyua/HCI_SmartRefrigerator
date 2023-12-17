@@ -26,12 +26,16 @@ struct ToCommitDialog {
 
   build() {
     Column() {
-      Text(this.text).fontSize(25).margin({ top: 10, bottom: 10 }).height('38%')
-      Button('确认',{ type: ButtonType.Normal})
-        .onClick(() => {
-          this.controller.close()
-          if(this.text == "提交已成功") router.replaceUrl({url:'pages/FoodManage'})
-        }).backgroundColor('#F5F5F5').fontColor(Color.Red).fontSize(20).width('100%').height('55%')
+      if(this.text != "提交已成功"){
+        Text(this.text).fontSize(25).margin({ top: 10, bottom: 10 }).height('38%')
+        Button('确认',{ type: ButtonType.Normal})
+          .onClick(() => {
+            this.controller.close()
+          }).backgroundColor('#F5F5F5').fontColor(Color.Red).fontSize(20).width('100%').height('55%')
+      }else {
+        Row().height('30%')
+        Text(this.text).fontSize(30)
+      }
     }.margin({ bottom: 10 }).height(130)
   }
 }
@@ -195,8 +199,8 @@ struct DateSelectItem{
   selectedDate: Date = new Date("2023-12-1")
   onAutoModeUp(){
     // 实际autoMode一直在变，只要变了就触发这里
-    this.text = 'Fri Jan 12 2023'
-    this.settingParams.freshDate = 'Fri Jan 12 2023'
+    this.text = '2023-12-31'
+    this.settingParams.freshDate = this.text
   }
 
   build(){
@@ -370,6 +374,12 @@ struct FoodAddPage {
               this.tipText = "提交已成功"
             }
             this.dialogController.open()
+            if(this.tipText == "提交已成功"){
+              setTimeout(function() {
+                router.replaceUrl({url:'pages/FoodManage'})
+                this.controller.close()
+              }, 500);
+            }
           })
           .buttonStyle().fontSize(30)
       }.margin({top:'6%'})

@@ -2,9 +2,17 @@ import router from '@ohos.router'
 import {foodImageMap, foodUnitMap } from '../mock/MockData'
 
 import { FoodInfo } from './DataModels'
+import promptAction from '@ohos.promptAction'
 // import { mockFoods, mockFoodInfo } from '../mock/MockData'
 
 const DEBUG_PREVIEW = false
+
+export function showToastContent(content: Resource | string): void {
+  promptAction.showToast({
+    message: content,
+    duration: 3000
+  });
+}
 
 export function getFoodCategories(): string[] {
   return ['蔬菜','水果','肉类','海鲜','零食','其他']
