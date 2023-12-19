@@ -51,3 +51,13 @@ export class MenuInfo{
   }
 
 }
+
+export class CondimentInfo{
+  name: string
+  is_exist: boolean
+
+  constructor(name: string, is_exist: boolean) {
+    this.name = name
+    this.is_exist = is_exist
+  }
+}

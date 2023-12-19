@@ -3,8 +3,10 @@ import {MenuViewModel} from '../viewModel/MenuViewModel'
 import {foodList} from './MenuRecommendComponent/AvailableFoods'
 import {PageTitle} from '../pages/MenuComponent/PageTitle'
 import { MockDB } from '../mock/MockDB'
-import { FoodInfo } from '../model/DataModels'
+import { CondimentInfo, FoodInfo } from '../model/DataModels'
 import router from '@ohos.router'
+import { CondimentsList } from './MenuRecommendComponent/Condiments'
+import { MockCondiment } from '../mock/MockCondiment'
 
 @Component
 struct MenuPageTitle {
@@ -14,8 +16,8 @@ struct MenuPageTitle {
         .width(30)
         .height(30)
         .onClick(() => {
-          router.clear()
-          router.replaceUrl({url:'pages/MainPage'})
+          // router.clear()
+          router.back()
         })
       Text("菜谱")
         .fontSize(30)
@@ -43,6 +45,7 @@ struct Menus {
     Column(){
       MenuPageTitle()
       foodList({foods: this.foodList})
+      CondimentsList()
       MenuList({menuList: this.menuList})
     }
   }

@@ -49,7 +49,7 @@ export class RecipeInfo1{
     new MenuIngredientInfo("白糖", "适量"),
     new MenuIngredientInfo("盐", "适量"),
     new MenuIngredientInfo("糖", "适量"),
-    new MenuIngredientInfo("酒", "适量"),
+    new MenuIngredientInfo("料酒", "适量"),
     new MenuIngredientInfo("水", "适量"),
   ]
 
@@ -82,7 +82,8 @@ export class RecipeInfo2{
     new MenuIngredientInfo("盐", "适量"),
     new MenuIngredientInfo("料酒", "适量"),
     new MenuIngredientInfo("油", "适量"),
-    new MenuIngredientInfo("葱姜", "少许")
+    new MenuIngredientInfo("葱", "少许"),
+  new MenuIngredientInfo("姜", "少许")
   ]
 
 }
@@ -115,9 +116,9 @@ export class RecipeInfo3{
     new MenuIngredientInfo("香辣酱", "5克"),
     new MenuIngredientInfo("干辣椒", "10克"),
     new MenuIngredientInfo("玉米淀粉", "10克"),
-    new MenuIngredientInfo("葱段", "5克"),
+    new MenuIngredientInfo("葱", "5克"),
     new MenuIngredientInfo("油", "50毫升"),
-    new MenuIngredientInfo("姜末", "3克")
+    new MenuIngredientInfo("姜", "3克")
   ]
 
 }
@@ -144,7 +145,7 @@ export class RecipeInfo4{
   static readonly ingredients: Array<MenuIngredientInfo> = [
     new MenuIngredientInfo("黄瓜", "1根"),
     new MenuIngredientInfo("鸡蛋", "2个"),
-    new MenuIngredientInfo("食盐", "适量")
+    new MenuIngredientInfo("盐", "适量")
     ]
 }
 
@@ -169,9 +170,9 @@ export class RecipeInfo5{
   static readonly ingredients: Array<MenuIngredientInfo> = [
     new MenuIngredientInfo("嫩豆腐", "500克"),
     new MenuIngredientInfo("咸蛋黄", "4个"),
-    new MenuIngredientInfo("葱末", "15克"),
-    new MenuIngredientInfo("食用油", "5毫升"),
-    new MenuIngredientInfo("开水", "5毫升"),
+    new MenuIngredientInfo("葱", "15克"),
+    new MenuIngredientInfo("油", "5毫升"),
+    new MenuIngredientInfo("水", "5毫升"),
     new MenuIngredientInfo("盐", "3克"),
     new MenuIngredientInfo("水淀粉", "10克")
   ]
@@ -206,7 +207,8 @@ export class RecipeInfo6{
     new MenuIngredientInfo("盐", "5克"),
     new MenuIngredientInfo("糖", "5克"),
     new MenuIngredientInfo("蒜", "10克"),
-    new MenuIngredientInfo("葱姜", "10克")
+    new MenuIngredientInfo("葱", "10克"),
+    new MenuIngredientInfo("姜", "10克")
   ]
 
 }
@@ -236,7 +238,7 @@ export class RecipeInfo7{
     new MenuIngredientInfo("胡椒粉", "3克"),
     new MenuIngredientInfo("孜然粉", "3克"),
     new MenuIngredientInfo("生抽", "20克"),
-    new MenuIngredientInfo("蜜糖", "15克"),
+    new MenuIngredientInfo("糖", "15克"),
     new MenuIngredientInfo("料酒", "20克")
   ]
 
@@ -269,7 +271,8 @@ export class RecipeInfo8{
     new MenuIngredientInfo("耗油", "3克"),
     new MenuIngredientInfo("油", "8毫升"),
     new MenuIngredientInfo("盐", "3克"),
-    new MenuIngredientInfo("葱姜", "适量")
+    new MenuIngredientInfo("葱", "适量"),
+  new MenuIngredientInfo("姜", "适量")
   ]
 
 }
@@ -298,9 +301,9 @@ export class RecipeInfo9{
     new MenuIngredientInfo("胡萝卜", "1根"),
     new MenuIngredientInfo("玉米", "1根"),
     new MenuIngredientInfo("黄豆", "50克"),
-    new MenuIngredientInfo("葱段", "10克"),
+    new MenuIngredientInfo("葱", "10克"),
     new MenuIngredientInfo("料酒", "5克"),
-    new MenuIngredientInfo("姜片", "5克"),
+    new MenuIngredientInfo("姜", "5克"),
     new MenuIngredientInfo("水", "适量")
   ]
 

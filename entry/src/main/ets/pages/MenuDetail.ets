@@ -9,10 +9,11 @@ import {MenuImage} from '../pages/MenuComponent/MenuImage'
 import {MenuViewModel} from '../viewModel/MenuViewModel'
 import {StepList} from '../pages/MenuComponent/StepList'
 import { MockDB } from '../mock/MockDB';
-import {FoodInfo, MenuInfo, MenuIngredientInfo} from '../model/DataModels'
+import {CondimentInfo, FoodInfo, MenuInfo, MenuIngredientInfo} from '../model/DataModels'
 import thermal from '@ohos.thermal'
 import { PageTitle } from './MenuComponent/PageTitle'
 import url from '@ohos.url'
+import { MockCondiment } from '../mock/MockCondiment'
 
 const params = router.getParams();
 const menuID = params['menuID']
@@ -114,8 +115,35 @@ export struct ButtonBeginCook{
 export struct IngredientList {
 
   private ingredients: Array<MenuIngredientInfo>
+  private is_exist: Array<boolean> = new Array<boolean>()
   mockDB : MockDB = AppStorage.Link('appDB').get();
   foodItems: FoodInfo[] = [...this.mockDB.getFoodList()]
+  mockCondiment: MockCondiment = AppStorage.Link('appCondiment').get();
+  condimentItems: CondimentInfo[] = [...this.mockCondiment.getCondimentList()]
+
+  aboutToAppear(){
+    for (let i = 0; i < this.ingredients.length; i++) {
+      let item: MenuIngredientInfo = this.ingredients[i]
+      let isFound: boolean = false;
+      for (let index = 0; index < this.foodItems.length; index++) {
+        const element = this.foodItems[index];
+        if(element.name == item.name) {
+          isFound = true
+          router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: element.id} })
+        }
+      }
+      for (let index = 0; index < this.condimentItems.length; index++) {
+        const element = this.condimentItems[index];
+        if(element.name == item.name && element.is_exist) {
+          isFound = true
+        }
+      }
+      if (isFound)
+        this.is_exist.push(true)
+      else
+        this.is_exist.push(false)
+    }
+  }
 
   foodNotFoundController: CustomDialogController = new CustomDialogController({
     builder: FoodNotFound(),
@@ -133,8 +161,15 @@ export struct IngredientList {
         .align(Alignment.Center)
       // .backgroundColor(Color.Pink)
 
-      ForEach(this.ingredients, (item: MenuIngredientInfo) => {
+      ForEach(this.ingredients, (item: MenuIngredientInfo, index: number) => {
         Row() {
+          if (this.is_exist[index]) {
+            Image($r("app.media.has_food"))
+              .width("10%")
+          } else {
+            Blank()
+              .width("10%")
+          }
           Text(item.name)
             .width('50%')
             .height(40)
@@ -154,6 +189,12 @@ export struct IngredientList {
                 if(element.name == item.name) {
                   isFound = true
                   router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: element.id} })
+                }
+              }
+              for (let index = 0; index < this.condimentItems.length; index++) {
+                const element = this.condimentItems[index];
+                if(element.name == item.name && element.is_exist) {
+                  isFound = true
                 }
               }
               if (!isFound) {

@@ -17,7 +17,6 @@ struct titleLine{
     .height("8%")
     // .margin({bottom: '3%'})
     .alignItems(HorizontalAlign.Start)
-
   }
 
 }

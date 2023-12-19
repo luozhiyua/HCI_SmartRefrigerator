@@ -2,6 +2,7 @@ import router from '@ohos.router'
 import { MockDB } from '../mock/MockDB'
 import systemDateTime from '@ohos.systemDateTime'
 import { beforeAll } from '@ohos/hypium'
+import { MockCondiment } from '../mock/MockCondiment'
 
 @Component
 struct time {
@@ -60,8 +61,8 @@ struct MainPage {
 
   aboutToAppear(){
     AppStorage.SetOrCreate('appDB', new MockDB());
+    AppStorage.SetOrCreate('appCondiment', new MockCondiment())
     //TODO:发送最后一天食物过期消息到手机
-
   }
 
   build(){
