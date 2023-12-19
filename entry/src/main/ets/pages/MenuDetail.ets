@@ -129,7 +129,6 @@ export struct IngredientList {
         const element = this.foodItems[index];
         if(element.name == item.name) {
           isFound = true
-          router.pushUrl({ url: 'pages/FoodDetail', params: { foodId: element.id} })
         }
       }
       for (let index = 0; index < this.condimentItems.length; index++) {

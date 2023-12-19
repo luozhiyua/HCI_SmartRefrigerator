@@ -5,11 +5,49 @@ import {PageTitle} from '../pages/MenuComponent/PageTitle'
 import { MockDB } from '../mock/MockDB'
 import { CondimentInfo, FoodInfo } from '../model/DataModels'
 import router from '@ohos.router'
-import { CondimentsList } from './MenuRecommendComponent/Condiments'
 import { MockCondiment } from '../mock/MockCondiment'
+
+@CustomDialog
+struct CondimentDialog {
+  controller: CustomDialogController
+  mockCondiment: MockCondiment = AppStorage.Link('appCondiment').get();
+  @State condimentList: CondimentInfo[] = [...this.mockCondiment.getCondimentList()]
+
+  scroller: Scroller = new Scroller();
+  build(){
+    Column(){
+      Scroll(this.scroller){
+        Column(){
+          ForEach(this.condimentList, (item: CondimentInfo, index: number) => {
+            Row(){
+              Text(item.name)
+                .fontSize(30)
+              Toggle({type: ToggleType.Checkbox, isOn: item.is_exist})
+                .height(30)
+                .onChange((isOn: boolean) => {
+                  this.mockCondiment.setCondimentAvailable(index, isOn)
+                })
+            }
+            .height(43)
+          })
+        }
+        // .backgroundColor(Color.Grey)
+      }
+      .scrollable(ScrollDirection.Vertical)
+      .scrollBar(BarState.Off)
+    }
+    .margin({ bottom: 10 })
+    .height(130)
+    .width(130)
+  }
+}
 
 @Component
 struct MenuPageTitle {
+  dialogController: CustomDialogController = new CustomDialogController({
+    builder: CondimentDialog()
+  })
+
   build() {
     Row() {
       Image($r('app.media.back'))
@@ -23,13 +61,19 @@ struct MenuPageTitle {
         .fontSize(30)
         .fontWeight(FontWeight.Bold)
         .margin({ left: 1 })
-        .textAlign(TextAlign.Center)
-        .width("85%")
+        .width("46%")
+        .textAlign(TextAlign.End)
         .fontColor(Color.Black)
+      Blank()
+      Button('调味品管理',{ type: ButtonType.Normal})
+        .borderRadius(12).backgroundColor('#FF8C69').opacity(0.9).fontSize(30).height(60)
+        .onClick(()=>{
+          this.dialogController.open()
+        })
     }
     .padding(10)
     .width('100%')
-    .height("7%")
+    .height("8%")
     .backgroundColor('#FF8C69')
   }
 }
@@ -44,8 +88,6 @@ struct Menus {
   build(){
     Column(){
       MenuPageTitle()
-      foodList({foods: this.foodList})
-      CondimentsList()
       MenuList({menuList: this.menuList})
     }
   }
