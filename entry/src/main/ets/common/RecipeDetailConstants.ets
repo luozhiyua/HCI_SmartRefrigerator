@@ -334,3 +334,53 @@ export class RecipeInfo10{
   ]
 
 }
+
+export class RecipeInfo11{
+  static readonly recipe_name:string = "番茄炒蛋";
+
+  static readonly description:string = "西红柿炒蛋是家常菜肴之一，不仅简单易操作且口感鲜美。它外观诱人、色泽艳丽、口味清淡回甘，老少皆宜。";
+
+  static readonly image: string = "https://exp-picture.cdn.bcebos.com/ad121888912ca5cadf286dfc8bfc77f7990e9414.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80";
+
+  static readonly cookTime:string = "15 min";
+
+  static readonly steps: Array<Array<string>> = [
+    ["鸡蛋处理，把鸡蛋磕到碗中，用筷子使劲搅打，把蛋黄，蛋清搅到均匀混合为止","https://exp-picture.cdn.bcebos.com/274e9635dd8a59de56c775b5b370d5413b8c8414.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80","false"],
+    ["西红柿洗净，切成片状，待用","https://exp-picture.cdn.bcebos.com/890dfb4a2f27e7ef0cc696b519dd3340b7f3f514.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80","false"],
+    ["把锅预热，加入油，油烧热后，把准备好的鸡蛋放入，翻炒，炒熟后，装盘待用","https://exp-picture.cdn.bcebos.com/bfa52adaf05e4a234cb103a91dd818196020e214.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80","false"],
+    ["另起锅，加入油，油热后，加入西红柿，放入盐，继续翻炒，西红柿变软，流汁时，把前面做好的鸡蛋放入，翻炒","https://exp-picture.cdn.bcebos.com/739bc049610f8b56ebc4d3dc9ce951e10ff8d314.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80","false"],
+    ["继续翻炒一会，撒入葱花，起锅即可！OK！西红柿炒鸡蛋大功告成", "https://exp-picture.cdn.bcebos.com/116b1ae23ea23a42f7ba5da43733ec3835bbc014.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fformat%2Cf_auto%2Fquality%2Cq_80", "false"]
+  ];
+
+
+  static readonly ingredients: Array<MenuIngredientInfo> = [
+    new MenuIngredientInfo("番茄", "3个 "),
+    new MenuIngredientInfo("鸡蛋", "2个"),
+    new MenuIngredientInfo("葱", "适量"),
+  new MenuIngredientInfo("盐", "适量"),
+  new MenuIngredientInfo("油", "适量")
+  ]
+}
+
+export class RecipeInfo12{
+  static readonly recipe_name:string = "清蒸螃蟹";
+
+  static readonly description:string = "螃蟹是鲜美的海鲜，要多加1步清蒸，不要直接上锅蒸，否则会掉腿不流黄，鲜嫩美味。";
+
+  static readonly image: string = "https://i2.chuimg.com/65876d0e88c211e6b87c0242ac110003_493w_493h.jpg?imageView2/2/w/660/interlace/1/q/75";
+
+  static readonly cookTime:string = "30 min";
+
+  static readonly steps: Array<Array<string>> = [
+    ["将活螃蟹放入凉水中，放养十几分钟，洗净螃蟹身上的沙粒","https://i2.chuimg.com/d67249188fc911e6a9a10242ac110002_427w_428h.jpg?imageView2/2/w/300/interlace/1/q/75","true", "15分钟"],
+    ["用牙刷仔细刷干净螃蟹，肚皮朝上，撒少许盐，放入蒸锅内，大约蒸15分钟左右","https://i2.chuimg.com/d6ade7348fc911e6a9a10242ac110002_523w_523h.jpg?imageView2/2/w/300/interlace/1/q/75","true", "15分钟"],
+    ["蘸料汁:姜末，醋的调和汁","https://i2.chuimg.com/d6e225e48fc911e6a9a10242ac110002_207w_207h.jpg?imageView2/2/w/300/interlace/1/q/75","false"]
+  ];
+
+
+  static readonly ingredients: Array<MenuIngredientInfo> = [
+    new MenuIngredientInfo("螃蟹", "若干"),
+    new MenuIngredientInfo("醋", "适量"),
+    new MenuIngredientInfo("姜", "适量"),
+  ]
+}

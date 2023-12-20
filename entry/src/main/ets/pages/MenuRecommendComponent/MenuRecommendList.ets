@@ -31,9 +31,35 @@ struct MenuListItem {
       router.replaceUrl({url: 'pages/MenuDetail', params: { menuID: this.menuID,index:this.menuID}})
     })
   }
+}
 
+@Component
+struct MenuListItemAvail {
+  private menu : MenuInfo;
+  @State menuID: number = 0;
 
+  build(){
+    Column(){
+      Image(this.menu.image)
+        .width('85%')
+        .height('70%')
+        .margin({top:'3%'})
+        .borderRadius(10)
 
+      Text(this.menu.name)
+        .fontSize(30)
+        .margin({top: '3%'})
+    }
+    .height('85%')
+    .width("30%")
+    .margin({top: '5%', left: '2%',right:'2%'})
+    .borderRadius(10)
+    .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
+    .onClick(() => {
+      console.info(this.menuID.toString())
+      router.replaceUrl({url: 'pages/MenuDetail', params: { menuID: this.menuID,index:this.menuID}})
+    })
+  }
 }
 
 @Component
@@ -45,7 +71,6 @@ export struct MenuList{
   condimentItems: CondimentInfo[] = [...this.mockCondiment.getCondimentList()]
   private is_available_menu: Array<boolean> = new Array<boolean>()
   scroller: Scroller = new Scroller()
-  @State is_recommend: boolean = false
 
   aboutToAppear(){
     let Menus: Array<MenuInfo> = this.menuList.getMenuList();
@@ -79,41 +104,49 @@ export struct MenuList{
   build(){
     Column(){
       Row(){
-        Text("推荐菜谱")
-          .width('50%')
+        Text("可做菜谱")
+          .width('85%')
           .fontSize(40)
           .fontWeight(FontWeight.Bold)
           .fontColor(Color.Gray)
-          .margin({top: '4%'})
-        Row() {
-          Text("只显示可做菜谱")
-            .fontSize(30)
-          Toggle({type: ToggleType.Checkbox, isOn: false})
-            .height(30)
-            .onChange((isOn: boolean)=>{
-              if (isOn) {
-                this.is_recommend = true;
-              } else {
-                this.is_recommend = false;
-              }
-            })
-        }
-        .margin({top: '4%'})
+          .margin({top: '2%'})
       }
-      .height("8%")
+      .height("6%")
       .margin({top: '2%'})
-
       List({scroller: this.scroller}){
         ForEach(this.menuList.getMenuList(), (item: MenuInfo, index: number) => {
           ListItem(){
             // MenuListItem({menu: item, menuID: index})
-            if (!this.is_recommend || this.is_available_menu[index]) {
-              MenuListItem({menu: item, menuID: index})
+            if (this.is_available_menu[index]) {
+              MenuListItemAvail({menu: item, menuID: index})
             }
           }
         })
       }
-      .height('80%')
+      .padding({left: "1%", right: "1%"})
+      .listDirection(Axis.Horizontal)
+      .height('26%')
+
+
+      Row(){
+        Text("推荐菜谱")
+          .width('85%')
+          .fontSize(40)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(Color.Gray)
+          .margin({top: '3%'})
+      }
+      .height("6%")
+      .margin({top: '2%', bottom:"2%"})
+
+      List({scroller: this.scroller}){
+        ForEach(this.menuList.getMenuList(), (item: MenuInfo, index: number) => {
+          ListItem(){
+            MenuListItem({menu: item, menuID: index})
+          }
+        })
+      }
+      .height('64%')
     }
     }
 

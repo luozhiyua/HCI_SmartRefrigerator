@@ -164,10 +164,10 @@ export struct IngredientList {
         Row() {
           if (this.is_exist[index]) {
             Image($r("app.media.has_food"))
-              .width("10%")
+              .width("6%")
           } else {
             Blank()
-              .width("10%")
+              .width("6%")
           }
           Text(item.name)
             .width('50%')

@@ -13,7 +13,7 @@ export class MockCondiment{
     this.CondimentInfoList.set(5, new CondimentInfo("白糖", true))
     this.CondimentInfoList.set(6, new CondimentInfo("料酒", true))
     this.CondimentInfoList.set(7, new CondimentInfo("葱", true))
-    this.CondimentInfoList.set(8, new CondimentInfo("姜", false))
+    this.CondimentInfoList.set(8, new CondimentInfo("姜", true))
     this.CondimentInfoList.set(9, new CondimentInfo("生抽", true))
     this.CondimentInfoList.set(10, new CondimentInfo("醋", true))
   }

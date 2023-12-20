@@ -1,5 +1,5 @@
 import {MenuInfo} from '../model/DataModels'
-import {RecipeInfo1, RecipeInfo2,RecipeInfo3,RecipeInfo4,RecipeInfo5,RecipeInfo6,RecipeInfo7,RecipeInfo8,RecipeInfo9,RecipeInfo10} from '../common/RecipeDetailConstants'
+import {RecipeInfo1, RecipeInfo2,RecipeInfo3,RecipeInfo4,RecipeInfo5,RecipeInfo6,RecipeInfo7,RecipeInfo8,RecipeInfo9,RecipeInfo10, RecipeInfo11, RecipeInfo12} from '../common/RecipeDetailConstants'
 
 
 export class MenuViewModel{
@@ -16,6 +16,9 @@ export class MenuViewModel{
   private menuInfo8: MenuInfo = new MenuInfo(RecipeInfo8.image, RecipeInfo8.recipe_name,RecipeInfo8.description,RecipeInfo8.cookTime, RecipeInfo8.ingredients, RecipeInfo8.steps)
   private menuInfo9: MenuInfo = new MenuInfo(RecipeInfo9.image, RecipeInfo9.recipe_name,RecipeInfo9.description,RecipeInfo9.cookTime, RecipeInfo9.ingredients, RecipeInfo9.steps)
   private menuInfo10: MenuInfo = new MenuInfo(RecipeInfo10.image, RecipeInfo10.recipe_name,RecipeInfo10.description,RecipeInfo10.cookTime, RecipeInfo10.ingredients, RecipeInfo10.steps)
+  private menuInfo11: MenuInfo = new MenuInfo(RecipeInfo11.image, RecipeInfo11.recipe_name,RecipeInfo11.description,RecipeInfo11.cookTime, RecipeInfo11.ingredients, RecipeInfo11.steps)
+  private menuInfo12: MenuInfo = new MenuInfo(RecipeInfo12.image, RecipeInfo12.recipe_name,RecipeInfo12.description,RecipeInfo12.cookTime, RecipeInfo12.ingredients, RecipeInfo12.steps)
+
 
   public getMenuList(): Array<MenuInfo>{
     this.menuInfoList.push(this.menuInfo1)
@@ -28,6 +31,8 @@ export class MenuViewModel{
     this.menuInfoList.push(this.menuInfo8)
     this.menuInfoList.push(this.menuInfo9)
     this.menuInfoList.push(this.menuInfo10)
+    this.menuInfoList.push(this.menuInfo11)
+    this.menuInfoList.push(this.menuInfo12)
     return this.menuInfoList
   }
 

@@ -37,6 +37,7 @@ struct clock {
   build() {
     Column() {
       PageTitle({ pageName: "定时",bgColor:Color.Pink,titleColor:Color.Black })
+        .padding({bottom:"2%"})
       // 以12小时制显示东八区的系统时间，精确到秒。
       TextClock({ timeZoneOffset: -8, controller: this.controller })
         .format('YYYYMMddHHm')
@@ -65,12 +66,17 @@ struct clock {
       //     this.controller.stop()
       //   })
 
+      Text("快捷时间选择 （单位：分钟）")
+      .padding({top: "5%"})
+      .fontSize(25)
+      .fontColor(Color.Gray)
       Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceBetween }) {
-        Button('5分钟',{type:ButtonType.Normal,stateEffect:true})
+        Button('5',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
           .fontColor(Color.White)
+          .fontSize(38)
           .fontWeight(FontWeight.Bold)
           .onClick(()=>{
             this.minuteNum = 5;
@@ -79,11 +85,12 @@ struct clock {
           })
           .backgroundColor("#D8BFD8")
           .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
-        Button('15分钟',{type:ButtonType.Normal,stateEffect:true})
+        Button('15',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
           .fontColor(Color.White)
+          .fontSize(38)
           .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
@@ -95,11 +102,12 @@ struct clock {
           .backgroundColor("#DB7093")
           .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
-        Button('30分钟',{type:ButtonType.Normal,stateEffect:true})
+        Button('30',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
           .fontColor(Color.White)
+          .fontSize(38)
           .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
@@ -111,11 +119,12 @@ struct clock {
           .backgroundColor("#B0C4DE")
           .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
-        Button('45分钟',{type:ButtonType.Normal,stateEffect:true})
+        Button('45',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
           .fontColor(Color.White)
+          .fontSize(38)
           .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
@@ -127,11 +136,12 @@ struct clock {
           .backgroundColor("#9370DB")
           .shadow({radius: 30, color: Color.Gray, offsetX: 20, offsetY: 20})
 
-        Button('1小时',{type:ButtonType.Normal,stateEffect:true})
+        Button('60',{type:ButtonType.Normal,stateEffect:true})
           .flexGrow(1) // 父容器分配给该Text的宽度为剩余宽度的2/3
           .height('100%')
           .borderRadius(20)
           .fontColor(Color.White)
+          .fontSize(38)
           .fontWeight(FontWeight.Bold)
           .margin({left:5})
           .onClick(()=>{
@@ -147,7 +157,6 @@ struct clock {
       .width('90%')
       .height(120)
       .padding(10)
-      .margin({top:20})
 
       Row() {
         //TODO：调整滑动器文本大小
@@ -182,19 +191,19 @@ struct clock {
       .height('40%')
       .margin({ top: 40 })
 
-      TextInput({ text: this.text, placeholder: '备注', controller: this.textController })
-        .placeholderColor(Color.Grey)
-        .placeholderFont({ size: 30, weight: 400 })
-        .caretColor(Color.Blue)
-        .width('90%')
-        .height('8%')
-        .margin(20)
-        .fontSize(30)
-        .fontColor(Color.Black)
-        .onChange((value: string) => {
-          this.text = value
-        })
-        .maxLength(100)
+      // TextInput({ text: this.text, placeholder: '备注', controller: this.textController })
+      //   .placeholderColor(Color.Grey)
+      //   .placeholderFont({ size: 30, weight: 400 })
+      //   .caretColor(Color.Blue)
+      //   .width('90%')
+      //   .height('8%')
+      //   .margin(20)
+      //   .fontSize(30)
+      //   .fontColor(Color.Black)
+      //   .onChange((value: string) => {
+      //     this.text = value
+      //   })
+      //   .maxLength(100)
 
 
       Row() {
