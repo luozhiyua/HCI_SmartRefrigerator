@@ -74,7 +74,8 @@ struct MainPage {
     Column(){
       time()
       foodList({foods: this.foodList})
-      .margin({bottom: '5%', right:'3%', left:'3%'})
+      .margin({bottom: '10%',top: '2%', right:'7%', left:'3%'})
+
       Row(){
         Text("食物管理")
           .height("90%")

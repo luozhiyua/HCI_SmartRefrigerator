@@ -33,7 +33,7 @@ struct foodItem{
         .fontSize(28)
         .fontWeight(FontWeight.Bold)
     }
-    .height("23%")
+    .height("18%")
     .width("23%")
     .margin({left: '4%'})
     .borderRadius(10)
