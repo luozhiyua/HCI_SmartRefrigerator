@@ -31,10 +31,11 @@ struct foodItem{
         .width('90%')
       Text(this.food.name)
         .fontSize(28)
+        .fontWeight(FontWeight.Bold)
     }
-    .height("18%")
-    .width("21%")
-    .margin({left: '5%'})
+    .height("23%")
+    .width("23%")
+    .margin({left: '4%'})
     .borderRadius(10)
     .backgroundColor('#f1f3f5')
     .onClick(() => {

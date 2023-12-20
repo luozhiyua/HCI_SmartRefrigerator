@@ -3,6 +3,8 @@ import { MockDB } from '../mock/MockDB'
 import systemDateTime from '@ohos.systemDateTime'
 import { beforeAll } from '@ohos/hypium'
 import { MockCondiment } from '../mock/MockCondiment'
+import { foodList } from './MenuRecommendComponent/AvailableFoods'
+import { FoodInfo } from '../model/DataModels'
 
 @Component
 struct time {
@@ -59,6 +61,9 @@ struct time {
 @Entry
 struct MainPage {
 
+  mockDB : MockDB = new MockDB()
+  @State foodList: FoodInfo[] = [...this.mockDB.getFoodList()]
+
   aboutToAppear(){
     AppStorage.SetOrCreate('appDB', new MockDB());
     AppStorage.SetOrCreate('appCondiment', new MockCondiment())
@@ -68,6 +73,8 @@ struct MainPage {
   build(){
     Column(){
       time()
+      foodList({foods: this.foodList})
+      .margin({bottom: '5%', right:'3%', left:'3%'})
       Row(){
         Text("食物管理")
           .height("90%")
@@ -77,7 +84,7 @@ struct MainPage {
              right: "4%",top: "5%", bottom: "5%"
           })
           .textAlign(TextAlign.Center)
-          .fontSize('50')
+          .fontSize('45')
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .onClick(() => {
@@ -94,7 +101,7 @@ struct MainPage {
             top: "5%", bottom: "5%"
           })
           .textAlign(TextAlign.Center)
-          .fontSize('50')
+          .fontSize('45')
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
@@ -102,10 +109,10 @@ struct MainPage {
             router.push({url: 'pages/Menus'})
           })
       }
-      .height("40%")
-      .width("84%")
+      .height("20%")
+      .width("88%")
       .margin({
-        left: "8%", right:"8%"
+        left: "6%", right:"6%",bottom:"5%"
       })
 
 
@@ -119,15 +126,13 @@ struct MainPage {
            right: "4%", bottom: "5%"
           })
           .textAlign(TextAlign.Center)
-          .fontSize('50')
+          .fontSize('45')
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
           .onClick(() => {
             router.push({url: 'pages/Clock'})
           })
-
-
 
         Text("温度调节")
           .height("90%")
@@ -137,7 +142,7 @@ struct MainPage {
             bottom: "5%"
           })
           .textAlign(TextAlign.Center)
-          .fontSize('50')
+          .fontSize('45')
           .fontColor(Color.White)
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
@@ -145,13 +150,14 @@ struct MainPage {
             router.push({url: 'pages/TemperatureController'})
           })
       }
-      .height("40%")
-      .width("84%")
+      .height("20%")
+      .width("88%")
       .margin({
-        left: "8%", right:"8%"
+        left: "6%", right:"6%"
       })
 
     }
+    .height('100%')
     .width("100%")
     .backgroundColor($r('app.color.main_background'))
   }
