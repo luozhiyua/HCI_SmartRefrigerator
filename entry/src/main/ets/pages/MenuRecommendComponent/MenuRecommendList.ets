@@ -145,6 +145,11 @@ export struct MenuList{
             MenuListItem({menu: item, menuID: index})
           }
         })
+        ListItem() {
+          Column() {
+          }
+          .height("25%")
+        }
       }
       .height('64%')
     }

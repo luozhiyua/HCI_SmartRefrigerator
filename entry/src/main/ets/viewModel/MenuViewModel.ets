@@ -21,6 +21,7 @@ export class MenuViewModel{
 
 
   public getMenuList(): Array<MenuInfo>{
+    this.menuInfoList = new Array<MenuInfo>()
     this.menuInfoList.push(this.menuInfo1)
     this.menuInfoList.push(this.menuInfo2)
     this.menuInfoList.push(this.menuInfo3)
