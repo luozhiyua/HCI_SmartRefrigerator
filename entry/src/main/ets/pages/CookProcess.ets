@@ -2,7 +2,7 @@ import router from '@ohos.router'
 import { MenuInfo } from '../model/DataModels'
 @Entry
 @Component
-export struct cookProcess{
+struct cookProcess{
   menuName:string = router.getParams()['menuName']
   steps: Array<Array<string>> = router.getParams()['steps']
   index:number = router.getParams()['index']
@@ -52,7 +52,7 @@ export struct cookProcess{
               .onClick(()=>{
                 //TODO：跳转到倒计时
                 var timeCount = new Number(this.steps[this.index][3].substring(0,2))
-                router.replaceUrl({
+                router.pushUrl({
                   url: 'pages/CountDown',
                   params: {
                     timeCount:timeCount,

@@ -107,7 +107,7 @@ struct MainPage {
           .fontWeight(FontWeight.Medium)
           .borderRadius(20)
           .onClick(() => {
-            router.push({url: 'pages/Menus'})
+            router.pushUrl({url: 'pages/Menus'})
           })
       }
       .height("20%")

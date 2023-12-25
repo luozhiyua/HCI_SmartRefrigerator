@@ -1,6 +1,6 @@
 import { FoodInfo } from '../model/DataModels'
 import systemDateTime from '@ohos.systemDateTime'
-import { getAddrLists, getAutoIamge, getAutoLists, getAutoUnit, getDetailLists, getFoodCategories, getSideLists, getunitLists } from '../model/DataUtil'
+import { getAddrLists, getAutoIamge, getAutoLists, getAutoUnit, getDetailLists, getFoodCategories, getunitLists } from '../model/DataUtil'
 import router from '@ohos.router'
 import { MockDB } from '../mock/MockDB'
 
@@ -196,7 +196,8 @@ struct DateSelectItem{
   @Consume settingParams: FoodInfo
   @Consume @Watch('onAutoModeUp') autoMode: boolean
   @State text : string = ''
-  selectedDate: Date = new Date("2023-12-1")
+  @Consume curDate: Date
+  selectedDate: Date = this.curDate
   onAutoModeUp(){
     // 实际autoMode一直在变，只要变了就触发这里
     this.text = '2023-12-31'
@@ -242,6 +243,7 @@ struct FoodAddPage {
   @State foodImage: Resource = $r('app.media.default_photo')
   mockDB : MockDB = AppStorage.Link('appDB').get();
   tipText: string = ''
+  @Provide curDate: Date = new Date("2023-12-24")
 
   dialogController: CustomDialogController = new CustomDialogController({
     builder: ToCommitDialog({text: this.tipText})
@@ -250,6 +252,19 @@ struct FoodAddPage {
   onNameChange(){
     this.foodImage = this.settingParams.name === '' ? $r('app.media.default_photo') : getAutoIamge(this.settingParams.name)
     this.settingParams.image = this.foodImage
+  }
+  onPageShow(){
+    try {
+      systemDateTime.getDate((error, date) => {
+        if (error) {
+          console.info(`Failed to get date. message:${error.message}, code:${error.code}`);
+          return;
+        }
+        this.curDate = date
+      });
+    } catch(e) {
+      console.info(`Failed to get date. message:${e.message}, code:${e.code}`);
+    }
   }
 
   build() {

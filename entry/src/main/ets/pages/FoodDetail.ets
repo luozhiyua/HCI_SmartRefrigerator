@@ -2,6 +2,7 @@ import router from '@ohos.router'
 import { MockDB } from '../mock/MockDB';
 import { FoodInfo } from '../model/DataModels'
 import { getAddrLists, getSideLists } from '../model/DataUtil'
+import systemDateTime from '@ohos.systemDateTime';
 
 const params = router.getParams(); // 获取传递过来的参数对象
 const foodItemID = params['foodId']
@@ -150,7 +151,8 @@ struct inputSelectItem{
 struct DateSelectItem{
   @Consume editParams: FoodInfo
   @State text : string = ''
-  selectedDate: Date = new Date("2023-12-1")
+  @Consume curDate: Date
+  selectedDate: Date = this.curDate
   build(){
     Row(){
       Flex({justifyContent: FlexAlign.SpaceBetween}){
@@ -262,6 +264,7 @@ struct FoodDetail {
   @State @Watch('onAutoModeUp') autoMode: boolean = false
   nullValue: string[]
   quanShow: string = this.foodInfo.quantity + " " + this.foodInfo.unit
+  @Provide curDate: Date = new Date("2023-12-24")
 
   // 这是用来控制 ”确认删除“弹窗的
   deleteCheckController: CustomDialogController = new CustomDialogController({
@@ -272,6 +275,19 @@ struct FoodDetail {
   onAutoModeUp(){
     this.whe_edit = true
     // TODO: 先不管，默认无变更值
+  }
+  onPageShow(){
+    try {
+      systemDateTime.getDate((error, date) => {
+        if (error) {
+          console.info(`Failed to get date. message:${error.message}, code:${error.code}`);
+          return;
+        }
+        this.curDate = date
+      });
+    } catch(e) {
+      console.info(`Failed to get date. message:${e.message}, code:${e.code}`);
+    }
   }
 
   build() {

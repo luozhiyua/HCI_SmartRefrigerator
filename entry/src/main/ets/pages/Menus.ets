@@ -51,11 +51,11 @@ struct MenuPageTitle {
   build() {
     Row() {
       Image($r('app.media.back'))
-        .width(30)
-        .height(30)
+        .width(35)
+        .height(35)
         .onClick(() => {
-          // router.clear()
-          router.back()
+          router.replaceUrl({url : 'pages/MainPage'})
+          // router.back()
         })
       Text("菜谱")
         .fontSize(30)
