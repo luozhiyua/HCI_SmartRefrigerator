@@ -48,7 +48,7 @@ struct foodItem{
 
 @Component
 export struct foodList{
-  private foods: FoodInfo[];
+  @Link foods: FoodInfo[];
 
   scroller: Scroller = new Scroller();
   build(){

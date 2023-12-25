@@ -22,7 +22,6 @@ export class MockDB{
   }
 
   getFoodList(){
-    // return this.dba;
     return this.db.values();
   }
 

@@ -60,7 +60,6 @@ struct time {
 @Component
 @Entry
 struct MainPage {
-
   mockDB : MockDB = new MockDB()
   @State foodList: FoodInfo[] = [...this.mockDB.getFoodList()]
 
@@ -69,11 +68,15 @@ struct MainPage {
     AppStorage.SetOrCreate('appCondiment', new MockCondiment())
     //TODO:发送最后一天食物过期消息到手机
   }
+  onPageShow(){
+    this.mockDB = AppStorage.Link('appDB').get();
+    this.foodList = [...this.mockDB.getFoodList()]
+  }
 
   build(){
     Column(){
       time()
-      foodList({foods: this.foodList})
+      foodList({foods: $foodList})
       .margin({bottom: '10%',top: '2%', right:'7%', left:'3%'})
 
       Row(){
