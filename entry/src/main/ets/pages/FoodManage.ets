@@ -18,7 +18,6 @@ import { MockDB } from '../mock/MockDB'
 import { FoodInfo } from '../model/DataModels'
 import { getFoodCategories } from '../model/DataUtil'
 import systemDateTime from '@ohos.systemDateTime'
-import systemTime from '@ohos.systemTime'
 
 @Component
 struct PageTitle {
@@ -67,23 +66,14 @@ export default struct AddBtn {
 @Component
 struct FoodGridItem {
   private foodItem?: FoodInfo
+  @Consume curDate : Date
   date:Date = new Date();
   outDate:Boolean = false;
   outDateNum:number = -1;
 
   aboutToAppear(){
-    try {
-      systemTime.getDate().then((date) => {
-        this.date = date
-        console.info(this.date.toString())
-      }).catch((error) => {
-        console.info(`Failed to getting date. message: ${error.message}, code: ${error.code}`);
-      });
-    } catch(e) {
-      console.info(`Failed to get date. message: ${e.message}, code: ${e.code}`);
-    }
+    this.date = this.curDate
     const freshDate = new Date(this.foodItem.freshDate)
-
     if (freshDate.getMonth() === this.date.getMonth() && freshDate.getFullYear() === this.date.getFullYear()) {
       //同年同月
       if (freshDate.getDate() - this.date.getDate() >= 0) {
@@ -225,6 +215,20 @@ struct CategoryModeFoods {
 @Component
 struct Home {
   @State isCategoryMode: boolean = true
+  @Provide curDate : Date = new Date()
+  onPageShow(){
+    try {
+      systemDateTime.getDate((error, date) => {
+        if (error) {
+          console.info(`Failed to get date. message:${error.message}, code:${error.code}`);
+          return;
+        }
+        this.curDate = date
+      });
+    } catch(e) {
+      console.info(`Failed to get date. message:${e.message}, code:${e.code}`);
+    }
+  }
 
   build() {
     Column() {

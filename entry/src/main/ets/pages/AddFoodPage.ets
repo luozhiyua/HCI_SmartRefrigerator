@@ -196,8 +196,7 @@ struct DateSelectItem{
   @Consume settingParams: FoodInfo
   @Consume @Watch('onAutoModeUp') autoMode: boolean
   @State text : string = ''
-  @Consume curDate: Date
-  selectedDate: Date = this.curDate
+  @State selectedDate: Date = new Date()
   onAutoModeUp(){
     // 实际autoMode一直在变，只要变了就触发这里
     this.text = '2023-12-31'
@@ -252,19 +251,6 @@ struct FoodAddPage {
   onNameChange(){
     this.foodImage = this.settingParams.name === '' ? $r('app.media.default_photo') : getAutoIamge(this.settingParams.name)
     this.settingParams.image = this.foodImage
-  }
-  onPageShow(){
-    try {
-      systemDateTime.getDate((error, date) => {
-        if (error) {
-          console.info(`Failed to get date. message:${error.message}, code:${error.code}`);
-          return;
-        }
-        this.curDate = date
-      });
-    } catch(e) {
-      console.info(`Failed to get date. message:${e.message}, code:${e.code}`);
-    }
   }
 
   build() {
@@ -392,7 +378,6 @@ struct FoodAddPage {
             if(this.tipText == "提交已成功"){
               setTimeout(function() {
                 router.replaceUrl({url:'pages/FoodManage'})
-                this.controller.close()
               }, 500);
             }
           })
