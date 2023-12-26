@@ -34,11 +34,14 @@ struct CondimentDialog {
         // .backgroundColor(Color.Grey)
       }
       .scrollable(ScrollDirection.Vertical)
-      .scrollBar(BarState.Off)
+      .scrollBarColor(Color.Gray)
+      .scrollBarWidth(10)
+      .scrollBar(BarState.On)
+      .width('100%')
     }
     .margin({ bottom: 10 })
-    .height(130)
-    .width(130)
+    .height('30%')
+    .width('98%')
   }
 }
 

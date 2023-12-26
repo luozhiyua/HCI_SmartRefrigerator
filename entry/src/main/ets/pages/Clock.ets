@@ -10,14 +10,14 @@ struct clock {
   textTimerController: TextTimerController = new TextTimerController()
   @State format: string = 'mm:ss.SS'
   private select1: number = 0
-  private select2: number = 10
+  private select2: number = 1
   private hours: Array<string> = new Array<string>()
   private minutes: Array<string> = new Array<string>()
   @State text: string = ''
   textController: TextInputController = new TextInputController()
   @State timeCount :number = 10;
   @State private hourNum:number = 0;
-  @State private minuteNum:number = 0;
+  @State private minuteNum:number = 1;
   private selfTimeCount:Boolean = false;
 
 
