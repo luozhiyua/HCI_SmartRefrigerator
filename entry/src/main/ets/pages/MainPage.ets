@@ -78,7 +78,7 @@ struct MainPage {
       time()
       foodList({foods: $foodList})
       .margin({bottom: '10%',top: '2%', right:'7%', left:'3%'})
-
+      
       Row(){
         Text("食物管理")
           .height("90%")
